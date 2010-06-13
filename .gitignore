@@ -1,0 +1,6 @@
+*.class
+*.war
+*~
+*.log
+target/
+*.swp
