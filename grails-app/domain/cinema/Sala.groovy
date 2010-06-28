@@ -15,7 +15,7 @@ class Sala {
     String sistemaProyeccion
     Integer capacidad
     static belongsTo = [exhibidor:Exhibidor, complejo:Complejo]
-    static hasMany = [diasExhibicion:Dia, ddjjSalas:DdjjSala]
+    static hasMany = [diasExhibicion:Dia]
    
     static constraints = {
 		codigo(nullable:false, min:1, max:999999)
