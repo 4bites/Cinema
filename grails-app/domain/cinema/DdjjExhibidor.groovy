@@ -7,8 +7,12 @@ class DdjjExhibidor {
     static belongsTo = [exhibidora:Exhibidor]
 	static hasMany = [ddjjExhibidorRegs:DdjjExhibidorRegistry]
     static constraints = {
-        sala()
         fecha()
 		file()        
     }
+/*	static transients = ['file']
+
+	String getFilePath(){
+		file.getPath()
+	}*/
 }
