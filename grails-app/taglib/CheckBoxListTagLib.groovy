@@ -10,9 +10,9 @@ def isChecked, ht, wd, style, html
 
 // sets the style to override height and/or width if either of them // is specified, else the default from the CSS is taken style = "style='" if(attrs.height) style += "height:${attrs.height};" if(attrs.width) style += "width:${attrs.width};"
 
-//if (style.length() == "style='".length()) style = "" else style += "'" // closing single quote
+if (style.length() == "style='".length()) style = "" else style += "'" // closing single quote
 
-html = "<ul class='CheckBoxList' >" //+ style + ">"
+html = "<ul class='CheckBoxList' " + style + ">"
 
 out << html
 

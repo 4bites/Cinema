@@ -28,7 +28,4 @@ class PersonaJuridica {
 	
     }
 
-    toString(){
-        "Persona Juridica"
-    }
 }

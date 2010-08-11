@@ -17,7 +17,7 @@ class PersonaFisica {
     static hasMany = [personasJuridicas:PersonaJuridica]
 
     static constraints = {
-        cuit(unique:true, blank:false)
+        cuit(unique:true, blank:false, match:"[1..9][0..9]-(\\d){8}-[0..9]")
         nombre(blank:false)
         apellido(blank:false)
         tipoDocumento(nullable:false)

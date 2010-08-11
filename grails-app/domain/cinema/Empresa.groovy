@@ -9,7 +9,7 @@ class Empresa {
     static belongsTo = [personaFisica:PersonaFisica, personaJuridica:PersonaJuridica]
 
     static constraints = {
-        codigo()
+        codigo(unique:true)
         fechaInicioActividad()
         fechaFinActividad()
         fechaUltimaRevalida()
