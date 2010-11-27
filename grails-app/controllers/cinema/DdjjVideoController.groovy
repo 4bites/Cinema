@@ -1,7 +1,7 @@
 package cinema
 
 class DdjjVideoController {
- 	static navigation = [
+/* 	static navigation = [
 		group:'menu', 
 		order:11, 
 		action:'create',
@@ -10,7 +10,7 @@ class DdjjVideoController {
 			[action:'update',order:2, title:'Modificar'],
 			[action:'list',order:3, title:'Listar']
 		]
-	]
+	]*/
    def scaffold = true
     def index = { }
 }

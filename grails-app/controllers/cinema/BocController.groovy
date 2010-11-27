@@ -2,7 +2,7 @@ package cinema
 
 class BocController {
 	def scaffold = true
-	static navigation = [
+/*	static navigation = [
 		group:'menu', 
 		order:6, 
 		action:'create',
@@ -11,6 +11,6 @@ class BocController {
 			[action:'update',order:2, title:'Modificar'],
 			[action:'list',order:3, title:'Listar']
 		]
-	]
+	]*/
     def index = { }
 }

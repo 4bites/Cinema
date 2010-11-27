@@ -3,7 +3,7 @@ import java.io.File
 
 class DdjjExhibidorController {
     def scaffold = true
-	static navigation = [
+/*	static navigation = [
 		group:'menu', 
 		order:10, 
 		action:'create',
@@ -12,7 +12,7 @@ class DdjjExhibidorController {
 			[action:'update',order:2, title:'Modificar'],
 			[action:'list',order:3, title:'Listar']
 		]
-	]
+	]*/
     def index = { }
     def save = {
 		def ddjj = new DdjjExhibidor()

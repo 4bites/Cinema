@@ -2,7 +2,6 @@ package cinema
 
 class Empresa {
     Integer codigo
-	String cuit
     Date fechaInicioActividad
     Date fechaFinActividad
     Date fechaUltimaRevalida

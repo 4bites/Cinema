@@ -2,7 +2,7 @@ package cinema
 
 class PeliculaController {
     def scaffold = true
-	static navigation = [
+/*	static navigation = [
 		group:'menu', 
 		order:4, 
 		action:'create',
@@ -11,6 +11,6 @@ class PeliculaController {
 			[action:'update',order:2, title:'Modificar'],
 			[action:'list',order:3, title:'Listar']
 		]
-	]
+	]*/
     def index = { }
 }
