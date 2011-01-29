@@ -8,7 +8,7 @@ class Boc {
     String accion
     static belongsTo = [exhibidor:Exhibidor]
     static constraints = {
-		accion(nullable:false, inList:["DEVOLUCION","PEDIDO"])
+		accion(nullable:false, inList:["DEVOLUCION2","PEDIDO"])
 		serie(nullable:false, matches:"[A..Z]")
 		
     }
