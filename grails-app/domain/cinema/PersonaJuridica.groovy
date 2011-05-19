@@ -1,31 +1,36 @@
 package cinema
 
 class PersonaJuridica {
-    String RazonSocial
+    String razonSocial
     String cuit
-    String tipoSociedad
+    SocietyType tipoSociedad
     String condicionIVA
-    String direccion
+    String domicilio
     String codigoPostal
-    String provincia
-    String localidad
+    Provincia provincia
+    Localidad localidad
     String telefono
     String email
-    static hasMany = [personas:PersonaFisica]
+	List pJuridicaPFisicas
+    //static hasMany = [personas:PersonaFisica]
+	static hasMany = [pJuridicaPFisicas: PFisicaPJuridica]
     static belongsTo = PersonaFisica
 
     static constraints = {
-        RazonSocial(nullable:false)
-	cuit(nullable:false, unique:true)
-	tipoSociedad(nullable:false)
-	condicionIVA(nullable:false)
-	direccion(nullable:false)
-	codigoPostal(nullable:false)
-	provincia(nullable:false)
-	localidad(nullable:false)
-	telefono(nullable:false)
-	email(email:true)
-	
+		cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/)
+		razonSocial(unique:true, blank:false, nullable:false)
+		tipoSociedad(nullable:false)
+		domicilio(nullable:false)
+		codigoPostal(nullable:false)
+		provincia(nullable:false)
+		localidad(nullable:true)
+		telefono(nullable:false)
+		email(email:true)
+		condicionIVA(nullable:false)	
     }
+
+	public String toString(){
+		razonSocial
+	}
 
 }

@@ -4,31 +4,42 @@ class PersonaFisica {
     String nombre
     String apellido
     String cuit
-    String tipoDocumento
+    DocumentType tipoDocumento
     Integer numeroDocumento
-    String sexo
+    Gender sexo
     String domicilio
     String codigoPostal
-    String provincia
-    String localidad
+    Provincia provincia
+    Localidad localidad
     String telefono
     String email
     String condicionIVA
-    static hasMany = [personasJuridicas:PersonaJuridica]
-
+//    static hasMany = [personasJuridicas:PersonaJuridica]
+	List pFisicaPJuridicas
+	static hasMany = [pFisicaPJuridicas:PFisicaPJuridica]
     static constraints = {
-        cuit(unique:true, blank:false, match:"[1..9][0..9]-(\\d){8}-[0..9]")
+        cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/)
         nombre(blank:false)
         apellido(blank:false)
-        tipoDocumento(nullable:false)
+        tipoDocumento(blank:false)
         numeroDocumento(nullable:false)
-        sexo(nullable:false)
-        domicilio(nullable:false)
-        codigoPostal(nullable:false)
-        provincia(nullable:false)
-        localidad(nullable:false)
-        telefono(nullable:false)
-        email(email:true)
-        condicionIVA(nullable:false)
+        sexo(blank:false)
+        domicilio(blank:false)
+        codigoPostal(blank:false)
+        provincia(nullable:false, validator: {
+            return (it.id != 0)
+    	})
+        localidad(nullable:false, validator: {
+            return (it.id != 0)
+    	})
+        telefono(nullable:false, blank:false)
+        email(email:true, blank:false)
+        condicionIVA(nullable:false, validator: {
+			return (it != '0')
+		})
     }
+
+	public String toString(){
+		"$nombre $apellido"
+	}
 }
