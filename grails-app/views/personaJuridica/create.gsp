@@ -48,7 +48,7 @@
 					$("#pJuridicaPFisicas\\.personaFisica").autocomplete(autocomplete).live('keydown', function (e) {
 				        var keyCode = e.keyCode || e.which;
         				if((keyCode == 9 || keyCode == 13) && ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0)) {
-            				$(this).val($(".ui-autocomplete li:visible:first").text());alert(keyCode);
+            				$(this).val($(".ui-autocomplete li:visible:first").text());
         				}
     				});
 

@@ -1,4 +1,5 @@
 package cinema
+import grails.converters.*
 
 class PersonaJuridicaController {
     def scaffold = true
@@ -54,5 +55,13 @@ class PersonaJuridicaController {
         def pj = PersonaJuridica.get(params.id)
         render view:"create", model:[personaJuridicaInstance:pj]
     }
+
+	def autocomplete = {
+	    def p = PersonaJuridica.createCriteria()
+        def pJuridicas = p.list {
+            ilike('razonSocial', params.term + '%')
+        }
+        render pJuridicas as JSON
+	}
 	
 }
