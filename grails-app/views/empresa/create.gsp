@@ -8,6 +8,9 @@
         <g:set var="entityName" value="${message(code: 'empresa', default: params.dom)}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
 		<script type="text/javascript" charset="utf-8">
+			$.expr[':'].textEquals = function (a, i, m) {
+            	return $(a).text().match("^" + m[3] + "$");
+            };	
 			$(document).ready(function() {
 				 	autocomplete= {
                         source: function(request, response) {
@@ -30,10 +33,7 @@
                         },
                         minLength: 2,
                         change: function(event, ui) {
-                            var source = $(this).val();
-                            //var found = source.search($('.ui-autocomplete li').text());
-							var found = source.search($('#personaFisica').text());
-                            if(found < 0) {
+							if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
                                 $(this).val('');
 							}
                         },
