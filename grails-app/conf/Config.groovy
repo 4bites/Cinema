@@ -9,7 +9,7 @@
 // if(System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
-migrations.enabled = true
+migrations.enabled = false
 migrations.changelogs = ['migrations/changelog.xml']
 
 grails.app.context = "/"
