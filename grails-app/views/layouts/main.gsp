@@ -28,20 +28,20 @@
     </gui:submenu>
     <gui:submenu label='Empresa'>
     	<gui:submenu label='Exhibidor'>
-	        <gui:menuitem url='${webRequest.getContextPath()}/exhibidor/create'>Alta</gui:menuitem>
-	        <gui:menuitem url='${webRequest.getContextPath()}/exhibidor/list'>Listar</gui:menuitem>
+	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/Exhibidor/create'>Alta</gui:menuitem>
+	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/Exhibidor/list'>Listar</gui:menuitem>
 	    </gui:submenu>
     	<gui:submenu label='Productor'>
-	        <gui:menuitem url='${webRequest.getContextPath()}/productor/create'>Alta</gui:menuitem>
-	        <gui:menuitem url='${webRequest.getContextPath()}/productor/list'>Listar</gui:menuitem>
+	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/Productor/create'>Alta</gui:menuitem>
+	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/Productor/list'>Listar</gui:menuitem>
 	    </gui:submenu>
     	<gui:submenu label='Distribuidor'>
-	        <gui:menuitem url='${webRequest.getContextPath()}/distribuidor/create'>Alta</gui:menuitem>
-	        <gui:menuitem url='${webRequest.getContextPath()}/distribuidor/list'>Listar</gui:menuitem>
+	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/Distribuidor/create'>Alta</gui:menuitem>
+	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/Distribuidor/list'>Listar</gui:menuitem>
 	    </gui:submenu>
     	<gui:submenu label='Video Club'>
-	        <gui:menuitem url='${webRequest.getContextPath()}/videoClub/create'>Alta</gui:menuitem>
-	        <gui:menuitem url='${webRequest.getContextPath()}/videoClub/list'>Listar</gui:menuitem>
+	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/VideoClub/create'>Alta</gui:menuitem>
+	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/VideoClub/list'>Listar</gui:menuitem>
 	    </gui:submenu>
     </gui:submenu>
    	<gui:submenu label='Sala'>

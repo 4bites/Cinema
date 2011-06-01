@@ -9,6 +9,9 @@
         <title><g:message code="default.create.label" args="[entityName]" /></title>
 		<script type="text/javascript" charset="utf-8">
 			<g:render template="/js/prov-loc.js"/>
+				$.expr[':'].textEquals = function (a, i, m) {
+  		  			return $(a).text().match("^" + m[3] + "$");
+				};
 			    $(document).ready(function() {
 					var i = 1;
 					$("#remove").click(function() {
@@ -38,9 +41,7 @@
                 		},
                 		minLength: 2,
 						change: function(event, ui) {
-                			var source = $(this).val();
-                			var found = source.search($('.ui-autocomplete li').text());
-                			if(found < 0) {
+							if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
                     			$(this).val('');
                 			}
             			} 
@@ -48,7 +49,7 @@
 					$("#pJuridicaPFisicas\\.personaFisica").autocomplete(autocomplete).live('keydown', function (e) {
 				        var keyCode = e.keyCode || e.which;
         				if((keyCode == 9 || keyCode == 13) && ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0)) {
-            				$(this).val($(".ui-autocomplete li:visible:first").text());alert(keyCode);
+            				$(this).val($(".ui-autocomplete li:visible:first").text());
         				}
     				});
 
