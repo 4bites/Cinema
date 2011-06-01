@@ -18,15 +18,29 @@ class Sala {
     static hasMany = [diasExhibicion:Dia]
    
     static constraints = {
-		codigo(nullable:false, min:1, max:999999)
-		nombre(nullable:false)
-		domicilio(nullable:false)
-		codigoPostal(nullable:false)
-		provincia(nullable:false)
-		localidad(nullable:false)
-		email(email:true)
-		fechaInicioActividad(min:new Date())
-		tipo(nullable:false)
+		//Inicio modificacion Gabriel Marcos
+		//codigo(nullable:false, min:1, max:999999)
+		codigo(nullable:false, maxLength:11, size:1..11)
+		
+		//nombre(nullable:false)
+		nombre(nullable:false, maxLenght:80, size:1..80)
+		
+		domicilio(nullable:false, maxLenght:80, size:1..80)
+		codigoPostal(nullable:false, maxLenght:8, size:1..8)
+		provincia(nullable:false, validator: {
+            return (it.id != 0)
+    	})
+		localidad(nullable:false, validator: {
+			return (it.id != 0)
+		})
+		//localidad(nullable:false)
+		//Fin modificacion Gabriel Marcos
+		
+		email(email:true, maxLenght:60, size:1..60)
+		//fechaInicioActividad(min:new Date())
+		fechaInicioActividad(nullable:false)
+		
+		tipo(nullable:false, inList:["Comercial", "No Comercial", "Ambulante Comercial", "Ambulante No Comercial"])
 		frecuencia(nullable:false)
 		fechaRenovacion()
 		sistemaProyeccion()

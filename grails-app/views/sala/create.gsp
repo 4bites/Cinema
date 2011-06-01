@@ -28,7 +28,7 @@
                                     <label for="codigo"><g:message code="sala.codigo.label" default="Codigo" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'codigo', 'errors')}">
-                                    <g:textField name="codigo" value="${fieldValue(bean: salaInstance, field: 'codigo')}" />
+                                    <g:textField name="codigo" value="${fieldValue(bean: salaInstance, field: 'codigo')}" size="11" maxLenght="11" />
                                 </td>
                             </tr>
                         
@@ -37,7 +37,7 @@
                                     <label for="nombre"><g:message code="sala.nombre.label" default="Nombre" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'nombre', 'errors')}">
-                                    <g:textField name="nombre" value="${salaInstance?.nombre}" />
+                                    <g:textField name="nombre" value="${salaInstance?.nombre}" size="80"/>
                                 </td>
                             </tr>
                         
@@ -46,7 +46,7 @@
                                     <label for="domicilio"><g:message code="sala.domicilio.label" default="Domicilio" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'domicilio', 'errors')}">
-                                    <g:textField name="domicilio" value="${salaInstance?.domicilio}" />
+                                    <g:textField name="domicilio" value="${salaInstance?.domicilio}" size="80"/>
                                 </td>
                             </tr>
                         
@@ -55,7 +55,7 @@
                                     <label for="codigoPostal"><g:message code="sala.codigoPostal.label" default="Codigo Postal" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'codigoPostal', 'errors')}">
-                                    <g:textField name="codigoPostal" value="${salaInstance?.codigoPostal}" />
+                                    <g:textField name="codigoPostal" value="${salaInstance?.codigoPostal}" size="8" />
                                 </td>
                             </tr>
                         
@@ -64,7 +64,11 @@
                                     <label for="provincia"><g:message code="sala.provincia.label" default="Provincia" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'provincia', 'errors')}">
-                                    <g:textField name="provincia" value="${salaInstance?.provincia}" />
+                                    
+                                      <g:select name="provincia.id" id="provincia.id" noSelection="${['0':'Seleccionar...']}"
+                                              from="${cinema.Provincia.list()}" 
+                                              value="${salaInstance?.provincia?.id}"
+                                              optionValue="name" optionKey="id"/>
                                 </td>
                             </tr>
                         
@@ -73,7 +77,8 @@
                                     <label for="localidad"><g:message code="sala.localidad.label" default="Localidad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'localidad', 'errors')}">
-                                    <g:textField name="localidad" value="${salaInstance?.localidad}" />
+                                    <g:select name="localidad.id" id="localidad.id" value="${salaInstance?.localidad?.id}" noSelection="${['0':'Seleccionar...']}"
+											optionValue="name" optionKey="id" from="${salaInstance?.provincia?.localidades}"/>
                                 </td>
                             </tr>
                         
@@ -82,7 +87,7 @@
                                     <label for="email"><g:message code="sala.email.label" default="Email" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${salaInstance?.email}" />
+                                    <g:textField name="email" value="${salaInstance?.email}" size="60"/>
                                 </td>
                             </tr>
                         
@@ -100,7 +105,10 @@
                                     <label for="tipo"><g:message code="sala.tipo.label" default="Tipo" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'tipo', 'errors')}">
-                                    <g:textField name="tipo" value="${salaInstance?.tipo}" />
+                                    <g:select name="tipo" id="tipo" noSelection="${['0':'Seleccionar...']}"
+                                              from="${['Comercial','No Comercial','Ambulante Comercial', 'Ambulante No Comercial']}" 
+                                              value="${salaInstance?.tipo}"
+                                              />
                                 </td>
                             </tr>
                         
@@ -109,13 +117,16 @@
                                     <label for="frecuencia"><g:message code="sala.frecuencia.label" default="Frecuencia" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'frecuencia', 'errors')}">
-                                    <g:textField name="frecuencia" value="${salaInstance?.frecuencia}" />
+                                    <g:select name="frecuencia" id="frecuencia" noSelection="${['0':'Seleccionar...']}"
+                                              from="${['Anual',' Fines de semana','Verano e invierno', 'Ocasional']}" 
+                                              value="${salaInstance?.frecuencia}"
+                                              />
                                 </td>
                             </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="fechaRenovacion"><g:message code="sala.fechaRenovacion.label" default="Fecha Renovacion" /></label>
+                                    <label for="fechaRenovacion"><g:message code="sala.fechaRenovacion.label" default="Fecha de Renovacion de Certificado" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'fechaRenovacion', 'errors')}">
                                     <g:datePicker name="fechaRenovacion" precision="day" value="${salaInstance?.fechaRenovacion}"  />
@@ -127,7 +138,10 @@
                                     <label for="sistemaProyeccion"><g:message code="sala.sistemaProyeccion.label" default="Sistema Proyeccion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'sistemaProyeccion', 'errors')}">
-                                    <g:textField name="sistemaProyeccion" value="${salaInstance?.sistemaProyeccion}" />
+                                    <g:select name="sistemaProyeccion" id="sistemaProyeccion" noSelection="${['0':'Seleccionar...']}"
+                                              from="${['35 mm','Digital','Digital 3D', 'DVD']}" 
+                                              value="${salaInstance?.sistemaProyeccion}"
+                                              />
                                 </td>
                             </tr>
                         
