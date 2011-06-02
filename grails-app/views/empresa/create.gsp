@@ -119,7 +119,7 @@
                                     <label for="fechaFinActividad"><g:message code="empresa.fechaFinActividad.label" default="Fecha Fin Actividad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: empresaInstance, field: 'fechaFinActividad', 'errors')}">
-                                    <g:datePicker name="fechaFinActividad" precision="day" value="${empresaInstance?.fechaFinActividad}"  />
+                                    <g:datePicker name="fechaFinActividad" precision="day" value="${empresaInstance?.fechaFinActividad}" noSelection="['':'Seleccionar']" />
                                 </td>
                             </tr>
                         

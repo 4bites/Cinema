@@ -29,7 +29,7 @@ class EmpresaController {
         	def pFisica = PersonaFisica.findByCuit(cuit)
 			empresa.personaFisica = pFisica
 			empresa.personaJuridica = null	
-		} else {
+		} else if(params.personaJuridica){
 			def cuit = params.personaJuridica.split(" cuit:")[1]
         	def pJuridica = PersonaJuridica.findByCuit(cuit)
 			empresa.personaJuridica = pJuridica

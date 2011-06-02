@@ -10,7 +10,7 @@ class Empresa {
     static constraints = {
         codigo(unique:true)
         fechaInicioActividad()
-        fechaFinActividad(nullable:true)
+        fechaFinActividad(nullable:true, blank: true)
         fechaUltimaRevalida()
 		personaJuridica(nullable:true, validator: {val, obj -> val == null && obj.personaFisica != null || val != null && obj.personaFisica == null})
 		personaFisica(nullable:true, validator: {val, obj -> val == null && obj.personaJuridica != null || val != null && obj.personaJuridica == null})
