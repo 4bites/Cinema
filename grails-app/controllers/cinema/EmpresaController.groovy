@@ -1,5 +1,6 @@
 package cinema
 import cinema.*
+import grails.converters.*
 
 class EmpresaController {
     def scaffold = true
@@ -56,4 +57,23 @@ class EmpresaController {
 		def empresa = grailsApplication.getDomainClass("cinema.$params.dom").clazz.get(params.id)
 		[empresaInstance:empresa]
 	}
+
+	def autocomplete = {
+		def pFisicas = PersonaFisica.findAllByNombreIlike(params.term)
+		def pJuridicas = PersonaJuridica.findAllByRazonSocialIlike(params.term)
+		def empresa = grailsApplication.getDomainClass("cinema.$params.dom").clazz
+		def empresas = empresa.findAllByPersonaFisicaInListOrPersonaJuridicaInList(pFisicas,  pJuridicas)
+		def json = []
+		empresas.each {
+			def map = ["id":it.id]
+			if(it.personaFisica){
+				map << ["nombre":it.personaFisica.nombre, "apellido":it.personaFisica.apellido, "cuit":it.personaFisica.cuit]
+			}else {
+				map << ["razonSocial":it.personaJuridica.razonSocial, "cuit":it.personaJuridica.cuit]
+			}
+			json << map
+		}
+		render json as JSON	
+	}
+
 }

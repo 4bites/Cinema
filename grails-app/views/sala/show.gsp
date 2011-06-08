@@ -32,28 +32,28 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.codigo.label" default="Codigo" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "codigo") size="11"}</td>
+                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "codigo")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.nombre.label" default="Nombre" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "nombre") size="80"}</td>
+                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "nombre")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.domicilio.label" default="Domicilio" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "domicilio")size="11"}</td>
+                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "domicilio")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.codigoPostal.label" default="Codigo Postal" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "codigoPostal") size = "8"}</td>
+                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "codigoPostal")}</td>
                             
                         </tr>
                     
@@ -74,7 +74,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.email.label" default="Email" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "email") size = "60"}</td>
+                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "email")}</td>
                             
                         </tr>
                     
@@ -123,7 +123,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.diasExhibicion.label" default="Dias Exhibicion" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "diasExhibicion")}</td>
+                            <td valign="top" class="value">${salaInstance.diasExhibicion}</td>
                             
                         </tr>
                     

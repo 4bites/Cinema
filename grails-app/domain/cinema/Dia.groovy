@@ -19,5 +19,9 @@ enum Dia {
     }
     
     String getKey() { name() }
+
+	static def byId = { dia ->
+		valueOf(dia)
+	}
     
 } 

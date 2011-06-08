@@ -15,4 +15,8 @@ class Empresa {
 		personaJuridica(nullable:true, validator: {val, obj -> val == null && obj.personaFisica != null || val != null && obj.personaFisica == null})
 		personaFisica(nullable:true, validator: {val, obj -> val == null && obj.personaJuridica != null || val != null && obj.personaJuridica == null})
     }
+
+	def desc = {
+		personaFisica? "${personaFisica.nombre} ${personaFisica.apellido} cuit:${personaFisica.cuit}" : "${personaJuridica?.razonSocial} cuit:${personaJuridica?.cuit}"
+	}
 }

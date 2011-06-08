@@ -6,6 +6,41 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'sala.label', default: 'Sala')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
+		<script type="text/javascript" charset="utf-8">
+            <g:render template="/js/prov-loc.js"/>
+			
+			$(document).ready(function() {
+				$("#exhibidor").autocomplete({ source: function(request, response) {
+                            $.ajax({
+                                url: "${createLink(mapping:'empresa', params:[dom:'Exhibidor'], action:'autocomplete')}",
+                                dataType: "json",
+                                data: {
+                                    term: request.term
+                                },
+                                success: function(data) {
+                                    response($.map(data, function(item) {
+                                        return {
+                                            label: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
+											value: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
+											title: item.id
+                                        }
+                                    }))
+                                }
+                            })
+                        },
+                        minLength:2,
+						select: function(event, ui) {
+                            $('#exhibidor\\.id').val(ui.item.title);
+							alert($('exhibidor\\.id').val());
+                        }
+
+                    });
+
+				$("#fechaInicioActividad").datepicker({dateFormat: 'dd/mm/yy'});
+				$("#fechaRenovacion").datepicker({dateFormat: 'dd/mm/yy'});
+
+				})	
+		</script>
     </head>
     <body>
         <div class="body">
@@ -18,7 +53,11 @@
                 <g:renderErrors bean="${salaInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" method="post" >
+            <g:form action="save" method="get" >
+               <g:if test="${salaInstance?.id}">
+                    <g:hiddenField name="id" value="${salaInstance?.id}" />
+                    <g:hiddenField name="version" value="${salaInstance?.version}" />
+               </g:if>
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -28,7 +67,7 @@
                                     <label for="codigo"><g:message code="sala.codigo.label" default="Codigo" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'codigo', 'errors')}">
-                                    <g:textField name="codigo" value="${fieldValue(bean: salaInstance, field: 'codigo')}" size="11" maxLenght="11" />
+                                    <g:textField name="codigo" value="${salaInstance?.codigo}" size="11" maxLenght="11" />
                                 </td>
                             </tr>
                         
@@ -96,7 +135,7 @@
                                     <label for="fechaInicioActividad"><g:message code="sala.fechaInicioActividad.label" default="Fecha Inicio Actividad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'fechaInicioActividad', 'errors')}">
-                                    <g:datePicker name="fechaInicioActividad" precision="day" value="${salaInstance?.fechaInicioActividad}"  />
+                                    <g:textField name="fechaInicioActividad" value="${formatDate(format:'dd/MM/yyyy', date:salaInstance?.fechaInicioActividad)}"  />
                                 </td>
                             </tr>
                         
@@ -129,7 +168,7 @@
                                     <label for="fechaRenovacion"><g:message code="sala.fechaRenovacion.label" default="Fecha de Renovacion de Certificado" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'fechaRenovacion', 'errors')}">
-                                    <g:datePicker name="fechaRenovacion" precision="day" value="${salaInstance?.fechaRenovacion}"  />
+                                    <g:textField name="fechaRenovacion" value="${formatDate(format:'dd/MM/yyyy', date:salaInstance?.fechaRenovacion)}"  />
                                 </td>
                             </tr>
                         
@@ -159,7 +198,8 @@
                                     <label for="exhibidor"><g:message code="sala.exhibidor.label" default="Exhibidor" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'exhibidor', 'errors')}">
-                                    <g:select name="exhibidor.id" from="${cinema.Exhibidor.list()}" optionKey="id" value="${salaInstance?.exhibidor?.id}"  />
+                                    <g:textField name="exhibidor" value="${salaInstance?.exhibidor?.desc()}"  />
+									<input type="hidden" id="exhibidor.id" name="exhibidor.id" value="${salaInstance?.exhibidor?.id}" />
                                 </td>
                             </tr>
                             <tr class="prop">
@@ -167,8 +207,8 @@
                                     <label for="diasExhibicion"><g:message code="sala.diasExhibicion.label" default="Dias Exhibicion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'diasExhibicion', 'errors')}">
-				    <g:each in="${cinema.Dia.values()}">
-                                        <g:checkBox name="diasExhibicion.id" value="${salaInstance?.diasExhibicion?.id}"/>${it.value} 
+								    <g:each in="${cinema.Dia.values()}">
+                                        <g:checkBox name="diasExhibicion" value="${it.getKey()}" checked="${salaInstance?.diasExhibicion?.contains(cinema.Dia.byId(it.getKey()))}"/>${it.value} 
                                     </g:each>
                                 </td>
                             </tr> 

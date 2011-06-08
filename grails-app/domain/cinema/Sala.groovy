@@ -5,8 +5,8 @@ class Sala {
     String nombre
     String domicilio
     String codigoPostal
-    String provincia
-    String localidad
+    Provincia provincia
+    Localidad localidad
     String email
     Date fechaInicioActividad
     String tipo
@@ -45,6 +45,6 @@ class Sala {
 		fechaRenovacion()
 		sistemaProyeccion()
 		capacidad(min:1, nullable:false)
-	
+		complejo(nullable: true)
     }
 }
