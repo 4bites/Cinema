@@ -57,7 +57,7 @@ class PersonaFisicaController {
 
 	def edit = {
 		def person = PersonaFisica.get(params.id)
-		render view:"create", model:[personaFisicaInstance:person]
+		render view:"edit", model:[personaFisicaInstance:person]
 	}
 
 }
