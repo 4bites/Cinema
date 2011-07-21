@@ -31,7 +31,31 @@
                         minLength:2,
 						select: function(event, ui) {
                             $('#exhibidor\\.id').val(ui.item.title);
-							alert($('exhibidor\\.id').val());
+                        }
+
+                    });
+
+	                $("#complejo").autocomplete({ source: function(request, response) {
+                            $.ajax({
+                                url: "${createLink(controller:'complejo', action:'autocomplete')}",
+                                dataType: "json",
+                                data: {
+                                    term: request.term
+                                },
+                                success: function(data) {
+                                    response($.map(data, function(item) {
+                                        return {
+                                            label: item.denominacion,
+                                            value: item.denominacion,
+                                            title: item.id
+                                        }
+                                    }))
+                                }
+                            })
+                        },
+                        minLength:2,
+                        select: function(event, ui) {
+                            $('#complejo\\.id').val(ui.item.title);
                         }
 
                     });
@@ -88,7 +112,16 @@
                                     <g:textField name="domicilio" value="${salaInstance?.domicilio}" size="80"/>
                                 </td>
                             </tr>
-                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="complejo"><g:message code="sala.complejo.label" default="Complejo" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'complejo', 'errors')}">
+                                    <g:textField name="complejo" value="${salaInstance?.complejo?.denominacion}" size="20" />
+									<input type="hidden" id="complejo.id" name="complejo.id" value="${salaInstance?.complejo?.id}">
+                                </td>
+                            </tr>
+ 
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="codigoPostal"><g:message code="sala.codigoPostal.label" default="Codigo Postal" /></label>

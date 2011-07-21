@@ -18,21 +18,30 @@ class SalaController {
 		def sala	
 		if(params.id){
             sala = Sala.get(params.id)
-			sala.properties = params.findAll{it.key != "exhibidor"}
+			sala.properties = params.findAll{it.key != "exhibidor" && it.key != "complejo"}
 		} else {
-            sala = new Sala(params.findAll{it.key != "exhibidor"})
+            sala = new Sala(params.findAll{it.key != "exhibidor" && it.key != "complejo"})
         }
 		if(params["exhibidor.id"]){
 			sala.exhibidor = Exhibidor.get(params["exhibidor.id"])
 		}
+		if(params["complejo.id"]){
+			sala.complejo = Complejo.get(params["complejo.id"])
+		}
+		def dias = []
+	    params.diasExhibicion.each{
+	    	print "dia:$it"
+            dias << Dia.byId(it)
+        }
+		sala.diasExhibicion = dias	
 		if(sala.validate()) {
-			def dias = []
+/*			def dias = []
 			params.diasExhibicion.each{
 				print "dia:$it"
 				dias << Dia.byId(it)
 				//sala.addToDiasExhibicion(Dia.byId(it))
 			}
-			sala.diasExhibicion = dias
+			sala.diasExhibicion = dias*/
 			try{ 
 				sala.save()
 			}catch(Exception e){
@@ -44,7 +53,7 @@ class SalaController {
 		}
 	}
 
-	 def update = {
+	def update = {
         save()
     }
 

@@ -53,8 +53,8 @@
         <gui:menuitem url='${webRequest.getContextPath()}/complejo/list'>Listar</gui:menuitem>
     </gui:submenu>
    	<gui:submenu label='Local de video'>
-        <gui:menuitem url='${webRequest.getContextPath()}/video/create'>Alta</gui:menuitem>
-        <gui:menuitem url='${webRequest.getContextPath()}/video/list'>Listar</gui:menuitem>
+        <gui:menuitem url='${webRequest.getContextPath()}/local/create'>Alta</gui:menuitem>
+        <gui:menuitem url='${webRequest.getContextPath()}/local/list'>Listar</gui:menuitem>
     </gui:submenu>
    	<gui:submenu label='Pelicula'>
         <gui:menuitem url='${webRequest.getContextPath()}/pelicula/create'>Alta</gui:menuitem>

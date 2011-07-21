@@ -14,13 +14,24 @@ environments {
 	development {
 		dataSource {
 			dbCreate = "update" // one of 'create', 'create-drop','update'
-			url = "jdbc:hsqldb:file:devDb"
+//			url = "jdbc:hsqldb:file:devDb"
+            url = "jdbc:mysql://localhost/cinema"
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            username = "root"
+            password = "nicolas"
+
 		}
 	}
 	test {
 		dataSource {
-			dbCreate = "update"
-			url = "jdbc:hsqldb:file:testDb"
+            dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+//          url = "jdbc:hsqldb:file:devDb"
+            url = "jdbc:mysql://localhost/cinematest"
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            username = "root"
+            password = "nicolas"
 		}
 	}
 	production {

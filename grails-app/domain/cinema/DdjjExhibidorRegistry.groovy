@@ -14,14 +14,14 @@ class DdjjExhibidorRegistry {
 	Pelicula pelicula
 	Distribuidor distribuidor
 	String serieBOC
-	Integer numeroInicialBOC
+	String numeroInicialBOC
 	BigDecimal precioBasico
 	BigDecimal impuesto
 	BigDecimal precioVenta
 	Integer cantidadEntradas
 	BigDecimal impuestoTotal
-	static belongsTo = [ddjjExhibidor:DdjjExhibidor]
-	static transients = ['exhibidor','sala','distribuidor']
+	static belongsTo = DdjjExhibidor
+	//static transients = ['exhibidor','sala','distribuidor']
     static constraints = {
 		periodoFiscal(blank:false,range:1..4)
 		dia(range:1..31)

@@ -11,6 +11,13 @@ class DdjjVideoController {
 			[action:'list',order:3, title:'Listar']
 		]
 	]*/
-   def scaffold = true
+   	def scaffold = true
     def index = { }
+
+    def edit = {
+        def ddjj = DdjjVideo.get(params.id)
+        render view:"create", model:[ddjjVideoInstance:ddjj]
+    }
+
+	
 }

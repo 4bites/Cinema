@@ -1,7 +1,7 @@
 package cinema
 
 class DdjjVideo {
-    Date fecha
+    String periodo
     Integer cantidadTotalVenta
     Integer precioTotalVenta
     Integer gravamenTotalVenta
@@ -13,12 +13,12 @@ class DdjjVideo {
     static hasMany = [peliculas:Pelicula]
     static constraints = {
         videoClub(nullable:true)
-	fecha(nullable:false, min:new Date())
-	cantidadTotalVenta()
-	precioTotalVenta()
-	gravamenTotalVenta()
-	cantidadTotalAlquiler()
-	precioTotalAlquiler()
-	gravamenTotalAlquiler()
+		periodo(nullable:false)
+		cantidadTotalVenta()
+		precioTotalVenta()
+		gravamenTotalVenta()
+		cantidadTotalAlquiler()
+		precioTotalAlquiler()
+		gravamenTotalAlquiler()
     }
 }

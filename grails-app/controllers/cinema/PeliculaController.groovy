@@ -1,4 +1,5 @@
 package cinema
+import cinema.*
 
 class PeliculaController {
     def scaffold = true
@@ -13,4 +14,31 @@ class PeliculaController {
 		]
 	]*/
     def index = { }
+
+	def save = {
+		Pelicula pelicula
+		if(params.id){
+			pelicula = Peligula.get(id)
+	        pelicula.properties = params.findAll{it.key != "distribuidor" && it.key != "productor"}
+		}else{
+			pelicula = new Pelicula(params.findAll{it.key != "distribuidor" && it.key != "productor"})
+		}
+		pelicula.distribuidor = Distribuidor.get(params["distribuidor.id"])
+		pelicula.productor = Productor.get(params["productor.id"])
+		if(pelicula.save()){
+			redirect action:"show", id: pelicula.id
+        } else{
+            render view:"create", model:[peliculaInstance: pelicula]
+        }
+	}
+
+    def update = {
+        save()
+    }
+
+    def edit = {
+        def pelicula = Pelicula.get(params.id)
+        render view:"create", model:[peliculaInstance:pelicula]
+    }
+
 }

@@ -72,12 +72,17 @@
                 		}
 					});
 
+				$("#fechaInicioActividad").datepicker({dateFormat: 'dd/mm/yy'});
+				$("#fechaFinActividad").datepicker({dateFormat: 'dd/mm/yy'});
+				$("#fechaUltimaRevalida").datepicker({dateFormat: 'dd/mm/yy'});
+
+
 			});
 		</script>
     </head>
     <body>
         <div class="body">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h1><g:message code="default.${params.action}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -110,7 +115,7 @@
                                     <label for="fechaInicioActividad"><g:message code="empresa.fechaInicioActividad.label" default="Fecha Inicio Actividad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: empresaInstance, field: 'fechaInicioActividad', 'errors')}">
-                                    <g:datePicker name="fechaInicioActividad" precision="day" value="${empresaInstance?.fechaInicioActividad}"  />
+                                    <g:textField name="fechaInicioActividad" value="${formatDate(date:empresaInstance?.fechaInicioActividad, format:'dd/MM/yyyy')}"  />
                                 </td>
                             </tr>
                         
@@ -119,7 +124,7 @@
                                     <label for="fechaFinActividad"><g:message code="empresa.fechaFinActividad.label" default="Fecha Fin Actividad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: empresaInstance, field: 'fechaFinActividad', 'errors')}">
-                                    <g:datePicker name="fechaFinActividad" precision="day" value="${empresaInstance?.fechaFinActividad}" noSelection="['':'Seleccionar']" />
+                                    <g:textField name="fechaFinActividad" value="${formatDate(date:empresaInstance?.fechaFinActividad, format:'dd/MM/yyyy')}" />
                                 </td>
                             </tr>
                         
@@ -128,7 +133,7 @@
                                     <label for="fechaUltimaRevalida"><g:message code="empresa.fechaUltimaRevalida.label" default="Fecha Ultima Revalida" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: empresaInstance, field: 'fechaUltimaRevalida', 'errors')}">
-                                    <g:datePicker name="fechaUltimaRevalida" precision="day" value="${empresaInstance?.fechaUltimaRevalida}"  />
+                                    <g:textField name="fechaUltimaRevalida" value="${formatDate(date:empresaInstance?.fechaUltimaRevalida, format:'dd/MM/yyyy')}"  />
                                 </td>
                             </tr>
                         
@@ -154,7 +159,7 @@
                     </table>
                 </div>
                 <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.${params.action}.label', default: 'Save')}" /></span>
+                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.save.label', default: 'Guardar')}" /></span>
                 </div>
             </g:form>
         </div>
