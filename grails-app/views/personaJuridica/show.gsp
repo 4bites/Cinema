@@ -8,8 +8,15 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
+    
+    	<div class="nav">
+            <!--  <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>-->
+            <span class="menuButton"><g:link class="list" action="list">Listado de Personas Juridicas</g:link></span>
+            <span class="menuButton"><g:link class="create" action="create"><g:message code="Crear nueva Persona Juridica" args="[entityName]" /></g:link></span>
+        </div>
+        
         <div class="body">
-            <h1><g:message code="default.show.label" args="[entityName]" /></h1>
+            <h1>Detalle Persona Juridica: ${fieldValue(bean:personaJuridicaInstance, field:'razonSocial' )}</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -17,13 +24,14 @@
                 <table>
                     <tbody>
                     
+                    <!--  
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personaJuridica.id.label" default="Id" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: personaJuridicaInstance, field: "id")}</td>
                             
                         </tr>
-                    
+                    -->
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personaJuridica.cuit.label" default="Cuit" /></td>
                             
@@ -62,14 +70,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personaJuridica.provincia.label" default="Provincia" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="provincia" action="show" id="${personaJuridicaInstance?.provincia?.id}">${personaJuridicaInstance?.provincia?.name}</g:link></td>
+                            <td valign="top" class="value">${personaJuridicaInstance?.provincia?.name}</td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="personaJuridica.localidad.label" default="Localidad" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="localidad" action="show" id="${personaJuridicaInstance?.localidad?.id}">${personaJuridicaInstance?.localidad?.name}</g:link></td>
+                            <td valign="top" class="value">${personaJuridicaInstance?.localidad?.name}</td>
                             
                         </tr>
                     

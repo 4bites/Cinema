@@ -70,8 +70,14 @@
        </script> 
     </head>
     <body>
+    
+    	<div class="nav">
+           
+            <span class="menuButton"><g:link class="list" action="list">Listado de Personas Juridicas</g:link></span>
+            
+        </div>
         <div class="body">
-            <h1><g:message code="default.${params.action}.label" args="[entityName]" /></h1>
+            <h1>Crear Persona Juridica</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>

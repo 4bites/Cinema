@@ -7,15 +7,34 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'personaFisica.label', default: 'PersonaFisica')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
+        
+        <script type="text/javascript" charset="utf-8">
+            <g:render template="/js/prov-loc.js"/>
+
+		var cuit = 	function(){
+						$.getJSON("${createLink(controller:'personaFisica', action:'cuit')}",{sexo: $("select#sexo").val(), documento: $("#numeroDocumento").val()}, 
+                    		function(j){
+                        	$("#cuit").val(j.cuit)
+                    		})
+            	   	}
+
+		$(function() {
+			$("#cuitbot").click(cuit)
+		})
+		$("#create").click(cuit)
+		
+		
+		</script>
+		
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <!--  <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>-->
+            <span class="menuButton"><g:link class="list" action="list">Listado de personas</g:link></span>
+            <span class="menuButton"><g:link class="create" action="create"><g:message code="Crear nueva Persona Fisica" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
+            <h1>Editar Persona Fisica: ${fieldValue(bean:personaFisicaInstance, field:'apellido' )} ,  ${fieldValue(bean:personaFisicaInstance, field:'nombre' )}</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -37,6 +56,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'cuit', 'errors')}">
                                     <g:textField name="cuit" value="${personaFisicaInstance?.cuit}" />
+                                	<input type="button" id="cuitbot" value="Calcular" />
                                 </td>
                             </tr>
                         
@@ -45,7 +65,7 @@
                                   <label for="nombre"><g:message code="personaFisica.nombre.label" default="Nombre" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'nombre', 'errors')}">
-                                    <g:textField name="nombre" value="${personaFisicaInstance?.nombre}" />
+                                    <g:textField name="nombre" value="${personaFisicaInstance?.nombre}" size="40"/>
                                 </td>
                             </tr>
                         
@@ -54,7 +74,7 @@
                                   <label for="apellido"><g:message code="personaFisica.apellido.label" default="Apellido" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'apellido', 'errors')}">
-                                    <g:textField name="apellido" value="${personaFisicaInstance?.apellido}" />
+                                    <g:textField name="apellido" value="${personaFisicaInstance?.apellido}" size="40" />
                                 </td>
                             </tr>
                         
@@ -63,7 +83,11 @@
                                   <label for="tipoDocumento"><g:message code="personaFisica.tipoDocumento.label" default="Tipo Documento" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'tipoDocumento', 'errors')}">
-                                    <g:textField name="tipoDocumento" value="${personaFisicaInstance?.tipoDocumento}" />
+                                    <g:select name="tipoDocumento" id="tipoDocumento"
+							                       from="${cinema.DocumentType.list()}" 
+                       								value="${personaFisicaInstance?.tipoDocumento}" 
+                       							optionValue="name"/>
+                                    <!--  <g:textField name="tipoDocumento" value="${personaFisicaInstance?.tipoDocumento}" /> -->
                                 </td>
                             </tr>
                         
@@ -81,7 +105,7 @@
                                   <label for="sexo"><g:message code="personaFisica.sexo.label" default="Sexo" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'sexo', 'errors')}">
-                                    <g:textField name="sexo" value="${personaFisicaInstance?.sexo}" />
+                                   <g:select name="sexo" from="${cinema.Gender.values()}" optionValue="name" value="${personaFisicaInstance?.sexo}" />
                                 </td>
                             </tr>
                         
@@ -90,7 +114,7 @@
                                   <label for="domicilio"><g:message code="personaFisica.domicilio.label" default="Domicilio" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'domicilio', 'errors')}">
-                                    <g:textField name="domicilio" value="${personaFisicaInstance?.domicilio}" />
+                                    <g:textField name="domicilio" value="${personaFisicaInstance?.domicilio}" size="80"/>
                                 </td>
                             </tr>
                         
@@ -99,7 +123,7 @@
                                   <label for="codigoPostal"><g:message code="personaFisica.codigoPostal.label" default="Codigo Postal" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'codigoPostal', 'errors')}">
-                                    <g:textField name="codigoPostal" value="${personaFisicaInstance?.codigoPostal}" />
+                                    <g:textField name="codigoPostal" value="${personaFisicaInstance?.codigoPostal}"  size="8"/>
                                 </td>
                             </tr>
                         
@@ -108,7 +132,11 @@
                                   <label for="provincia"><g:message code="personaFisica.provincia.label" default="Provincia" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'provincia', 'errors')}">
-                                    <g:textField name="provincia" value="${personaFisicaInstance?.provincia}" />
+                                    <g:select name="provincia.id" id="provincia.id" noSelection="${['0':'Seleccionar...']}"
+                                              from="${cinema.Provincia.list()}" 
+                                              value="${personaFisicaInstance?.provincia?.id}"
+                                              optionValue="name" optionKey="id"/>
+                                               </td>
                                 </td>
                             </tr>
                         
@@ -117,7 +145,8 @@
                                   <label for="localidad"><g:message code="personaFisica.localidad.label" default="Localidad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'localidad', 'errors')}">
-                                    <g:textField name="localidad" value="${personaFisicaInstance?.localidad}" />
+                                    <g:select name="localidad.id" id="localidad.id" value="${personaFisicaInstance?.localidad?.id}" noSelection="${['0':'Seleccionar...']}"
+											optionValue="name" optionKey="id" from="${personaFisicaInstance?.provincia?.localidades}"/>
                                 </td>
                             </tr>
                         
@@ -135,7 +164,7 @@
                                   <label for="email"><g:message code="personaFisica.email.label" default="Email" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${personaFisicaInstance?.email}" />
+                                    <g:textField name="email" value="${personaFisicaInstance?.email}" size="60"/>
                                 </td>
                             </tr>
                         
@@ -144,7 +173,10 @@
                                   <label for="condicionIVA"><g:message code="personaFisica.condicionIVA.label" default="Condicion IVA" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'condicionIVA', 'errors')}">
-                                    <g:textField name="condicionIVA" value="${personaFisicaInstance?.condicionIVA}" />
+                                    <g:select name="condicionIVA" id="condicionIVA" noSelection="${['0':'Seleccionar...']}"
+                                              from="${['Inscripto','No Inscripto','Excento', 'Monotributo']}" 
+                                              value="${personaFisicaInstance?.condicionIVA}"
+                                              />
                                 </td>
                             </tr>
                         

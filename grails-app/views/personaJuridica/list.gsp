@@ -9,11 +9,11 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <!--  <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span> -->
+            <span class="menuButton"><g:link class="create" action="create">Crear Persona Juridica</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1>Listado de Personas Juridicas</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -22,7 +22,7 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'personaJuridica.id.label', default: 'Id')}" />
+                            <!-- <g:sortableColumn property="id" title="${message(code: 'personaJuridica.id.label', default: 'Id')}" />  -->
                         
                             <g:sortableColumn property="cuit" title="${message(code: 'personaJuridica.cuit.label', default: 'Cuit')}" />
                         
@@ -40,9 +40,9 @@
                     <g:each in="${personaJuridicaInstanceList}" status="i" var="personaJuridicaInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${personaJuridicaInstance.id}">${fieldValue(bean: personaJuridicaInstance, field: "id")}</g:link></td>
+                            <td><g:link action="show" id="${personaJuridicaInstance.id}">${fieldValue(bean: personaJuridicaInstance, field: "cuit")}</g:link></td> 
                         
-                            <td>${fieldValue(bean: personaJuridicaInstance, field: "cuit")}</td>
+                            <!--  <td>${fieldValue(bean: personaJuridicaInstance, field: "cuit")}</td> -->
                         
                             <td>${fieldValue(bean: personaJuridicaInstance, field: "razonSocial")}</td>
                         
