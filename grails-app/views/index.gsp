@@ -53,9 +53,12 @@
     <body>
 		<div id="nav">
 			<div class="homePagePanel">
+			
+			<!-- 
 				<div class="panelTop">
 
 				</div>
+				 
 				<div class="panelBody">
 					<h1>Application Status</h1>
 					<ul>
@@ -78,21 +81,22 @@
 
 					</ul>
 				</div>
+				
 				<div class="panelBtm">
 				</div>
+				
+				-->
 			</div>
 
 
 		</div>
 		<div id="pageBody">
-	        <h1>Welcome to Grails</h1>
-	        <p>Congratulations, you have successfully started your first Grails application! At the moment
-	        this is the default page, feel free to modify it to either redirect to a controller or display whatever
-	        content you may choose. Below is a list of controllers that are currently deployed in this application,
-	        click on each to execute its default action:</p>
+	        <h1>Bienvenidos a nuestra aplicacion!</h1>
+	        <p>Vamos gente que se puede!! tiene pagina de home la aplicacion? no tenemos definido eso en ningun lado.
+	           Me parece que algo deberiamos tener</p>
 
 	        <div id="controllerList" class="dialog">
-				<h2>Available Controllers:</h2>
+				<h2>Links a lo que esta hecho</h2>
 	            <ul>
 	              <g:each var="c" in="${grailsApplication.controllerClasses}">
 	                    <li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
