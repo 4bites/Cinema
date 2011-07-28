@@ -1,6 +1,6 @@
 package cinema
 
-class Boc {
+class BocIngreso {
     Integer desde
     Integer hasta
     String serie

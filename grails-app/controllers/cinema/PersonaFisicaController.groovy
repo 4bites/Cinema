@@ -22,8 +22,16 @@ class PersonaFisicaController {
 		doc.eachWithIndex { obj,i -> 
 			multi[i] = Integer.valueOf(obj)*multi[i]
 		}
-
-		def verif = 11- multi.sum()%11 
+		def resto = multi.sum()%11
+		def verif
+		if(resto == 0){
+			verif = 0
+		} else if(resto == 1){
+			verif = (sexNum == '27' ? 4 : 9)
+			sexNum = '23'
+		} else {
+			verif = 11- multi.sum()%11 
+		}
 		def c = [cuit: "$sexNum-$params.documento-$verif"]
 		render c as JSON
 	}
@@ -57,7 +65,7 @@ class PersonaFisicaController {
 
 	def edit = {
 		def person = PersonaFisica.get(params.id)
-		render view:"edit", model:[personaFisicaInstance:person]
+		render view:"create", model:[personaFisicaInstance:person]
 	}
 
 }

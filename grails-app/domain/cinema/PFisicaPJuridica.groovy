@@ -15,6 +15,8 @@ class PFisicaPJuridica {
 		{
 			pp = new PFisicaPJuridica()
 			pp.cargo = cargo
+//			pp.personaFisica = pFisica
+//			pp.personaJuridica = pJuridica
 			pFisica?.addToPFisicaPJuridicas(pp)
 			pJuridica?.addToPJuridicaPFisicas(pp) 
 			pp.save()
@@ -28,7 +30,7 @@ class PFisicaPJuridica {
 		{
 			pFisica?.removeFromPFisicaPJuridicas(pp)
 			pJuridica?.removeFromPJuridicaPFisicas(pp)
-			pp.delete()
+			pp.delete(flush:true)
 		}
 	}
 }

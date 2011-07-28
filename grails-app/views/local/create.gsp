@@ -53,7 +53,7 @@
     </head>
     <body>
         <div class="body">
-            <h1><g:message code="default.${params.action}.label" args="[entityName]" /></h1>
+            <h1><g:message code="default.${localInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>

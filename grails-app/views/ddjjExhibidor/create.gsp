@@ -6,7 +6,6 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'ddjjExhibidor.label', default: 'DdjjExhibidor')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
-			<jqDT:resources/>
 			<script type="text/javascript" charset="utf-8">
 
             $(document).ready(function() {
@@ -48,7 +47,7 @@
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.${params.action}.label" args="[entityName]" /></h1>
+            <h1><g:message code="default.${ddjjExhibidorInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>

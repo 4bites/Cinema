@@ -9,6 +9,8 @@
         <g:layoutHead />
         <g:javascript library="application" />
         <gui:resources components="menu"/>
+		<jqDT:resources/>
+		<g:javascript library="jquery/jquery.dataTables.columnFilter" />
     </head>
     <body class="yui-skin-sam">
         <div id="spinner" class="spinner" style="display:none;">
@@ -65,7 +67,14 @@
         <gui:menuitem url='${webRequest.getContextPath()}/ddjjExhibidor/create'>Exhibidor</gui:menuitem>
     </gui:submenu>
    	<gui:submenu label='BOC'>
-        <gui:menuitem url='${webRequest.getContextPath()}/boc/create'>Ingreso/Egreso</gui:menuitem>
+		<gui:submenu label='BOC Ingreso'>
+	        <gui:menuitem url='${webRequest.getContextPath()}/bocIngreso/create'>Alta</gui:menuitem>
+			<gui:menuitem url='${webRequest.getContextPath()}/bocIngreso/list'>Listar</gui:menuitem>
+		</gui:submenu>
+       <gui:submenu label='BOC Egreso'>
+            <gui:menuitem url='${webRequest.getContextPath()}/bocEgreso/create'>Alta</gui:menuitem>
+            <gui:menuitem url='${webRequest.getContextPath()}/bocEgreso/list'>Listar</gui:menuitem>
+        </gui:submenu>
     </gui:submenu>
     
 </gui:menubar>

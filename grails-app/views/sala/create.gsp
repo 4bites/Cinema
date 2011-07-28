@@ -8,8 +8,11 @@
         <title><g:message code="default.create.label" args="[entityName]" /></title>
 		<script type="text/javascript" charset="utf-8">
             <g:render template="/js/prov-loc.js"/>
-			
-			$(document).ready(function() {
+             $.expr[':'].textEquals = function (a, i, m) {
+	             return $(a).text().match("^" + m[3] + "$");
+             };
+		
+			$(document).ready(function(){ 
 				$("#exhibidor").autocomplete({ source: function(request, response) {
                             $.ajax({
                                 url: "${createLink(mapping:'empresa', params:[dom:'Exhibidor'], action:'autocomplete')}",
@@ -28,11 +31,16 @@
                                 }
                             })
                         },
-                        minLength:2,
+                        minLength:1,
 						select: function(event, ui) {
                             $('#exhibidor\\.id').val(ui.item.title);
+                        },
+						change: function(event, ui) {
+                            if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
+                                $(this).val('');
+                            }
                         }
-
+	
                     });
 
 	                $("#complejo").autocomplete({ source: function(request, response) {
@@ -56,6 +64,11 @@
                         minLength:2,
                         select: function(event, ui) {
                             $('#complejo\\.id').val(ui.item.title);
+                        },
+                        change: function(event, ui) {
+                            if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
+                                $(this).val('');
+                            }
                         }
 
                     });
@@ -68,7 +81,7 @@
     </head>
     <body>
         <div class="body">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h1><g:message code="default.${salaInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -249,7 +262,7 @@
                     </table>
                 </div>
                 <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.save.label', default: 'Create')}" /></span>
                 </div>
             </g:form>
         </div>

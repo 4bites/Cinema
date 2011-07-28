@@ -15,7 +15,7 @@ class PersonaFisica {
     String email
     String condicionIVA
 //    static hasMany = [personasJuridicas:PersonaJuridica]
-	List pFisicaPJuridicas
+//	List pFisicaPJuridicas
 	static hasMany = [pFisicaPJuridicas:PFisicaPJuridica]
     static constraints = {
         cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/)

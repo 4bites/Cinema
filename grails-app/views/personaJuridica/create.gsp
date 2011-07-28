@@ -13,11 +13,11 @@
   		  			return $(a).text().match("^" + m[3] + "$");
 				};
 			    $(document).ready(function() {
-					var i = 1;
-					$("#remove").click(function() {
-						if($("#remove").length > 1)
-							$(this).parent().remove();
-					});
+					var i = 1+${personaJuridicaInstance && personaJuridicaInstance.pJuridicaPFisicas ?personaJuridicaInstance.pJuridicaPFisicas.size():'0'};
+	//				$("#remove").click(function() {
+	//					if($("#remove").length > 1)
+	//						$(this).parent().remove();
+	//				});
         		
 					autocomplete= {
 						source: function(request, response) {
@@ -57,12 +57,19 @@
                     $("#add").click(function() {
                         newPf = $("#pfs > p:first-child").clone().attr('id', 'pf'+i).insertBefore("#pfs > p:last-child");
 						$("#pf"+i+" input:first").autocomplete(autocomplete);
+//						$("#pf"+i+" input:first").val('');
+						$("#pf"+i+" input[type!='button']").val('');
 						$("#pf"+i+" #remove").click(function() {
                         	$(this).parent().remove();
                     	});
 						i++;
                         return false;
                     });
+					for(j=1;j<=i;j++){
+					$("#remove"+j).click(function() {
+                            $(this).parent().remove();
+                      });
+					}
 
 
 				});
@@ -71,7 +78,7 @@
     </head>
     <body>
         <div class="body">
-            <h1><g:message code="default.${params.action}.label" args="[entityName]" /></h1>
+            <h1><g:message code="default.${personaJuridicaInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -198,9 +205,9 @@
                                 <td valign="top" class="name" colspan=2 id="pfs">
 									<g:each status="i" in="${personaJuridicaInstance.pJuridicaPFisicas}" var="p">									
 										<p id="pf${i+1}">
-										<label>Persona Fisica</label><g:textField name="pJuridicaPFisicas.personaFisica" value="${p.personaFisica.nombre} ${p.personaFisica.apellido} cuit: ${p.personaFisica.cuit}" size="50"/><g:hiddenField name="personaFisica.apellido" value="${p.personaFisica?.apellido}" /><g:hiddenField name="personaFisica.nombre" value="${p.personaFisica?.nombre}" />
+										<label>Persona Fisica</label><g:textField name="pJuridicaPFisicas.personaFisica" value="${p.personaFisica.nombre} ${p.personaFisica.apellido} cuit:${p.personaFisica.cuit}" size="50"/>
 										<label>Cargo</label><g:textField name="pJuridicaPFisicas.cargo" value="${p.cargo}"/>
-										<span class="button" id="remove"><input type="button" class="save" value="Remover" /></span>
+										<span class="button" id="remove${i+1}"><input type="button" class="save" value="Remover" /></span>
 										</p>
 									</g:each>
                                         <p>

@@ -16,6 +16,7 @@ class PersonaJuridicaController {
     def index = { }
 
 	def save = {
+		print params
 		def p 
 		if(params.id){
 			p = PersonaJuridica.get(params.id)
@@ -23,25 +24,40 @@ class PersonaJuridicaController {
 		}else{
 			p = new PersonaJuridica(params.findAll{ it.key != "pJuridicaPFisicas.personaFisica" && it.key != "pJuridicaPFisicas.cargo"})
 		}
-		if(p.save()){
-			p.pJuridicaPFisicas.each{
+		if(p.validate()){
+			p.save()
+			print PFisicaPJuridica.findAllByPersonaJuridica(p).size()
+//			p.pJuridicaPFisicas.each{
+			PFisicaPJuridica.findAllByPersonaJuridica(p).each{
 				print "eliminando... $it.personaFisica.apellido"
 				PFisicaPJuridica.unlink(it.personaFisica, p)
 			}
 		    params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
 				if(pf){
-					println "pf:$pf"
 					def cuit = pf.split(" cuit:")[1]
 					def pFisica = PersonaFisica.findByCuit(cuit)
 					//def pFisica = PersonaFisica.findByNombreAndApellido(pf.split(" ")[0],pf.split(" ")[1])
 					if(pFisica){
+						println pFisica.nombre + " " + params.list("pJuridicaPFisicas.cargo").get(i)
 						def fj = PFisicaPJuridica.link(pFisica, p, params.list("pJuridicaPFisicas.cargo").get(i))
-						println fj.personaFisica.cuit + " " + fj.personaJuridica.cuit + " " + fj.id
+						println fj.personaFisica?.cuit + " " + fj.personaJuridica?.cuit + " " + fj.id
 					}
 				}
-			} 		
+			}
+//			p.save()	 		
 			redirect(action:"show", model: [personaJuridicaInstance:p])
 		}else{
+			println "Invalido!!!"
+			params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
+        	    if(pf){
+            	    def cuit = pf.split(" cuit:")[1]
+					def desc = pf.split(" cuit:")[0]
+                	def pFisica = new PersonaFisica(nombre:desc.split(" ")[0],apellido:desc.split(" ")[1],cuit:cuit)
+                	def pfj = new PFisicaPJuridica(personaFisica:pFisica, cargo:params.list("pJuridicaPFisicas.cargo").get(i))
+                	p.pJuridicaPFisicas << pfj
+            	}
+        	}
+			print "personaJuridicaInstance.pJuridicaPFisicas:"+p.pJuridicaPFisicas
 			def map = [personaJuridicaInstance: p]
 			render(view:"create", model: map)
 		}
@@ -62,6 +78,41 @@ class PersonaJuridicaController {
             ilike('razonSocial', params.term + '%')
         }
         render pJuridicas as JSON
+	}
+
+	def search = {
+		def dataToRender = [:]
+    	dataToRender.sEcho = params.sEcho
+	    dataToRender.aaData=[]                
+    	dataToRender.iTotalRecords = PersonaJuridica.count()
+	    dataToRender.iTotalDisplayRecords = dataToRender.iTotalRecords
+		def criteria = PersonaJuridica.createCriteria()
+		def results = criteria.list {
+			or{
+				if(params.sSearch){
+					params.findAll{it.key.startsWith("mDataProp_")}.each {
+						def prop = it.value.replaceAll("aaData.","")
+						if(prop.tokenize(".").size()==1){ 
+							like prop, params.sSearch+"%"
+						}
+					}
+				}
+			}
+			maxResults(params.int('iDisplayLength'))
+		    firstResult(params.int('iDisplayStart'))
+			params.findAll{it.key.startsWith("iSortCol_")}.eachWithIndex { param, i ->
+        	    def prop = params["mDataProp_${param.value}"].replaceAll("aaData.","")
+				def sortDir = params["sSortDir_$i"]
+				println "${param.value} ${params["mDataProp_${param.value}"]} $prop $sortDir}"
+                if(prop.tokenize(".").size()==1){
+                	order prop, sortDir
+                }
+           	}
+
+		}
+		dataToRender.aaData = results
+
+		render dataToRender as JSON
 	}
 	
 }
