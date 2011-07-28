@@ -9,11 +9,11 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <!-- <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>  -->
+            <span class="menuButton"><g:link class="create" action="create">Crear Nueva Persona Fisica</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1><g:message code="Listado de Personas Fisicas" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -22,8 +22,8 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'personaFisica.id.label', default: 'Id')}" />
-                        
+                            <!--    <g:sortableColumn property="id" title="${message(code: 'personaFisica.id.label', default: 'Id')}" /> 
+                        	-->
                             <g:sortableColumn property="cuit" title="${message(code: 'personaFisica.cuit.label', default: 'Cuit')}" />
                         
                             <g:sortableColumn property="nombre" title="${message(code: 'personaFisica.nombre.label', default: 'Nombre')}" />
@@ -40,9 +40,9 @@
                     <g:each in="${personaFisicaInstanceList}" status="i" var="personaFisicaInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${personaFisicaInstance.id}">${fieldValue(bean: personaFisicaInstance, field: "id")}</g:link></td>
+                            <td><g:link action="show" id="${personaFisicaInstance.id}">${fieldValue(bean: personaFisicaInstance, field: "cuit")}</g:link></td>
                         
-                            <td>${fieldValue(bean: personaFisicaInstance, field: "cuit")}</td>
+                            <!--  <td>${fieldValue(bean: personaFisicaInstance, field: "cuit")}</td> -->
                         
                             <td>${fieldValue(bean: personaFisicaInstance, field: "nombre")}</td>
                         

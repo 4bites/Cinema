@@ -32,11 +32,11 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <!--  <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span> -->
+            <span class="menuButton"><g:link class="create" action="create">Crear Persona Juridica</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1>Listado de Personas Juridicas</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -44,7 +44,6 @@
                 <table id="results">
                     <thead>
                         <tr>
-                        
                             <td>${message(code: 'personaJuridica.cuit.label', default: 'Cuit')}</td>
                             <td>${message(code: 'personaJuridica.razonSocial.label', default: 'Razon Social')}</td>
                             <td>${message(code: 'personaJuridica.domicilio.label', default: 'Domicilio')}</td>

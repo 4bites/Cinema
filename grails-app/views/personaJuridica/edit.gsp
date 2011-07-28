@@ -7,15 +7,75 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'personaJuridica.label', default: 'PersonaJuridica')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
+        <script type="text/javascript" charset="utf-8">
+			<g:render template="/js/prov-loc.js"/>
+				$.expr[':'].textEquals = function (a, i, m) {
+  		  			return $(a).text().match("^" + m[3] + "$");
+				};
+			    $(document).ready(function() {
+					var i = 1;
+					$("#remove").click(function() {
+						if($("#remove").length > 1)
+							$(this).parent().remove();
+					});
+        		
+					autocomplete= {
+						source: function(request, response) {
+            				$.ajax({
+                				url: "${createLink(controller:'personaFisica', action:'autocomplete')}",
+                				dataType: "json",
+                				data: {
+                    				name_startsWith: request.term
+                				},
+								success: function(data) {
+                    				response($.map(data, function(item) {
+											
+                        				return {
+                            				label: item.nombre+" "+item.apellido+" cuit:"+item.cuit,
+                            				value: item.nombre+" "+item.apellido+" cuit:"+item.cuit,
+                            				title: item.cuit
+                        				}
+                    				}))
+                				}
+                    		})	
+                		},
+                		minLength: 2,
+						change: function(event, ui) {
+							if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
+                    			$(this).val('');
+                			}
+            			} 
+        		    };
+					$("#pJuridicaPFisicas\\.personaFisica").autocomplete(autocomplete).live('keydown', function (e) {
+				        var keyCode = e.keyCode || e.which;
+        				if((keyCode == 9 || keyCode == 13) && ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0)) {
+            				$(this).val($(".ui-autocomplete li:visible:first").text());
+        				}
+    				});
+
+					
+                    $("#add").click(function() {
+                        newPf = $("#pfs > p:first-child").clone().attr('id', 'pf'+i).insertBefore("#pfs > p:last-child");
+						$("#pf"+i+" input:first").autocomplete(autocomplete);
+						$("#pf"+i+" #remove").click(function() {
+                        	$(this).parent().remove();
+                    	});
+						i++;
+                        return false;
+                    });
+
+
+				});
+
+       </script> 
     </head>
     <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+        <div class="nav">           
+            <span class="menuButton"><g:link class="list" action="list">Listado de Personas Juridicas </g:link></span>
+            <span class="menuButton"><g:link class="create" action="create">Crear Persona Juridica</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
+            <h1>Editar Persona Juridica: ${fieldValue(bean:personaJuridicaInstance, field:'razonSocial' )}</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -45,7 +105,7 @@
                                   <label for="razonSocial"><g:message code="personaJuridica.razonSocial.label" default="Razon Social" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'razonSocial', 'errors')}">
-                                    <g:textField name="razonSocial" value="${personaJuridicaInstance?.razonSocial}" />
+                                    <g:textField name="razonSocial" value="${personaJuridicaInstance?.razonSocial}" size="80" />
                                 </td>
                             </tr>
                         
@@ -54,7 +114,10 @@
                                   <label for="tipoSociedad"><g:message code="personaJuridica.tipoSociedad.label" default="Tipo Sociedad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'tipoSociedad', 'errors')}">
-                                    <g:textField name="tipoSociedad" value="${personaJuridicaInstance?.tipoSociedad}" />
+                                    <g:select name="tipoSociedad" id="tipoSociedad"
+                                                   from="${cinema.SocietyType.values()}" 
+                                                    value="${personaJuridicaInstance?.tipoSociedad}" 
+                                                optionValue="name"/>
                                 </td>
                             </tr>
                         
@@ -63,7 +126,7 @@
                                   <label for="domicilio"><g:message code="personaJuridica.domicilio.label" default="Domicilio" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'domicilio', 'errors')}">
-                                    <g:textField name="domicilio" value="${personaJuridicaInstance?.domicilio}" />
+                                    <g:textField name="domicilio" value="${personaJuridicaInstance?.domicilio}"  size="80"/>
                                 </td>
                             </tr>
                         
@@ -72,7 +135,7 @@
                                   <label for="codigoPostal"><g:message code="personaJuridica.codigoPostal.label" default="Codigo Postal" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'codigoPostal', 'errors')}">
-                                    <g:textField name="codigoPostal" value="${personaJuridicaInstance?.codigoPostal}" />
+                                    <g:textField name="codigoPostal" value="${personaJuridicaInstance?.codigoPostal}"  size="8"/>
                                 </td>
                             </tr>
                         
@@ -81,7 +144,9 @@
                                   <label for="provincia"><g:message code="personaJuridica.provincia.label" default="Provincia" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'provincia', 'errors')}">
-                                    <g:select name="provincia.id" from="${cinema.Provincia.list()}" optionKey="id" value="${personaJuridicaInstance?.provincia?.id}"  />
+                                     <g:select name="provincia.id" id="provincia.id" from="${cinema.Provincia.list()}" 
+										optionKey="id" value="${personaJuridicaInstance?.provincia?.id}"  
+										noSelection="${['0':'Seleccionar...']}" optionValue="name"/>
                                 </td>
                             </tr>
                         
@@ -90,7 +155,9 @@
                                   <label for="localidad"><g:message code="personaJuridica.localidad.label" default="Localidad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'localidad', 'errors')}">
-                                    <g:select name="localidad.id" from="${cinema.Localidad.list()}" optionKey="id" value="${personaJuridicaInstance?.localidad?.id}"  />
+                                    <g:select name="localidad.id" id="localidad.id" optionKey="id" optionValue="name" 
+										value="${personaJuridicaInstance?.localidad?.id}" from="${personaJuridicaInstance?.provincia?.localidades}" 
+										noSelection="${['0':'Seleccionar...']}"/>
                                 </td>
                             </tr>
                         
@@ -99,7 +166,7 @@
                                   <label for="telefono"><g:message code="personaJuridica.telefono.label" default="Telefono" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'telefono', 'errors')}">
-                                    <g:textField name="telefono" value="${personaJuridicaInstance?.telefono}" />
+                                    <g:textField name="telefono" value="${personaJuridicaInstance?.telefono}" size="80" />
                                 </td>
                             </tr>
                         
@@ -108,7 +175,7 @@
                                   <label for="email"><g:message code="personaJuridica.email.label" default="Email" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${personaJuridicaInstance?.email}" />
+                                    <g:textField name="email" value="${personaJuridicaInstance?.email}" size="60" />
                                 </td>
                             </tr>
                         
@@ -117,17 +184,31 @@
                                   <label for="condicionIVA"><g:message code="personaJuridica.condicionIVA.label" default="Condicion IVA" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'condicionIVA', 'errors')}">
-                                    <g:textField name="condicionIVA" value="${personaJuridicaInstance?.condicionIVA}" />
+                                     <g:select name="condicionIVA" id="condicionIVA" noSelection="${['null':'Seleccionar...']}"
+                                              from="${['Inscripto','No Inscripto','Excento', 'Monotributo']}" 
+                                              value="${personaJuridicaInstance?.condicionIVA}"
+                                              />
                                 </td>
                             </tr>
                         
                             <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="personas"><g:message code="personaJuridica.personas.label" default="Personas" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'personas', 'errors')}">
-                                    
-                                </td>
+                                <td valign="top" class="name" colspan=2 id="pfs">
+									<g:each status="i" in="${personaJuridicaInstance.pJuridicaPFisicas}" var="p">									
+										<p id="pf${i+1}">
+										<label>Persona Fisica</label><g:textField name="pJuridicaPFisicas.personaFisica" value="${p.personaFisica.nombre} ${p.personaFisica.apellido} cuit: ${p.personaFisica.cuit}" size="50"/><g:hiddenField name="personaFisica.apellido" value="${p.personaFisica?.apellido}" /><g:hiddenField name="personaFisica.nombre" value="${p.personaFisica?.nombre}" />
+										<label>Cargo</label><g:textField name="pJuridicaPFisicas.cargo" value="${p.cargo}"/>
+										<span class="button" id="remove"><input type="button" class="save" value="Remover" /></span>
+										</p>
+									</g:each>
+                                        <p>
+                                        <label>Persona Fisica</label><g:textField name="pJuridicaPFisicas.personaFisica" size="50"/>
+                                        <label>Cargo</label><g:textField name="pJuridicaPFisicas.cargo" />
+                                        <span class="button" id="remove"><input type="button" class="save" value="Remover" /></span>
+                                        </p>
+									<p id="addPfs">
+										<span class="button" id="add"><input type="button" class="save" value="Agregar Persona Fisica" /></span>
+									</p>
+								</td>
                             </tr>
                         
                         </tbody>

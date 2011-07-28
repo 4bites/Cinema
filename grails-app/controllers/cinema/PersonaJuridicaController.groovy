@@ -69,7 +69,7 @@ class PersonaJuridicaController {
 
 	def edit = {
         def pj = PersonaJuridica.get(params.id)
-        render view:"create", model:[personaJuridicaInstance:pj]
+        render view:"edit", model:[personaJuridicaInstance:pj]
     }
 
 	def autocomplete = {

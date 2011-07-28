@@ -26,6 +26,13 @@
 		</script>
     </head>
     <body>
+    
+   	 	<div class="nav">
+           
+            <span class="menuButton"><g:link class="list" action="list">Listado de personas</g:link></span>
+            
+        </div>
+        
         <div class="body">
             <h1><g:message code="default.${personaFisicaInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -117,7 +124,7 @@
                                     <label for="codigoPostal"><g:message code="personaFisica.codigoPostal.label" default="Codigo Postal" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'codigoPostal', 'errors')}">
-                                    <g:textField name="codigoPostal" value="${personaFisicaInstance?.codigoPostal}" />
+                                    <g:textField name="codigoPostal" value="${personaFisicaInstance?.codigoPostal}"  size="8"/>
                                 </td>
                             </tr>
                         
