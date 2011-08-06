@@ -26,9 +26,8 @@ class PersonaJuridicaController {
 		}
 		if(p.validate()){
 			p.save()
-			print PFisicaPJuridica.findAllByPersonaJuridica(p).size()
 //			p.pJuridicaPFisicas.each{
-			PFisicaPJuridica.findAllByPersonaJuridica(p).each{
+			PFisicaPJuridica.findAllByPersonaJuridica(p)?.each{
 				print "eliminando... $it.personaFisica.apellido"
 				PFisicaPJuridica.unlink(it.personaFisica, p)
 			}
@@ -45,7 +44,7 @@ class PersonaJuridicaController {
 				}
 			}
 //			p.save()	 		
-			redirect(action:"show", model: [personaJuridicaInstance:p])
+			redirect action:"show", id: p.id
 		}else{
 			println "Invalido!!!"
 			params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
@@ -81,21 +80,31 @@ class PersonaJuridicaController {
 	}
 
 	def search = {
-		def dataToRender = [:]
+		searcher(params) //search(params)
+/*		def dataToRender = [:]
     	dataToRender.sEcho = params.sEcho
 	    dataToRender.aaData=[]                
     	dataToRender.iTotalRecords = PersonaJuridica.count()
 	    dataToRender.iTotalDisplayRecords = dataToRender.iTotalRecords
 		def criteria = PersonaJuridica.createCriteria()
 		def results = criteria.list {
-			or{
-				if(params.sSearch){
-					params.findAll{it.key.startsWith("mDataProp_")}.each {
+			if(params.sSearch){
+				or{
+					params.findAll{it.key.startsWith("mDataProp_")}.each { 
 						def prop = it.value.replaceAll("aaData.","")
 						if(prop.tokenize(".").size()==1){ 
 							like prop, params.sSearch+"%"
 						}
 					}
+				}
+			} else {
+				and {
+					params.findAll{it.key.startsWith("mDataProp_")}.eachWithIndex {  param, i ->
+                        def prop = param.value.replaceAll("aaData.","").tokenize(".")
+                        if(params["sSearch_$i"]) {
+                            like prop[0], params["sSearch_$i"]+"%"
+                        }
+                    }
 				}
 			}
 			maxResults(params.int('iDisplayLength'))
@@ -110,9 +119,10 @@ class PersonaJuridicaController {
            	}
 
 		}
+
 		dataToRender.aaData = results
 
-		render dataToRender as JSON
+		render dataToRender as JSON*/
 	}
 	
 }

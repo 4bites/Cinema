@@ -32,5 +32,8 @@ class PersonaJuridica {
 	public String toString(){
 		razonSocial
 	}
-
+	
+	static def show_columns = {
+		["cuit","razonSocial","provincia","localidad","exhibidor"]
+	}
 }

@@ -32,7 +32,7 @@ environments {
 	}
 	test {
 		dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+            dbCreate = "create" // one of 'create', 'create-drop','update'
 //          url = "jdbc:hsqldb:file:devDb"
             url = "jdbc:mysql://localhost/cinematest"
             driverClassName = "com.mysql.jdbc.Driver"

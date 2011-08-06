@@ -7,4 +7,9 @@ class Localidad {
 	static belongsTo = [ provincia: Provincia ]
     static constraints = {
     }
+
+	static def show_columns = {
+        ["name"]
+    }
+
 }

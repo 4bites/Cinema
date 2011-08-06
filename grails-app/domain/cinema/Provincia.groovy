@@ -8,5 +8,12 @@ class Provincia {
     }
 
 	static hasMany = [localidades: Localidad]
-
+	
+	static def select = {
+		Provincia.list().collect{"['${it.name}','${it.name}']"}.join(",")
+	}
+	
+	static def show_columns = {
+		["name"]
+	}
 }

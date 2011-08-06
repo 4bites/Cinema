@@ -9,6 +9,7 @@
 // if(System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
+grails.json.legacy.builder=false
 migrations.enabled = false
 migrations.changelogs = ['migrations/changelog.xml']
 ddjjUploadDir = "/cinema/ddjj"
@@ -87,5 +88,32 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
+
+gsec {
+    //Default-Values. No one must be set.
+    isEnabled = true    //Only in development you can set it to false in all other environment it is non relevant 
+    nullMustBeAuthenticated = false    //true if the user must be authenticated if the controllername is null 
+    publicControllers = ['public','auth','registration', 'passwordManagement', 'gsecPermission','gsecUser','sala', 'personaJuridica', 'personaFisica', 'localidad', 'empresa', 'exhibidor', 'distribuidor', 'productor', 'local', 'ddjjExhibidor', 'ddjjVideo', 'pelicula', 'videoClub', 'bocIngreso', 'bocEgreso', 'complejo'] //list of controllernames without any security-checks
+    maxLoginFailed = 10 //nr of failed logins before a user is disabled.
+    //gsec.rememberMeCryptKey='No Public Default' //String which is used as key for the rememberMe encryption.
+    gsec.loginView = 'login' //defines the gsp for login, which has the model:[username, rememberMe, token]
+                             //The gsp must be in the folder views/auth
+                             //furthermore you must send back the parameter password. The button should be
+                             //<gti:actionSubmit class="signIn" action="signIn" messageCode="login.login" />
+    //Configuration-Options for registration and resetPassword:
+    allowSelfRegistration = true //true if the user can register himself.
+    allowResetPassword = true //true if the user can reset his password.
+    gsec.expireTime = 24 * 60 // time how long the registration is stored without confirmation in minutes. Default: 24h
+    gsec.allowedMailadresses = ''//List (separates by ',', ';' or <spaces>) of mail-adresses defined via regular-expression, 
+                                 //which are allowed for registration. Allowed mail-adresses can't be forbidden. Default: Empty-List
+    gsec.forbiddenMailadresses = '' //List (separates by ',', ';' or <spaces>) of mail-adresses defined via regular-expression, 
+                                    //which are forbidden for registration. Default: Empty-List
+    gsec.defaultRole="Administrator" //name of the defaultrole each user get.
+
+    gsec.replyAdress=null //Email-Adress for confirmation-reply.
+    gsec.bccAdress=null //Email-Adress for bcc of all registrations and resetPassword.
+    htmlMail = false //Send HTML-Mail or not. Notice true implied http://jira.codehaus.org/browse/GRAILSPLUGINS-1885
+
+}
 
      

@@ -60,17 +60,21 @@ class EmpresaController {
 
 	def autocomplete = {
 		def empresa = grailsApplication.getDomainClass("cinema.$params.dom").clazz
-
-		def c = empresa.createCriteria()
-		def empresas = c.list {
-  			or{
-    			personaFisica{
-        			ilike("nombre", params.term+"%")
-    			}
-    			personaJuridica{
-        			ilike("razonSocial", params.term+"%")
-    			}
-  			}
+		def empresas
+		if(params.term == "*"){
+			empresas = empresa.list()
+		} else {
+			def c = empresa.createCriteria()
+			empresas = c.list {
+  				or{
+    				personaFisica{
+        				ilike("nombre", params.term+"%")
+    				}
+    				personaJuridica{
+        				ilike("razonSocial", params.term+"%")
+    				}
+  				}
+			}
 		}
 		def json = []
 		empresas.each {

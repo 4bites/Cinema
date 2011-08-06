@@ -6,7 +6,10 @@ class Empresa {
     Date fechaFinActividad
     Date fechaUltimaRevalida
     static belongsTo = [personaFisica:PersonaFisica, personaJuridica:PersonaJuridica]
-
+	static mapping = {
+        personaFisica lazy: false
+		personaJuridica lazy: false
+    }
     static constraints = {
         codigo(unique:true)
         fechaInicioActividad()
@@ -18,5 +21,9 @@ class Empresa {
 
 	def desc = {
 		personaFisica? "${personaFisica.nombre} ${personaFisica.apellido} cuit:${personaFisica.cuit}" : "${personaJuridica?.razonSocial} cuit:${personaJuridica?.cuit}"
+	}
+
+	static def show_columns = {
+		["codigo", "personaFisica", "personaJuridica"]
 	}
 }

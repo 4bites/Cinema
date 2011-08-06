@@ -1,5 +1,6 @@
 
 <%@ page import="cinema.DdjjExhibidor" %>
+<%@ page import="cinema.DdjjExhibidorRegistry" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,8 +34,6 @@
                         }
 				});
  
-				$("#fecha").datepicker({dateFormat: 'dd/mm/yy'});	
-
 				$('#ddjjRegs').dataTable({
 				});
 
@@ -63,15 +62,6 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="fecha"><g:message code="ddjjExhibidor.fecha.label" default="Fecha" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: ddjjExhibidorInstance, field: 'fecha', 'errors')}">
-                                    <g:textField name="fecha" value="${formatDate(format:'dd/MM/yyyy', date: ddjjExhibidorInstance?.fecha)}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
                                     <label for="file"><g:message code="ddjjExhibidor.file.label" default="File" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjExhibidorInstance, field: 'file', 'errors')}">
@@ -95,33 +85,28 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="ddjjRegs">
     								<thead>
        									<tr>
-								        	<th>Periodo Fiscal</th>
-									      	<th>Dia</th>
-								          	<th>Mes</th>
-								          	<th>Año</th>
-											<th>Hora</th>
-								          	<th>Exhibidor</th>
-										  	<th>Sala</th>
-											<th>Pelicula</th>
-											<th>Distribuidor</th>	
-											<th>Tipo Función</th>
-											<th>Errores</th>
+								        	<th>Fila</th>
+									      	<th>Errores</th>
 								       </tr>
 								    </thead>
 								    <tbody>
-										<g:each in="${ddjjRegs}">
+										<g:each in="${ddjjRegs}" var="reg">
 											<tr>
-												<td>${it.periodoFiscal}</td>
-												<td>${it.dia}</td>
-												<td>${it.mes}</td>
-												<td>${it.anio}</td>
-												<td>${it.hora}</td>
-												<td>${it.exhibidor?.codigo}</td>
-											 	<td>${it.sala?.codigo}</td>
-												<td>${it.pelicula?.codigo}</td>
-												<td>${it.distribuidor?.codigo}</td>
-												<td>${it.tipoFuncion}</td>
-												<td><g:renderErrors bean="${it}" as="list" /></td>
+												<td>${reg.renglon}</td>
+												<td>
+													 <ul>
+													   <g:eachError var="err" bean="${reg}">
+													       	<li><g:if test="${!(err.code in ['fecha','ddjjExhibidorRegistry.invalid','hora','periodoFiscal','fechaFutura','impuestoTotal','impuesto'])}" >
+																	<g:message code="ddjjExhibidorRegistry.${err.code}"  
+																	args="${[reg.original_value(err.field), err.field]}"  />
+																</g:if>
+																<g:else>
+																	<g:message error="${err}" />
+																</g:else>	
+															</li> 
+														</g:eachError>
+													</ul>
+												</td>
 											</tr>
 										</g:each>			
 									</tbody>

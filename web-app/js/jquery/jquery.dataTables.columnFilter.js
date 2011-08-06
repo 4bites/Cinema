@@ -203,7 +203,11 @@
             var r = '<select class="search_init select_filter"><option value="" class="search_init">' + label + '</option>', j, iLen = aData.length;
 
             for (j = 0; j < iLen; j++) {
-                r += '<option value="' + aData[j] + '">' + aData[j] + '</option>';
+				if($.isArray(aData[j])){
+	                r += '<option value="' + aData[j][0] + '">' + aData[j][1] + '</option>';
+				}else{
+					r += '<option value="' + aData[j] + '">' + aData[j] + '</option>';
+				}
             }
             var select = $(r + '</select>');
             th.html(select);

@@ -1,4 +1,5 @@
 package cinema
+import grails.converters.*
 
 class SalaController {
     def scaffold = true
@@ -62,5 +63,7 @@ class SalaController {
         render view:"create", model:[salaInstance:sala]
     }
 
-
+	def search = {
+		searcher(params)
+	}
 }

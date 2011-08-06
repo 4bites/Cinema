@@ -23,16 +23,9 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="sala.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.codigo.label" default="Codigo" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "codigo")}</td>
+                            <td valign="top" class="value">${salaInstance.codigo}</td>
                             
                         </tr>
                     
@@ -49,7 +42,14 @@
                             <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "domicilio")}</td>
                             
                         </tr>
-                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="sala.complejo.label" default="Complejo" /></td>
+
+                            <td valign="top" class="value">${salaInstance?.complejo?.denominacion}</td>
+
+                        </tr>
+
+ 
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.codigoPostal.label" default="Codigo Postal" /></td>
                             
@@ -60,14 +60,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.provincia.label" default="Provincia" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "provincia")}</td>
+                            <td valign="top" class="value">${salaInstance?.provincia?.name}</td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.localidad.label" default="Localidad" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: salaInstance, field: "localidad")}</td>
+                            <td valign="top" class="value">${salaInstance?.localidad?.name}</td>
                             
                         </tr>
                     
@@ -81,7 +81,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.fechaInicioActividad.label" default="Fecha Inicio Actividad" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${salaInstance?.fechaInicioActividad}" /></td>
+                            <td valign="top" class="value"><g:formatDate format="dd/MM/yyyy" date="${salaInstance?.fechaInicioActividad}" /></td>
                             
                         </tr>
                     
@@ -130,7 +130,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.exhibidor.label" default="Exhibidor" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="exhibidor" action="show" id="${salaInstance?.exhibidor?.id}">${salaInstance?.exhibidor?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value"><g:link controller="exhibidor" action="show" id="${salaInstance?.exhibidor?.id}">${salaInstance?.exhibidor?.desc()}</g:link></td>
                             
                         </tr>
                     

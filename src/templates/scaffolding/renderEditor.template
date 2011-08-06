@@ -1,0 +1,203 @@
+<%  if(property.type == Boolean.class || property.type == boolean.class)
+        out << renderBooleanEditor(domainClass,property)	
+    else if(Number.class.isAssignableFrom(property.type) || (property.type.isPrimitive() && property.type != boolean.class))
+        out << renderNumberEditor(domainClass,property)
+    else if(property.type == String.class)
+        out << renderStringEditor(domainClass,property)
+    else if(property.type == Date.class || property.type == java.sql.Date.class || property.type == java.sql.Time.class)
+        out << renderDateEditor(domainClass,property)
+    else if(property.type == Calendar.class)
+        out << renderDateEditor(domainClass,property)  
+    else if(property.type == URL.class) 
+        out << renderStringEditor(domainClass,property)
+    else if(property.isEnum())
+        out << renderEnumEditor(domainClass,property)
+    else if(property.type == TimeZone.class)
+        out << renderSelectTypeEditor("timeZone",domainClass,property)
+    else if(property.type == Locale.class)
+        out << renderSelectTypeEditor("locale",domainClass,property)
+    else if(property.type == Currency.class)
+        out << renderSelectTypeEditor("currency",domainClass,property)
+    else if(property.type==([] as Byte[]).class) //TODO: Bug in groovy means i have to do this :(
+        out << renderByteArrayEditor(domainClass,property)
+    else if(property.type==([] as byte[]).class) //TODO: Bug in groovy means i have to do this :(
+        out << renderByteArrayEditor(domainClass,property)                
+    else if(property.manyToOne || property.oneToOne)
+        out << renderManyToOne(domainClass,property)
+    else if((property.oneToMany && !property.bidirectional) || (property.manyToMany && property.isOwningSide()))
+        out << renderManyToMany(domainClass, property)
+    else if(property.oneToMany || (property.manyToMany && !property.isOwningSide()))
+        out << renderOneToMany(domainClass,property)
+    else {
+        out << "${property.name}: no rendering defined in renderEditor.template"
+    }
+
+    private renderEnumEditor(domainClass,property) {
+        if(property.isEnum()) {
+            return "<g:select name=\"${property.name}\" from=\"\${${property.type.name}?.values()}\" value=\"\${${domainInstance}?.${property.name}?.name()}\" optionKey=\"\${{return it?.name()}}\"  ${renderNoSelection(property)} />"
+        }
+    }
+
+    private renderStringEditor(domainClass, property) {
+        if(!cp) {
+            return "<input type=\"text\" name=\"${property.name}\" id=\"${property.name}\" value=\"\${fieldValue(bean:${domainInstance},field:'${property.name}')}\" />"
+        }
+        else {
+            if("textarea" == cp.widget || (cp.maxSize > 250 && !cp.password && !cp.inList)) {
+                return "<textarea rows=\"5\" cols=\"40\" name=\"${property.name}\">\${fieldValue(bean:${domainInstance}, field:'${property.name}')}</textarea>"
+            }
+             else {
+                if(cp.inList) {
+                    def sb = new StringBuffer('<g:select ')
+                    sb << "id=\"${property.name}\" name=\"${property.name}\" from=\"\${${domainInstance}.constraints.${property.name}.inList}\" value=\"\${${domainInstance}.${property?.name}}\" valueMessagePrefix=\"${domainClass.propertyName}.${property?.name}\" ${renderNoSelection(property)}>"
+                    sb << '</g:select>'
+                    return sb.toString()
+                }
+                else {
+                    def sb = new StringBuffer('<input ')
+                    cp.password ? sb << 'type="password" ' : sb << 'type="text" '
+                    if(!cp.editable) sb << 'readonly="readonly" '
+                    if(cp.maxSize) sb << "maxlength=\"${cp.maxSize}\" "
+                    sb << "id=\"${property.name}\" name=\"${property.name}\" value=\"\${fieldValue(bean:${domainInstance},field:'${property.name}')}\"/>"
+                    return sb.toString()
+                }
+            }
+        }
+    }
+
+    private renderByteArrayEditor(domainClass,property) {
+        return "<input type=\"file\" id=\"${property.name}\" name=\"${property.name}\" />"
+    }
+
+    private renderManyToOne(domainClass,property) {
+        if(property.association) {
+            return "<g:select optionKey=\"id\" from=\"\${${property.type.name}.list()?.sort()}\" name=\"${property.name}.id\" value=\"\${${domainInstance}?.${property.name}?.id}\" ${renderNoSelection(property)}></g:select>"
+        }
+    }
+
+    private renderManyToMany(domainClass,property) {
+        def sw = new StringWriter()
+        def pw = new PrintWriter(sw)
+
+        //fix for http://jira.codehaus.org/browse/GRAILS-5221
+        pw.println "<g:hiddenField name=\"mtm_[${property.name}]\" value=\"${property.name}\" />"
+        pw.println "<g:select name=\"${property.name}\""
+        pw.println "from=\"\${${property.referencedDomainClass.fullName}.list()?.sort()}\""
+        pw.println "size=\"5\" multiple=\"yes\" optionKey=\"id\""
+        pw.println "value=\"\${${domainInstance}?.${property.name}.id}\" />"
+
+        return sw.toString()         
+    }
+
+    private renderOneToMany(domainClass,property) {
+        def sw = new StringWriter()
+        def pw = new PrintWriter(sw)
+        pw.println()
+        pw.println "<ul>"
+        pw.println "<g:each in=\"\${${domainInstance}?.${property.name}.sort()}\" var=\"${property.referencedDomainClass.propertyName}Instance\">"
+        pw.println "	<gsec:hasBasicPermission target=\"${property.referencedDomainClass.propertyName}\" action=\"show\">"
+        pw.println "        <li><gti:link controller=\"${property.referencedDomainClass.propertyName}\" action=\"show\" id=\"\${${property.referencedDomainClass.propertyName}Instance.id}\">\${${property.referencedDomainClass.propertyName}Instance?.encodeAsHTML()}</gti:link></li>"
+        pw.println "	</gsec:hasBasicPermission>"
+        pw.println "	<gsec:hasNot>"
+        pw.println "        <li>\${${property.referencedDomainClass.propertyName}Instance?.encodeAsHTML()}</li>"
+        pw.println "	</gsec:hasNot>"
+        pw.println "</g:each>"
+        pw.println "</ul>"
+        pw.println "<gsec:hasBasicPermission target=\"${property.referencedDomainClass.propertyName}\" action=\"create\">"
+        pw.println "    <gti:link controller=\"${property.referencedDomainClass.propertyName}\" params=\"['${domainClass.propertyName}.id': ${domainInstance}?.id]\" action=\"create\"><g:message code=\"${property.referencedDomainClass.propertyName}.new\" default=\"New ${property.referencedDomainClass.shortName}\" /></gti:link>"
+        pw.println "</gsec:hasBasicPermission>"
+        return sw.toString()
+    }
+
+    private renderNumberEditor(domainClass,property) {
+        if(!cp) {
+            if(property.type == Byte.class) {
+                return "<g:select from=\"\${-128..127}\" name=\"${property.name}\" value=\"\${${domainInstance}?.${property.name}}\"></g:select>"
+            }
+            else {
+                return "<input type=\"text\" id=\"${property.name}\" name=\"${property.name}\" value=\"\${fieldValue(bean:${domainInstance},field:'${property.name}')}\" />"
+            }
+        }
+        else {
+            if(cp.range) {
+                return "<g:select from=\"\${${cp.range.from}..${cp.range.to}}\" id=\"${property.name}\" name=\"${property.name}\" value=\"\${${domainInstance}?.${property.name}}\" ${renderNoSelection(property)}></g:select>"
+            }
+            else if(cp.inList) {
+                def sb = new StringBuffer('<g:select ')
+                sb << "id=\"${property.name}\" name=\"${property.name}\" from=\"\${${domainClass.propertyName}.constraints.${property.name}.inList}\" value=\"\${${domainClass.propertyName}.${property?.name}}\" valueMessagePrefix=\"${domainClass.propertyName}.${property?.name}\" ${renderNoSelection(property)}>"
+                sb << '</g:select>'
+                return sb.toString()
+            } else if(property.type == Byte.class) {
+                return "<g:select from=\"\${-128..127}\" name=\"${property.name}\" value=\"\${${domainInstance}?.${property.name}}\"></g:select>"
+            } else {
+                return "<input type=\"text\" id=\"${property.name}\" name=\"${property.name}\" value=\"\${fieldValue(bean:${domainInstance},field:'${property.name}')}\" />"
+            }
+        }
+     }
+
+    private renderBooleanEditor(domainClass,property) {
+        if(!cp) {
+            return "<g:checkBox name=\"${property.name}\" value=\"\${${domainInstance}?.${property.name}}\"></g:checkBox>"
+        }
+        else {
+            def buf = new StringBuffer('<g:checkBox ')
+            if(cp.widget) buf << "widget=\"${cp.widget}\"";
+
+            buf << "name=\"${property.name}\" value=\"\${${domainInstance}?.${property.name}}\" "
+            cp.attributes.each { k,v ->
+                buf << "${k}=\"${v}\" "
+            }
+            buf << '></g:checkBox>'
+            return buf.toString()
+        }
+    }
+
+    private renderDateEditor(domainClass,property) {
+        def precision = property.type == java.sql.Date ? 'day' : 'minute';
+        if(!cp) {
+            return "<g:datePicker name=\"${property.name}\" value=\"\${${domainInstance}?.${property.name}}\" precision=\"${precision}\"></g:datePicker>"
+        }
+        else {
+            if(!cp.editable) {
+                return "\${${domainInstance}?.${property.name}?.toString()}"
+            }
+            else {
+                def buf = new StringBuffer('<g:datePicker ')
+                if(cp.widget) buf << "widget=\"${cp.widget}\" "
+                if(cp.format) buf << "format=\"${cp.format}\" "
+                cp.attributes.each { k,v ->
+                    buf << "${k}=\"${v}\" "
+                }
+                buf << "name=\"${property.name}\" value=\"\${${domainInstance}?.${property.name}}\" precision=\"${precision}\" ${renderNoSelection(property)}></g:datePicker>"
+                return buf.toString()
+            }
+        }
+    }
+
+    private renderSelectTypeEditor(type,domainClass,property) {
+        if(!cp) {
+            return "<g:${type}Select name=\"${property.name}\" value=\"\${${domainInstance}?.${property.name}}\"></g:${type}Select>"
+        }
+        else {
+            def buf = new StringBuffer("<g:${type}Select ")
+            if(cp.widget) buf << "widget=\"${cp.widget}\" ";
+            cp.attributes.each { k,v ->
+                buf << "${k}=\"${v}\" "
+            }
+            buf << "name=\"${property.name}\" value=\"\${${domainInstance}?.${property.name}}\" ${renderNoSelection(property)}></g:${type}Select>"
+            return buf.toString()
+        }
+    }
+
+    private renderNoSelection(property) {
+        if(property.optional) {
+            if(property.manyToOne || property.oneToOne) {
+                return "noSelection=\"['null':'']\""				
+            }
+            else {
+                return "noSelection=\"['':'']\""
+            }
+        }
+        return ""
+    }
+%>

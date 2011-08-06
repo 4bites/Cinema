@@ -1,11 +1,18 @@
 
 <%@ page import="cinema.DdjjExhibidor" %>
+<%@ page import="cinema.DdjjExhibidorRegistry" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'ddjjExhibidor.label', default: 'DdjjExhibidor')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
+		<script>
+			$(document).ready(function() {
+			//	$('#results').dataTable({ });
+			});
+
+		</script>		
     </head>
     <body>
         <div class="body">
@@ -14,13 +21,13 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="dialog">
-                <table>
+                <table id="results">
                     <tbody>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="ddjjExhibidor.id.label" default="Id" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: ddjjExhibidorInstance, field: "id")}</td>
+                            <td valign="top" class="value">${ddjjExhibidorInstance?.id}</td>
                             
                         </tr>
                     
@@ -38,17 +45,6 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="ddjjExhibidor.ddjjExhibidorRegs.label" default="Ddjj Exhibidor Regs" /></td>
-                            
-                            <td valign="top" style="text-align: left;" class="value">
-                                <ul>
-                                <g:each in="${ddjjExhibidorInstance.ddjjExhibidorRegs}" var="d">
-                                    <li><g:link controller="ddjjExhibidorRegistry" action="show" id="${d.id}">${d?.encodeAsHTML()}</g:link></li>
-                                </g:each> 
-                                </ul>
-                            </td>
-                            
                         </tr>
                     
                         <tr class="prop">
@@ -57,7 +53,29 @@
                             <td valign="top" class="value"><g:link controller="exhibidor" action="show" id="${ddjjExhibidorInstance?.exhibidora?.id}">${ddjjExhibidorInstance?.exhibidora?.desc()}</g:link></td>
                             
                         </tr>
-                    
+                    	<tr>
+							<td valign="top" class="name" colspan="2">
+								<table cellpadding="0" cellspacing="0" border="0" id="ddjjRegs">
+								<thead>
+									<tr>
+									<g:each in="${DdjjExhibidorRegistry.show_columns()}" var="field">
+										<th>${field.tokenize(".")[0].humanField()}</th>
+									</g:each>
+									</tr>
+								</thead>
+								<tbody>
+								<g:each in="${ddjjExhibidorInstance?.ddjjExhibidorRegs}" var="reg">
+									<tr>
+                                    <g:each in="${DdjjExhibidorRegistry.show_columns()}" var="field">
+                                        <td>${reg.getValueFrom(field)}</td>
+                                    </g:each>
+									</tr>
+                                </g:each>
+									
+								</tbody>		
+								</table>
+							</td>
+						</tr>
                     </tbody>
                 </table>
             </div>

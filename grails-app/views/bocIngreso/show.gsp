@@ -30,14 +30,14 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bocIngreso.desde.label" default="Desde" /></td>
+                            <td valign="top" class="name"><g:message code="bocIngreso.desde.label" default="Desde número" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: bocIngresoInstance, field: "desde")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bocIngreso.hasta.label" default="Hasta" /></td>
+                            <td valign="top" class="name"><g:message code="bocIngreso.hasta.label" default="Hasta número" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: bocIngresoInstance, field: "hasta")}</td>
                             
@@ -53,7 +53,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="bocIngreso.cantidad.label" default="Cantidad" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: bocIngresoInstance, field: "cantidad")}</td>
+                            <td valign="top" class="value">${bocIngresoInstance.getCantidad()}</td>
                             
                         </tr>
                     
@@ -67,7 +67,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="bocIngreso.fechaAlta.label" default="Fecha Alta" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${bocIngresoInstance?.fechaAlta}" /></td>
+                            <td valign="top" class="value"><g:formatDate format="dd/MM/yyyy" date="${bocIngresoInstance?.fechaAlta}" /></td>
                             
                         </tr>
                     

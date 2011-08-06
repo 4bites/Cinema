@@ -18,4 +18,7 @@ public enum SocietyType{
 		this.name = name
 	}  
 
+	static String select(){
+		values().collect{"['${it}','${it}']"}.join(",")
+	}
 }

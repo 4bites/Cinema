@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-1">
+        <createTable tableName="boc">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="accion" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="desde" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exhibidor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hasta" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="serie" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-2">
+        <createTable tableName="complejo">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="denominacion" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_apertura" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-3">
+        <createTable tableName="ddjj_exhibidor">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exhibidora_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-4">
+        <createTable tableName="ddjj_exhibidor_ddjj_exhibidor_registry">
+            <column name="ddjj_exhibidor_ddjj_exhibidor_regs_id" type="BIGINT"/>
+            <column name="ddjj_exhibidor_registry_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-5">
+        <createTable tableName="ddjj_exhibidor_registry">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="anio" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cantidad_entradas" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ddjj_exhibidor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dia" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hora" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="impuesto" type="DECIMAL(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="impuesto_total" type="DECIMAL(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mes" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero_inicialboc" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pelicula_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="periodo_fiscal" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="precio_basico" type="DECIMAL(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="precio_venta" type="DECIMAL(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="renglon" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="serieboc" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_funcion" type="VARCHAR(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distribuidor_id" type="BIGINT"/>
+            <column name="exhibidor_id" type="BIGINT"/>
+            <column name="sala_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-6">
+        <createTable tableName="ddjj_video">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cantidad_total_alquiler" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cantidad_total_venta" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gravamen_total_alquiler" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gravamen_total_venta" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="periodo" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="precio_total_alquiler" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="precio_total_venta" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="video_club_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-7">
+        <createTable tableName="ddjj_video_pelicula">
+            <column name="ddjj_video_peliculas_id" type="BIGINT"/>
+            <column name="pelicula_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-8">
+        <createTable tableName="empresa">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_fin_actividad" type="DATETIME"/>
+            <column name="fecha_inicio_actividad" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_ultima_revalida" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="persona_fisica_id" type="BIGINT"/>
+            <column name="persona_juridica_id" type="BIGINT"/>
+            <column name="class" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-9">
+        <createTable tableName="local">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="video_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-10">
+        <createTable tableName="localidad">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="provincia_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-11">
+        <createTable tableName="pago">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exhibidor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="video_club_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-12">
+        <createTable tableName="pelicula">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distribuidor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_estreno" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="productor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="titulo" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-13">
+        <createTable tableName="persona_fisica">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="apellido" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo_postal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="condicioniva" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cuit" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="domicilio" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="localidad_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nombre" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero_documento" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="provincia_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sexo" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telefono" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_documento" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-14">
+        <createTable tableName="persona_juridica">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo_postal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="condicioniva" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cuit" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="domicilio" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="localidad_id" type="BIGINT"/>
+            <column name="provincia_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="razon_social" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telefono" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_sociedad" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-15">
+        <createTable tableName="pfisicapjuridica">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cargo" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="persona_fisica_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="persona_juridica_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="p_fisicapjuridicas_idx" type="INT"/>
+            <column name="p_juridicapfisicas_idx" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-16">
+        <createTable tableName="provincia">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-17">
+        <createTable tableName="sala">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="capacidad" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo_postal" type="VARCHAR(8)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="complejo_id" type="BIGINT"/>
+            <column name="domicilio" type="VARCHAR(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exhibidor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_inicio_actividad" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_renovacion" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="frecuencia" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="localidad_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nombre" type="VARCHAR(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="provincia_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sistema_proyeccion" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo" type="VARCHAR(22)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-18">
+        <createTable tableName="sala_dias_exhibicion">
+            <column name="sala_id" type="BIGINT"/>
+            <column name="dia" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-19">
+        <createIndex indexName="codigo" tableName="complejo" unique="true">
+            <column name="codigo"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-20">
+        <createIndex indexName="codigo" tableName="empresa" unique="true">
+            <column name="codigo"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-21">
+        <createIndex indexName="cuit" tableName="persona_fisica" unique="true">
+            <column name="cuit"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-22">
+        <createIndex indexName="cuit" tableName="persona_juridica" unique="true">
+            <column name="cuit"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-23">
+        <createIndex indexName="razon_social" tableName="persona_juridica" unique="true">
+            <column name="razon_social"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-24">
+        <addForeignKeyConstraint baseColumnNames="exhibidor_id" baseTableName="boc" constraintName="FK17DB6BBF63F5D" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-25">
+        <addForeignKeyConstraint baseColumnNames="exhibidora_id" baseTableName="ddjj_exhibidor" constraintName="FK4A2AC36DE1873F34" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-26">
+        <addForeignKeyConstraint baseColumnNames="ddjj_exhibidor_ddjj_exhibidor_regs_id" baseTableName="ddjj_exhibidor_ddjj_exhibidor_registry" constraintName="FKD9BDB9FD6783462A" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="ddjj_exhibidor"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-27">
+        <addForeignKeyConstraint baseColumnNames="ddjj_exhibidor_registry_id" baseTableName="ddjj_exhibidor_ddjj_exhibidor_registry" constraintName="FKD9BDB9FDAADD98D7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="ddjj_exhibidor_registry"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-28">
+        <addForeignKeyConstraint baseColumnNames="ddjj_exhibidor_id" baseTableName="ddjj_exhibidor_registry" constraintName="FK55C728CFD3495C1C" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="ddjj_exhibidor"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-29">
+        <addForeignKeyConstraint baseColumnNames="distribuidor_id" baseTableName="ddjj_exhibidor_registry" constraintName="FK55C728CFAD5246F7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-30">
+        <addForeignKeyConstraint baseColumnNames="exhibidor_id" baseTableName="ddjj_exhibidor_registry" constraintName="FK55C728CFBBF63F5D" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-31">
+        <addForeignKeyConstraint baseColumnNames="pelicula_id" baseTableName="ddjj_exhibidor_registry" constraintName="FK55C728CF863B6197" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="pelicula"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-32">
+        <addForeignKeyConstraint baseColumnNames="sala_id" baseTableName="ddjj_exhibidor_registry" constraintName="FK55C728CF151DCFD7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sala"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-33">
+        <addForeignKeyConstraint baseColumnNames="video_club_id" baseTableName="ddjj_video" constraintName="FKEAC9213C4780BE74" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-34">
+        <addForeignKeyConstraint baseColumnNames="ddjj_video_peliculas_id" baseTableName="ddjj_video_pelicula" constraintName="FKF522823C2ABE2C61" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="ddjj_video"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-35">
+        <addForeignKeyConstraint baseColumnNames="pelicula_id" baseTableName="ddjj_video_pelicula" constraintName="FKF522823C863B6197" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="pelicula"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-36">
+        <addForeignKeyConstraint baseColumnNames="persona_fisica_id" baseTableName="empresa" constraintName="FK9F354089B058DBF6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="persona_fisica"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-37">
+        <addForeignKeyConstraint baseColumnNames="persona_juridica_id" baseTableName="empresa" constraintName="FK9F3540898BAE5636" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="persona_juridica"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-38">
+        <addForeignKeyConstraint baseColumnNames="video_id" baseTableName="local" constraintName="FK625DF6BDF616C53" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-39">
+        <addForeignKeyConstraint baseColumnNames="provincia_id" baseTableName="localidad" constraintName="FKB83370691ED763BD" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="provincia"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-40">
+        <addForeignKeyConstraint baseColumnNames="exhibidor_id" baseTableName="pago" constraintName="FK346299BBF63F5D" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-41">
+        <addForeignKeyConstraint baseColumnNames="video_club_id" baseTableName="pago" constraintName="FK3462994780BE74" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-42">
+        <addForeignKeyConstraint baseColumnNames="distribuidor_id" baseTableName="pelicula" constraintName="FKF9ACE99AD5246F7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-43">
+        <addForeignKeyConstraint baseColumnNames="productor_id" baseTableName="pelicula" constraintName="FKF9ACE9949FCED9D" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-44">
+        <addForeignKeyConstraint baseColumnNames="localidad_id" baseTableName="persona_fisica" constraintName="FK8D9F446AAD905A3D" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="localidad"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-45">
+        <addForeignKeyConstraint baseColumnNames="provincia_id" baseTableName="persona_fisica" constraintName="FK8D9F446A1ED763BD" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="provincia"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-46">
+        <addForeignKeyConstraint baseColumnNames="localidad_id" baseTableName="persona_juridica" constraintName="FKBB7B1298AD905A3D" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="localidad"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-47">
+        <addForeignKeyConstraint baseColumnNames="provincia_id" baseTableName="persona_juridica" constraintName="FKBB7B12981ED763BD" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="provincia"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-48">
+        <addForeignKeyConstraint baseColumnNames="persona_fisica_id" baseTableName="pfisicapjuridica" constraintName="FK691836CEB058DBF6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="persona_fisica"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-49">
+        <addForeignKeyConstraint baseColumnNames="persona_juridica_id" baseTableName="pfisicapjuridica" constraintName="FK691836CE8BAE5636" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="persona_juridica"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-50">
+        <addForeignKeyConstraint baseColumnNames="complejo_id" baseTableName="sala" constraintName="FK35C0437A487D17" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="complejo"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-51">
+        <addForeignKeyConstraint baseColumnNames="exhibidor_id" baseTableName="sala" constraintName="FK35C043BBF63F5D" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="empresa"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-52">
+        <addForeignKeyConstraint baseColumnNames="localidad_id" baseTableName="sala" constraintName="FK35C043AD905A3D" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="localidad"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-53">
+        <addForeignKeyConstraint baseColumnNames="provincia_id" baseTableName="sala" constraintName="FK35C0431ED763BD" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="provincia"/>
+    </changeSet>
+    <changeSet author="ubuntu6500 (generated)" id="1310831886643-54">
+        <addForeignKeyConstraint baseColumnNames="sala_id" baseTableName="sala_dias_exhibicion" constraintName="FK7571D54C151DCFD7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sala"/>
+    </changeSet>
+</databaseChangeLog>
