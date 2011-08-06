@@ -19,9 +19,9 @@ class DdjjExhibidorController {
 		//println file.inputStream.text
 		def valid = true
         DdjjExhibidor.withTransaction { status ->
-//			if(ddjj.validate()){
-//				ddjj.save()
-//			}
+			if(ddjj.validate()){
+				ddjj.save()
+			}
 			def ddjjRegs = []
 			dest.eachLine { line ->
 				String[] fd = line.split(',')
@@ -41,10 +41,11 @@ class DdjjExhibidorController {
                                         impuestoTotal:fd[19], registry: fd, ddjj:ddjj]
 					registry = new DdjjExhibidorRegistry(map)
 				}
+				/**TODO validateHourZero union validateRepetitions union ddjjRegs (puedo filtrar ddjjRegs por los que tienen error) **/
 				if(fd.length != 20){
 					valid = valid & false
 					registry.errors.reject("ddjjExhibidorRegistry.invalid")
-					ddjjRegs << registry	
+//					ddjjRegs << registry	
 				}else if(registry.validate()){
 					valid = valid && true 
 					ddjj.addToDdjjExhibidorRegs(registry)
@@ -53,44 +54,17 @@ class DdjjExhibidorController {
 				 	registry.errors.each {
 		 	        	println it
    				 	}
-					ddjjRegs << registry	
+//					ddjjRegs << registry	
 				}
+				ddjjRegs << registry
 			}
 			def map = [ddjjExhibidorInstance:ddjj]
-			if(ddjj.validate() && valid){
-				ddjj.save()
-				def rep = DdjjExhibidorRegistry.executeQuery("select d.dia, d.mes, d.anio, d.hora, d.sala, count(*) from DdjjExhibidorRegistry d where d.ddjj=${ddjj.id} group by d.dia, d.mes, d.anio, d.hora, d.sala having count(*) > 1")
-				println "REPETIDOS:${rep.size}, ${rep.class.simpleName}"
-				if(rep){
-					def c = DdjjExhibidorRegistry.createCriteria()
-					def bugs = c.list{
-						and {
-							eq 'ddjj', ddjj
-							or{ println rep.class
-								rep.each{ println "${it} ${it.class}" 
-									def fila = it
-									and{
-										eq 'dia', fila[0]
-										eq 'mes', fila[1]
-										eq 'anio', fila[2]
-										eq 'hora', fila[3]
-										eq 'sala', fila[4]
-									}
-								}
-							}
-						}
-					}
-					map.ddjjRegs = bugs
-					ddjj.errors.reject("ddjjExhibidor.repetitiveRows")
-					status.setRollbackOnly()
-					ddjj.file = file.getOriginalFilename()
-	                ddjj.exhibidora = (params["exhibidor.id"]?Exhibidor.get(params.int("exhibidor.id")):null)
-					render(view:"create", model:map)
-					return
-				}
+			if(!ddjj.hasErrors() & valid & ddjj.validateHourZero(ddjjRegs) & ddjj.validateRepetitions(ddjjRegs)){
+				//ddjj.save()
 	        	redirect action:"show", id:ddjj.id
 			}else{
-				map.ddjjRegs = ddjjRegs
+				ddjjRegs.findAll{it.hasErrors()}.each{ it.errors.each{ reg -> println reg}} 
+				map.ddjjRegs = ddjjRegs.findAll{it.hasErrors()}
 				ddjj.file = file.getOriginalFilename()
 				ddjj.exhibidora = (params["exhibidor.id"]?Exhibidor.get(params.int("exhibidor.id")):null)
 				status.setRollbackOnly()

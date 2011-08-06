@@ -11,14 +11,14 @@ class DdjjExhibidor {
 		file()
 	}
 	
-	def validateRepetitions = {  
-		def rep = DdjjExhibidorRegistry.executeQuery("select d.dia, d.mes, d.anio, d.hora, d.sala, count(*) from DdjjExhibidorRegistry d where d.ddjj=${id} group by d.dia, d.mes, d.anio, d.hora, d.sala having count(*) > 1")
+	def validateRepetitions = { ddjjRegs -> 
+		def rep = DdjjExhibidorRegistry.executeQuery("select d.dia, d.mes, d.anio, d.hora, d.sala, count(*) from DdjjExhibidorRegistry d where d.ddjj=${this.id} group by d.dia, d.mes, d.anio, d.hora, d.sala having count(*) > 1")
         if(rep){
             def c = DdjjExhibidorRegistry.createCriteria()
-            def rep = c.list{
+            def results = c.list{
                 and {
                     eq 'ddjj', this
-                    or{ println rep.class
+                    or{ 
                         rep.each{ 
                             def fila = it
                             and{
@@ -32,13 +32,48 @@ class DdjjExhibidor {
                     }
                 }
             }
-			return rep		
+			ddjjRegs.each{
+                if(it in results){
+                	it.errors.rejectValue("hora","repetido",["${it.dia}/${it.mes}/${it.anio} ${it.hora}",it.sala.codigo] as Object[],"Existen otros registros de la misma fecha, hora[{0}] y sala [{1}]")
+				}
+			}
+			return results.size == 0		
 		}        
     }
 
 
-	def validateHourZero = { obj ->
-		def rep = DdjjExhibidorRegistry.executeQuery("select d.dia, d.mes, d.anio, d.sala, count(*) from DdjjExhibidorRegistry d where exists ( select 1 from DdjjExhibidorRegistry r where r.ddjj=d.ddjj and r.hora=0) group by d.dia, d.mes, d.anio, d.sala having count(*) > 1")
+	def validateHourZero = { ddjjRegs ->
+		def zero = DdjjExhibidorRegistry.executeQuery("select d.dia, d.mes, d.anio, d.sala, count(*) from DdjjExhibidorRegistry d where d.ddjj=${this.id} and exists ( select 1 from DdjjExhibidorRegistry r where r.ddjj=d.ddjj and r.hora='0') group by d.dia, d.mes, d.anio, d.sala having count(*) > 1")
+		if(zero){
+            def c = DdjjExhibidorRegistry.createCriteria()
+            def results = c.list{
+                and {
+                    eq 'ddjj', this
+                    or{ 
+                        zero.each{ 
+                            def fila = it
+                            and{
+                                eq 'dia', fila[0]
+                                eq 'mes', fila[1]
+                                eq 'anio', fila[2]
+                                eq 'sala', fila[3]
+                            }
+                        }
+                    }
+                }
+            }
+			ddjjRegs.each{
+				if(it in results){
+					if(it.hora == '0'){
+						it.errors.rejectValue("hora","horaZero",["${it.dia}/${it.mes}/${it.anio}"] as Object[],"Existen otros registros de la misma fecha [{0}] con horario distinto de cero")
+					} else {
+						it.errors.rejectValue("hora","horaZero",["${it.dia}/${it.mes}/${it.anio}"] as Object[],"Existen otros registros de la misma fecha [{0}] con horario en cero")
+					}
+				}
+			}
+            return results.size == 0
+
+		}
 	}
 
 /*	static transients = ['file']
