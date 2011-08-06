@@ -20,7 +20,7 @@ class DdjjExhibidorController {
 		def valid = true
         DdjjExhibidor.withTransaction { status ->
 			if(ddjj.validate()){
-				ddjj.save()
+				//ddjj.save()
 			}
 			def ddjjRegs = []
 			dest.eachLine { line ->
@@ -49,18 +49,24 @@ class DdjjExhibidorController {
 				}else if(registry.validate()){
 					valid = valid && true 
 					ddjj.addToDdjjExhibidorRegs(registry)
+					println "valido: ${registry.id}"
 				}else{
 					valid = valid && false
+					println "invalido: ${registry.id}"
 				 	registry.errors.each {
-		 	        	println it
+		 	        	println "ERROR: $it"
    				 	}
 //					ddjjRegs << registry	
 				}
 				ddjjRegs << registry
 			}
 			def map = [ddjjExhibidorInstance:ddjj]
-			if(!ddjj.hasErrors() & valid & ddjj.validateHourZero(ddjjRegs) & ddjj.validateRepetitions(ddjjRegs)){
-				//ddjj.save()
+			if(!ddjj.hasErrors() && valid ){
+				ddjj.save()
+				valid = valid && !ddjj.hasErrors() & ddjj.validateHourZero(ddjjRegs)
+				valid = valid & ddjj.validateRepetitions(ddjjRegs)
+			}
+			if(valid){
 	        	redirect action:"show", id:ddjj.id
 			}else{
 				ddjjRegs.findAll{it.hasErrors()}.each{ it.errors.each{ reg -> println reg}} 
