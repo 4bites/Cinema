@@ -87,6 +87,55 @@ class DdjjExhibidor {
 		}
 	}
 
+	def validateRepetitionsAndZeros = { ddjjRegs ->
+		def valid = true
+		def map = [:]
+		def hora = [:]
+
+		ddjjRegs.each {
+		    if(map[[it.dia, it.mes, it.anio, it.sala]]) {
+        		map[[it.dia, it.mes, it.anio, it.sala]] << it
+		    } else {
+        		map[[it.dia, it.mes, it.anio, it.sala]] = [it]
+    		}          
+		}
+    	println "MAP: ${map}" 
+		map.each{ key, value ->
+			def zero = value.findAll{ it.hora == '0'}
+			def nonZero = value.findAll{ it.hora != '0'}
+			println "${zero}, ${nonZero}"
+		    if(zero.size > 0 && nonZero.size > 0){
+				valid = false
+				zero.each {
+					it.errors.rejectValue("hora","horaZero",["${it.dia}/${it.mes}/${it.anio}"] as Object[],
+											"Existen otros registros de la misma fecha [{0}] con horario distinto de cero")
+				}
+        		nonZero.each{
+					it.errors.rejectValue("hora","horaZero",["${it.dia}/${it.mes}/${it.anio}"] as Object[],
+											"Existen otros registros de la misma fecha [{0}] con horario en cero")
+				}
+    		}
+
+		    value.each{
+        		if(hora[it.hora]){
+            		hora[it.hora] << it
+        		} else {
+            		hora[it.hora] = [it]    
+        		}            
+    		}
+    		hora.each{ k, v ->
+        		if(v.size > 1){
+					v.each {
+            			it.errors.rejectValue("hora","repetido",["${it.dia}/${it.mes}/${it.anio} ${it.hora}",it.sala.codigo] as Object[],
+											 	"Existen otros registros de la misma fecha, hora[{0}] y sala [{1}]")
+					}
+					valid = false
+        		}
+    		}
+		}
+		valid
+
+	}
 /*	static transients = ['file']
 
 	String getFilePath(){

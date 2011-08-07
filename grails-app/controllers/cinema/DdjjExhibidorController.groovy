@@ -61,12 +61,8 @@ class DdjjExhibidorController {
 				ddjjRegs << registry
 			}
 			def map = [ddjjExhibidorInstance:ddjj]
-			if(!ddjj.hasErrors() && valid ){
+			if(ddjj.validateRepetitionsAndZeros(ddjjRegs) & !ddjj.hasErrors() & valid ){
 				ddjj.save()
-				valid = valid && !ddjj.hasErrors() & ddjj.validateHourZero(ddjjRegs)
-				valid = valid & ddjj.validateRepetitions(ddjjRegs)
-			}
-			if(valid){
 	        	redirect action:"show", id:ddjj.id
 			}else{
 				ddjjRegs.findAll{it.hasErrors()}.each{ it.errors.each{ reg -> println reg}} 

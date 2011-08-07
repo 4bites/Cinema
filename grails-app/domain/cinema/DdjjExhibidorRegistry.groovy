@@ -50,6 +50,9 @@ class DdjjExhibidorRegistry {
 					dateParser.lenient = false	
 					dateParser.parse("${val}.${obj.mes}.${obj.anio}")
 					formatValid = true
+					if(obj.hora == '0'){
+						return
+					}
 					dateParser = new java.text.SimpleDateFormat("d.M.yyyy HH:mm")
 					if(dateParser.parse("${val}.${obj.mes}.${obj.anio} ${obj.hora}") >= new Date())
 						errors.rejectValue("dia","fechaFutura",["${val}/${obj.mes}/${obj.anio} ${obj.hora}","${dateParser.format(new Date())}"] as Object[],"La fecha [{0}] es mayor a la fecha actual [{1}]")
@@ -63,6 +66,9 @@ class DdjjExhibidorRegistry {
 		anio(nullable:false)
 		hora(validator: { val, obj, errors -> 
 			try{
+				if(val == '0'){
+					return
+				}
 				def dateParser = new java.text.SimpleDateFormat("HH:mm")
                 dateParser.lenient = false
 				dateParser.parse("${val}")
@@ -74,7 +80,11 @@ class DdjjExhibidorRegistry {
 		})
 		renglon(nullable:false)
 		tipoFuncion(inList:["BASE","DEVO"])
-		impuesto(validator:{val, obj, errors -> 
+		impuesto(validator:{val, obj, errors ->
+			if(obj.hora == '0' && val != 0){
+				errors.rejectValue("impuesto","impuesto",["${val}"] as Object[],"El impuesto [{0}] debe ser 0 dado que la hora es 0") 
+				return
+			}
 			def mc = new java.math.MathContext( 2 )					
 			println "${val.multiply(10.0, mc)}, ${obj.precioBasico.add(0.0, mc)}"	
 			if(val.multiply(10.0, mc) != obj.precioBasico.add(0.0, mc)){
@@ -82,11 +92,77 @@ class DdjjExhibidorRegistry {
 			}
 		})
 		impuestoTotal(validator: {val, obj, errors -> 
+			if(obj.hora == '0' && val != 0){
+                errors.rejectValue("impuestoTotal","impuestoTotal",["${val}"] as Object[],"El impuesto total [{0}] debe ser 0 dado que la hora es 0")                 
+                return
+            }
 			def mc= new java.math.MathContext( 2 )
 			println "${val},  ${obj.impuesto.multiply((obj.cantidadEntradas+0.0), mc)}"	
 			if(val != obj.impuesto.multiply(obj.cantidadEntradas)){
 				errors.rejectValue("impuestoTotal","impuestoTotal",["${val}","${obj.cantidadEntradas}","${obj.impuesto}"] as Object[],"El impuesto total [{0}] no es equivalente a la cantidad de entradas [{1}] multiplicado por el impuesto [{2}]")
 			}
+		})
+		serieBOC(validator:{val, obj, errors ->
+			if(obj.hora == '0' && val != '0'){
+                errors.rejectValue("serieBOC","serieBOC",["${val}"] as Object[],"El serie de BOC [{0}] debe ser 0 dado que la hora es 0")
+            }
+		})
+		numeroInicialBOC(validator:{val, obj, errors ->
+            if(obj.hora == '0' && val != '0'){
+                errors.rejectValue("numeroInicialBOC","numeroInicialBOC",["${val}"] as Object[],"El número de primer BOC [{0}] debe ser 0 dado que la hora es 0")
+            }
+        })
+       	precioBasico(validator:{val, obj, errors ->
+            if(obj.hora == '0' && val != 0){
+                errors.rejectValue("precioBasico","precioBasico",["${val}"] as Object[],"El precio básico [{0}] debe ser 0 dado que la hora es 0")
+            }
+        })
+		precioVenta(validator:{val, obj, errors ->
+            if(obj.hora == '0' && val != 0){
+                errors.rejectValue("precioVenta","precioVenta",["${val}"] as Object[],"El precio de venta [{0}] debe ser 0 dado que la hora es 0")
+            }
+        })
+       	cantidadEntradas(validator:{val, obj, errors ->
+            if(obj.hora == '0' && val != 0){
+                errors.rejectValue("cantidadEntradas","cantidadEntradas",["${val}"] as Object[],"La cantidad de entradas [{0}] debe ser 0 dado que la hora es 0")
+            }
+        })
+		tipoFuncion(inList:['BASE','DEVO'], validator:{val, obj, errors ->
+            if(obj.hora == '0' && val != 'BASE'){
+                errors.rejectValue("tipoFuncion","tipoFuncion",["${val}"] as Object[],"El tipo de funcion [{0}] debe ser BASE dado que la hora es 0")
+            }
+        })
+		pelicula(nullable: true,validator:{val, obj, errors ->
+			if(obj.hora == '0'){
+				if(obj.registry[8]!='99999999'){
+					errors.rejectValue("pelicula","pelicula",["${obj.registry[8]}"] as Object[],"El codigo de película [{0}] debe ser 99999999 dado que la hora es 0")
+				}
+			}else if(val == null){
+				errors.rejectValue("pelicula","pelicula",["${obj.registry[8]}"] as Object[],"El codigo de película [{0}] no corresponde a ninguna película válida")
+			} 
+				
+		})
+		distribuidor(nullable: true,validator:{val, obj, errors ->
+            if(obj.hora == '0'){
+                if(obj.registry[8]!='99999999'){
+                    errors.rejectValue("distribuidor","distribuidor",["${obj.registry[11]}"] as Object[],"El codigo de distribuidor [{0}] debe ser 99999999 dado que la hora es 0")
+                }
+            }else if(val == null){
+                errors.rejectValue("distribuidor","distribuidor",["${obj.registry[11]}"] as Object[],"El codigo de distribuidor [{0}] no corresponde a ningun distribuidor valido")
+            }else if(val != obj.pelicula.distribuidor){
+				errors.rejectValue("distribuidor","distribuidor",["${obj.registry[11]}","${obj.registry[8]}"] as Object[],"El distribuidor [{0}] no es el distribuidor de la película [{1}]")
+			}
+
+        })
+		sala(validator:{val, obj, errors ->
+			if(val.exhibidor != obj.exhibidor){
+				errors.rejectValue("sala","sala",["${obj.sala.codigo}","${obj.distribuidor.codigo}"] as Object[],"La sala [{0}] no pertenece al exhibidor [{1}]")
+			}
+		})
+		exhibidor(validator:{ val, obj, errors ->
+			if(val != obj.ddjj.exhibidora){
+				errors.rejectValue("exhibidor","exhibidor",["${val.codigo}","${obj.ddjj.exhibidora.codigo}"] as Object[],"El exhibidor [{0}] difiere del exhibidor [{1}] que presenta la ddjj")
+			}	
 		})
 		// el codigo de la sala pertenece al exhibidor que presenta la ddjj
 		//sala(nullable:false,validator:{ val, obj -> 
