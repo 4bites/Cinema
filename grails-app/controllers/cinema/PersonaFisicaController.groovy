@@ -15,6 +15,7 @@ class PersonaFisicaController {
 	]*/
     def index = { }
 	def cuit = {
+		/*
 		def multi = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]
 		def numDoc = params.documento.replaceAll("\\.","")
 		def sexNum = (params.sexo=='MASCULINO'?'20':'27')
@@ -33,6 +34,8 @@ class PersonaFisicaController {
 			verif = 11- multi.sum()%11 
 		}
 		def c = [cuit: "$sexNum-$params.documento-$verif"]
+		*/
+		def c = [cuit:PersonaFisica.calculateCuit(params.sexo, params.documento)]
 		render c as JSON
 	}
 

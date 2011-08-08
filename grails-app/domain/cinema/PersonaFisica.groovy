@@ -18,7 +18,9 @@ class PersonaFisica {
 //	List pFisicaPJuridicas
 	static hasMany = [pFisicaPJuridicas:PFisicaPJuridica]
     static constraints = {
-        cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/)
+        cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/, validator:{ val, obj ->
+			val == PersonaFisica.calculateCuit(obj.sexo.toString(), "${obj.numeroDocumento}")
+		})
         nombre(blank:false)
         apellido(blank:false)
         tipoDocumento(blank:false)
@@ -42,4 +44,26 @@ class PersonaFisica {
 	public String toString(){
 		"$nombre $apellido"
 	}
+
+	static def calculateCuit = { sexo, documento ->
+        def multi = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]
+        def numDoc = documento.replaceAll("\\.","")
+        def sexNum = (sexo=='MASCULINO'?'20':'27')
+        def doc = (sexNum+numDoc).toList()
+        doc.eachWithIndex { obj,i ->
+            multi[i] = Integer.valueOf(obj)*multi[i]
+        }
+        def resto = multi.sum()%11
+        def verif
+        if(resto == 0){
+            verif = 0
+        } else if(resto == 1){
+            verif = (sexNum == '27' ? 4 : 9)
+            sexNum = '23'
+        } else {
+            verif = 11- multi.sum()%11
+        }
+        "$sexNum-$numDoc-$verif"
+    }
+
 }
