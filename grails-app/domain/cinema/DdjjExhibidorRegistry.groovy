@@ -86,8 +86,8 @@ class DdjjExhibidorRegistry {
 				return
 			}
 			def mc = new java.math.MathContext( 2 )					
-			println "${val.multiply(10.0, mc)}, ${obj.precioBasico.add(0.0, mc)}"	
-			if(val.multiply(10.0, mc) != obj.precioBasico.add(0.0, mc)){
+			println "${val.multiply(10.0, mc)}, ${obj.precioBasico?.add(0.0, mc)}"	
+			if(val.multiply(10.0, mc) != obj.precioBasico?.add(0.0, mc)){
 				errors.rejectValue("impuesto","impuesto",["${val}","${obj.precioBasico}"] as Object[],"El impuesto [{0}] no es equivalente al 10% del precio básico [{1}]")
 			}
 		})
@@ -97,8 +97,7 @@ class DdjjExhibidorRegistry {
                 return
             }
 			def mc= new java.math.MathContext( 2 )
-			println "${val},  ${obj.impuesto.multiply((obj.cantidadEntradas+0.0), mc)}"	
-			if(val != obj.impuesto.multiply(obj.cantidadEntradas)){
+			if(val != obj.impuesto?.multiply(obj.cantidadEntradas?:0)){
 				errors.rejectValue("impuestoTotal","impuestoTotal",["${val}","${obj.cantidadEntradas}","${obj.impuesto}"] as Object[],"El impuesto total [{0}] no es equivalente a la cantidad de entradas [{1}] multiplicado por el impuesto [{2}]")
 			}
 		})
@@ -149,14 +148,16 @@ class DdjjExhibidorRegistry {
                 }
             }else if(val == null){
                 errors.rejectValue("distribuidor","distribuidor",["${obj.registry[11]}"] as Object[],"El codigo de distribuidor [{0}] no corresponde a ningun distribuidor valido")
-            }else if(val != obj.pelicula.distribuidor){
+            }else if(val != obj.pelicula?.distribuidor){
 				errors.rejectValue("distribuidor","distribuidor",["${obj.registry[11]}","${obj.registry[8]}"] as Object[],"El distribuidor [{0}] no es el distribuidor de la película [{1}]")
 			}
 
         })
-		sala(validator:{val, obj, errors ->
-			if(val.exhibidor != obj.exhibidor){
-				errors.rejectValue("sala","sala",["${obj.sala.codigo}","${obj.distribuidor.codigo}"] as Object[],"La sala [{0}] no pertenece al exhibidor [{1}]")
+		sala(nullable: true, validator:{val, obj, errors ->
+			if(val == null){
+				errors.rejectValue("sala","salaNull",["${obj.registry[4]}"] as Object[], "El código [{0}] no corresponde a ninguna sala válida")	
+			} else if(val.exhibidor != obj.exhibidor){
+				errors.rejectValue("sala","sala",["${obj.sala.codigo}","${obj.exhibidor.codigo}"] as Object[],"La sala [{0}] no pertenece al exhibidor [{1}]")
 			}
 		})
 		exhibidor(validator:{ val, obj, errors ->

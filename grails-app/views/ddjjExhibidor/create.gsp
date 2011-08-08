@@ -96,13 +96,15 @@
 												<td>
 													 <ul>
 													   <g:eachError var="err" bean="${reg}">
-													       	<li><g:if test="${!(err.code in ['fecha','ddjjExhibidorRegistry.invalid','hora','periodoFiscal','fechaFutura','impuestoTotal','impuesto','repetido','horaZero'])}" >
+													       	<li><!--
+																<g:if test="${!(err.code in ['distribuidor','fecha','ddjjExhibidorRegistry.invalid','hora','periodoFiscal','fechaFutura','impuestoTotal','impuesto','repetido','horaZero'])}" >
 																	<g:message code="ddjjExhibidorRegistry.${err.code}"  
 																	args="${[reg.original_value(err.field), err.field]}"  />
 																</g:if>
 																<g:else>
 																	<g:message error="${err}" />
-																</g:else>	
+																</g:else>-->
+																${message(code:err.code)==err.code?message(error:err):message(code:err.code)}
 															</li> 
 														</g:eachError>
 													</ul>
