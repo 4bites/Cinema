@@ -25,13 +25,6 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="ddjjExhibidor.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${ddjjExhibidorInstance?.id}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="ddjjExhibidor.fecha.label" default="Fecha" /></td>
                             
                             <td valign="top" class="value"><g:formatDate date="${ddjjExhibidorInstance?.fecha}" /></td>

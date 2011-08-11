@@ -28,7 +28,38 @@
                     	$(this).datepicker('setDate', new Date(year, month-1, 1));
                 	}
             	}
-    		});	
+    		});
+		
+			$("#videoClub").autocomplete({ source: function(request, response) {
+                            $.ajax({
+                                url: "${createLink(mapping:'empresa', params:[dom:'VideoClub'], action:'autocomplete')}",
+                                dataType: "json",
+                                data: {
+                                    term: request.term
+                                },
+                                success: function(data) {
+                                    response($.map(data, function(item) {
+                                        return {
+                                            label: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
+                                            value: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
+                                            title: item.id
+                                        }
+                                    }))
+                                }
+                            })
+                        },
+                        minLength:1,
+                        select: function(event, ui) {
+                            $('#videoClub\\.id').val(ui.item.title);
+                        },
+                        change: function(event, ui) {
+                            if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
+                                $(this).val('');
+                            }
+                        }
+
+                    });
+		
 		});	
 		</script>
 		<style>
@@ -63,7 +94,8 @@
                                     <label for="videoClub"><g:message code="ddjjVideo.videoClub.label" default="Video Club" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjVideoInstance, field: 'videoClub', 'errors')}">
-                                    <g:select name="videoClub.id" from="${cinema.VideoClub.list()}" optionKey="id" value="${ddjjVideoInstance?.videoClub?.id}" noSelection="['null': '']" />
+                                    <g:textField name="videoClub" value="${ddjjVideoInstance?.videoClub?.desc()}"  />
+									<input type="hidden" name="videoClub.id" id="videoClub.id" value="${ddjjVideoInstance?.videoClub?.id}"
                                 </td>
                             </tr>
                         

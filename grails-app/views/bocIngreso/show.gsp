@@ -23,13 +23,6 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bocIngreso.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: bocIngresoInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="bocIngreso.desde.label" default="Desde número" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: bocIngresoInstance, field: "desde")}</td>

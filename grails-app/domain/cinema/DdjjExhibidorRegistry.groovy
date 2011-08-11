@@ -29,19 +29,23 @@ class DdjjExhibidorRegistry {
 			switch (val){
 				case 1:
 					if(obj.dia < 1 || obj.dia > 7)
-						dias = [1,7] 
+						dias = [1,7]
+						break 
 				case 2:
 					if(obj.dia < 8 || obj.dia > 15)
 						dias = [8,15]
+						break
 				case 3:
         	        if(obj.dia < 16 || obj.dia > 22)
             	        dias = [16, 22]
+						break
 				case 4:
                     if(obj.dia < 22)
                         dias = [22, 'fin del mes']
 			}
 			if(dias.size > 0)
-				errors.rejectValue("periodoFiscal","periodoFiscal",["${val}"]+dias as Object[],"El período fiscal [{0}] debe corresponder con los días del mes [{1}] al [{2}]")
+				errors.rejectValue("periodoFiscal","periodoFiscal",["${val}"]+dias+["${obj.registry[6]}"] as Object[],
+					"El período fiscal [{0}] debe corresponder con los días del mes [{1}] al [{2}], pero el día del registro es [{3}]")
 		})
 		dia(range:1..31, validator:{val, obj, errors -> 
 			def formatValid
@@ -143,7 +147,7 @@ class DdjjExhibidorRegistry {
 		})
 		distribuidor(nullable: true,validator:{val, obj, errors ->
             if(obj.hora == '0'){
-                if(obj.registry[8]!='99999999'){
+                if(obj.registry[11]!='99999999'){
                     errors.rejectValue("distribuidor","distribuidor",["${obj.registry[11]}"] as Object[],"El codigo de distribuidor [{0}] debe ser 99999999 dado que la hora es 0")
                 }
             }else if(val == null){
@@ -160,8 +164,10 @@ class DdjjExhibidorRegistry {
 				errors.rejectValue("sala","sala",["${obj.sala.codigo}","${obj.exhibidor.codigo}"] as Object[],"La sala [{0}] no pertenece al exhibidor [{1}]")
 			}
 		})
-		exhibidor(validator:{ val, obj, errors ->
-			if(val != obj.ddjj.exhibidora){
+		exhibidor(nullable: true, validator:{ val, obj, errors ->
+			if(val == null){
+                errors.rejectValue("exhibidor","exhibidor",["${obj.registry[3]}"] as Object[], "El código [{0}] no corresponde a ningun exhibidor válido")
+			} else if(val != obj.ddjj.exhibidora){
 				errors.rejectValue("exhibidor","exhibidor",["${val.codigo}","${obj.ddjj.exhibidora.codigo}"] as Object[],"El exhibidor [{0}] difiere del exhibidor [{1}] que presenta la ddjj")
 			}	
 		})

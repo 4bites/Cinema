@@ -8,6 +8,10 @@ class Localidad {
     static constraints = {
     }
 
+	public String toString(){
+        name
+    }
+
 	static def show_columns = {
         ["name"]
     }

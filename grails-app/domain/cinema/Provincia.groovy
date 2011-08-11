@@ -13,6 +13,10 @@ class Provincia {
 		Provincia.list().collect{"['${it.name}','${it.name}']"}.join(",")
 	}
 	
+	public String toString(){
+        name
+    }
+
 	static def show_columns = {
 		["name"]
 	}

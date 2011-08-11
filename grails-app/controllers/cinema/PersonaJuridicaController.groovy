@@ -24,41 +24,57 @@ class PersonaJuridicaController {
 		}else{
 			p = new PersonaJuridica(params.findAll{ it.key != "pJuridicaPFisicas.personaFisica" && it.key != "pJuridicaPFisicas.cargo"})
 		}
-		if(p.validate()){
-			p.save()
-//			p.pJuridicaPFisicas.each{
-			PFisicaPJuridica.findAllByPersonaJuridica(p)?.each{
-				print "eliminando... $it.personaFisica.apellido"
-				PFisicaPJuridica.unlink(it.personaFisica, p)
-			}
-		    params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
-				if(pf){
-					def cuit = pf.split(" cuit:")[1]
-					def pFisica = PersonaFisica.findByCuit(cuit)
-					//def pFisica = PersonaFisica.findByNombreAndApellido(pf.split(" ")[0],pf.split(" ")[1])
-					if(pFisica){
-						println pFisica.nombre + " " + params.list("pJuridicaPFisicas.cargo").get(i)
-						def fj = PFisicaPJuridica.link(pFisica, p, params.list("pJuridicaPFisicas.cargo").get(i))
-						println fj.personaFisica?.cuit + " " + fj.personaJuridica?.cuit + " " + fj.id
+		def allPeopleOk = false
+
+		PersonaJuridica.withTransaction { status ->
+//		if(p.validate()){
+//				p.save()
+				p.pJuridicaPFisicas.each{
+					PJuridicaPFisica.unlink(it.pFisica, p)
+				}	
+			    params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
+					println "ENTRO AL LOOP!!! $i"
+					if(pf){
+						def cuit = pf.split(" cuit:")[1]?.trim()
+						def pFisica = PersonaFisica.findByCuit(cuit)
+						if(pFisica){
+							def fj = PFisicaPJuridica.link(pFisica, p, params.list("pJuridicaPFisicas.cargo").get(i))
+							println "personafisica $i, $fj?.personaFisica.nombre"
+							allPeopleOk = (i==0 ? allPeopleOk || (fj != null && !fj.hasErrors()): allPeopleOk && (fj != null && !fj.hasErrors()))
+							if(fj?.hasErrors()){
+								fj.errors.allErrors.each {
+									println "errores de $i, $it.code"
+									p.errors.reject(it.code, "Errores en persona física")
+								}
+							}
+						}
 					}
 				}
-			}
-//			p.save()	 		
+				println "ACA TENGO PFISICAPJURIDICAS: ${p.pJuridicaPFisicas.size()}"
+//		}
+		if(p.validate() && allPeopleOk){
+			p.save()
+			p.pJuridicaPFisicas.each{ it.save() }
 			redirect action:"show", id: p.id
 		}else{
-			println "Invalido!!!"
-			params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
-        	    if(pf){
+/*			params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
+        	    if(pf && !unlessOnePerson){
             	    def cuit = pf.split(" cuit:")[1]
 					def desc = pf.split(" cuit:")[0]
                 	def pFisica = new PersonaFisica(nombre:desc.split(" ")[0],apellido:desc.split(" ")[1],cuit:cuit)
                 	def pfj = new PFisicaPJuridica(personaFisica:pFisica, cargo:params.list("pJuridicaPFisicas.cargo").get(i))
                 	p.pJuridicaPFisicas << pfj
+					println "PORQUE DUPLICA!!! $i"
             	}
-        	}
+        	}*/
+			if(!allPeopleOk){
+				p.errors.reject("personaJuridica.unlessOnePerson")
+			}
 			print "personaJuridicaInstance.pJuridicaPFisicas:"+p.pJuridicaPFisicas
-			def map = [personaJuridicaInstance: p]
+			def map = [personaJuridicaInstance: p, status: status]
 			render(view:"create", model: map)
+//			status.setRollbackOnly()
+		}
 		}
 	}	
 
@@ -68,7 +84,7 @@ class PersonaJuridicaController {
 
 	def edit = {
         def pj = PersonaJuridica.get(params.id)
-        render view:"edit", model:[personaJuridicaInstance:pj]
+        render view:"create", model:[personaJuridicaInstance:pj]
     }
 
 	def autocomplete = {
@@ -119,9 +135,6 @@ class PersonaJuridicaController {
            	}
 
 		}
-
-		dataToRender.aaData = results
-
 		render dataToRender as JSON*/
 	}
 	

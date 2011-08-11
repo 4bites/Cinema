@@ -22,11 +22,18 @@ class PersonaJuridica {
 		tipoSociedad(blank:false)
 		domicilio(blank:false)
 		codigoPostal(blank:false)
-		provincia(blank:false)
-		localidad(blank:true)
+        provincia(nullable:false, validator: {
+            return (it.id != 0)
+        })
+        localidad(nullable:false, validator: {
+            return (it.id != 0)
+        })
+
 		telefono(blank:false)
 		email(blank:false,email:true)
-		condicionIVA(blank:false)	
+		condicionIVA(blank:false, validator: {
+            return (it != '0')
+        })
     }
 
 	public String toString(){
@@ -34,6 +41,6 @@ class PersonaJuridica {
 	}
 	
 	static def show_columns = {
-		["cuit","razonSocial","provincia","localidad","exhibidor"]
+		["cuit","razonSocial","provincia","localidad","tipoSociedad"]
 	}
 }

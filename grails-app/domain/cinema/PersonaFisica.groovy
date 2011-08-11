@@ -36,7 +36,7 @@ class PersonaFisica {
     	})
         telefono(nullable:false, blank:false)
         email(email:true, blank:false)
-        condicionIVA(nullable:false, validator: {
+        condicionIVA(blank:false, validator: {
 			return (it != '0')
 		})
     }
@@ -44,7 +44,11 @@ class PersonaFisica {
 	public String toString(){
 		"$nombre $apellido"
 	}
-
+	
+	static def show_columns = {
+        ["cuit","nombre","apellido","provincia","localidad","email"]
+    }
+ 
 	static def calculateCuit = { sexo, documento ->
         def multi = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]
         def numDoc = documento.replaceAll("\\.","")

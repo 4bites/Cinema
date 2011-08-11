@@ -23,6 +23,10 @@ class Empresa {
 		personaFisica? "${personaFisica.nombre} ${personaFisica.apellido} cuit:${personaFisica.cuit}" : "${personaJuridica?.razonSocial} cuit:${personaJuridica?.cuit}"
 	}
 
+	public String toString() {
+		return desc()
+	}
+
 	static def show_columns = {
 		["codigo", "personaFisica", "personaJuridica"]
 	}

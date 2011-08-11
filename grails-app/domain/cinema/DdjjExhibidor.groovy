@@ -115,7 +115,7 @@ class DdjjExhibidor {
 											"Existen otros registros de la misma fecha [{0}] con horario en cero")
 				}
     		}
-
+/*
 		    value.each{
         		if(hora[it.hora]){
             		hora[it.hora] << it
@@ -126,12 +126,13 @@ class DdjjExhibidor {
     		hora.each{ k, v ->
         		if(v.size > 1){
 					v.each {
-            			it.errors.rejectValue("hora","repetido",["${it.dia}/${it.mes}/${it.anio} ${it.hora}",it.sala.codigo] as Object[],
+            			it.errors.rejectValue("hora","repetido",["${it.dia}/${it.mes}/${it.anio} ${it.hora}",it.sala?.codigo] as Object[],
 											 	"Existen otros registros de la misma fecha, hora[{0}] y sala [{1}]")
 					}
 					valid = false
         		}
     		}
+*/
 		}
 		valid
 

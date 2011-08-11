@@ -53,6 +53,7 @@
                         	<td>${message(code: 'personaJuridica.telefono.label', default: 'Telefono')}</td>
 							<td>${message(code: 'personaJuridica.tipoSociedad.label', default: 'Tipo Sociedad')}</td>
 							<td>${message(code: 'personaJuridica.provincia.label', default: 'Provincia')}</td>
+							<!--td>${message(code: 'personaFisica.label', default: 'Persona Fisica')}</td-->
                         </tr>
                     </thead>
                     <tbody>
@@ -65,6 +66,7 @@
 							<th>${message(code: 'personaJuridica.telefono.label', default: 'Telefono')}</th>
 							<th>${message(code: 'personaJuridica.tipoSociedad.label', default: 'Tipo Sociedad')}</th>
 							<th>${message(code: 'personaJuridica.provincia.label', default: 'Provincia')}</th>
+							<!--th>${message(code: 'personaFisica.label', default: 'Persona Fisica')}</th-->
 						</tr>
 					</tfoot>
 

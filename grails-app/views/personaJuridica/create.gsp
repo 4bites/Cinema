@@ -66,9 +66,10 @@
                         return false;
                     });
 					for(j=1;j<=i;j++){
-					$("#remove"+j).click(function() {
+					  $("#remove"+j).click(function() {
                             $(this).parent().remove();
                       });
+					  j++;
 					}
 
 
@@ -197,7 +198,7 @@
                                     <label for="condicionIVA"><g:message code="personaJuridica.condicionIVA.label" default="Condicion IVA" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'condicionIVA', 'errors')}">
-                                    <g:select name="condicionIVA" id="condicionIVA" noSelection="${['null':'Seleccionar...']}"
+                                    <g:select name="condicionIVA" id="condicionIVA" noSelection="${['0':'Seleccionar...']}"
                                               from="${['Inscripto','No Inscripto','Excento', 'Monotributo']}" 
                                               value="${personaJuridicaInstance?.condicionIVA}"
                                               />
@@ -209,9 +210,9 @@
 							</tr>  
 							<tr class="prop">
                                 <td valign="top" class="name" colspan=2 id="pfs">
-									<g:each status="i" in="${personaJuridicaInstance.pJuridicaPFisicas}" var="p">									
+									<g:each status="i" in="${personaJuridicaInstance.pJuridicaPFisicas}" var="p">								
 										<p id="pf${i+1}">
-										<label>Persona Fisica</label><g:textField name="pJuridicaPFisicas.personaFisica" value="${p.personaFisica.nombre} ${p.personaFisica.apellido} cuit:${p.personaFisica.cuit}" size="50"/>
+										<label>Persona Fisica</label><g:textField name="pJuridicaPFisicas.personaFisica" value="${p.personaFisica} cuit:${p.personaFisica.cuit}" size="50"/>
 										<label>Cargo</label><g:textField name="pJuridicaPFisicas.cargo" value="${p.cargo}"/>
 										<span class="button" id="remove${i+1}"><input type="button" class="save" value="Remover" /></span>
 										</p>
@@ -236,3 +237,4 @@
         </div>
     </body>
 </html>
+<% status?.setRollbackOnly() %>

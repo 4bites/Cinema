@@ -1,5 +1,4 @@
-import cinema.Provincia
-import cinema.Localidad
+import cinema.*
 import grails.converters.*
 //import org.springframework.web.context.request.RequestContextHolder as RCH
 
@@ -23,6 +22,9 @@ class BootStrap {
 			}
 		}
 */
+		Provincia.metaClass.encodeAsHTML = { -> delegate.name }
+		Localidad.metaClass.encodeAsHTML = { -> delegate.name }
+
 		JSON.registerObjectMarshaller(new json.PoweredDomainClassMarshaller(false), 10)
 	
 		String.metaClass.humanField = { ->
@@ -32,10 +34,10 @@ class BootStrap {
 //			domain.metaClass.'static'.methodMissing = { String name, args ->  null }
 			domain.metaClass.getValueFrom = { String field -> 
 												def b = new Binding()
-												b.setVariable("field",field)
+												b.setVariable("field",field.replaceAll("\\.","?."))
 												b.setVariable("delegate",delegate)
 												def shell = new GroovyShell(b)
-												return shell.evaluate("delegate.${field}") }
+												return shell.evaluate("try{delegate.${field}} catch(Exception e){''}") }
 		}
 
 		grailsApplication.getArtefacts("Controller")*.clazz.each{ controller ->

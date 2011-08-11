@@ -67,8 +67,14 @@
         <gui:menuitem url='${webRequest.getContextPath()}/pelicula/list'>Listar</gui:menuitem>
     </gui:submenu>
    	<gui:submenu label='DDJJ'>
-        <gui:menuitem url='${webRequest.getContextPath()}/ddjjVideo/create'>Video Club</gui:menuitem>
-        <gui:menuitem url='${webRequest.getContextPath()}/ddjjExhibidor/create'>Exhibidor</gui:menuitem>
+		<gui:submenu label="Video Club">	
+	        <gui:menuitem url='${webRequest.getContextPath()}/ddjjVideo/create'>Alta</gui:menuitem>
+			<gui:menuitem url='${webRequest.getContextPath()}/ddjjVideo/list'>Listar</gui:menuitem>	
+		</gui:submenu>
+		<gui:submenu label="Exhibidor">
+	        <gui:menuitem url='${webRequest.getContextPath()}/ddjjExhibidor/create'>Alta</gui:menuitem>
+			<gui:menuitem url='${webRequest.getContextPath()}/ddjjExhibidor/list'>Listar</gui:menuitem>
+		</gui:submenu>
     </gui:submenu>
    	<gui:submenu label='BOC'>
 		<gui:submenu label='BOC Ingreso'>
