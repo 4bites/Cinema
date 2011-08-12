@@ -130,7 +130,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="sala.exhibidor.label" default="Exhibidor" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="exhibidor" action="show" id="${salaInstance?.exhibidor?.id}">${salaInstance?.exhibidor?.desc()}</g:link></td>
+                            <td valign="top" class="value"><g:link mapping="empresa" params="[dom:'Exhibidor']" action="show" id="${salaInstance?.exhibidor?.id}">${salaInstance?.exhibidor?.desc()}</g:link></td>
                             
                         </tr>
                     

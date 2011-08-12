@@ -16,20 +16,22 @@ class DdjjExhibidorController {
 		File dest = new File("${grailsApplication.config.ddjjUploadDir}/ddjj_ex${params["exhibidor.id"]}_${System.currentTimeMillis()}")
 		file.transferTo(dest)
 		ddjj.file = dest.getPath()
-		//println file.inputStream.text
+		println "File: ${dest.size()}" 
 		def valid = true
         DdjjExhibidor.withTransaction { status ->
-			if(ddjj.validate()){
-				//ddjj.save()
-			}
+			ddjj.validate()
+			if(dest.size() == 0){
+    	        ddjj.errors.rejectValue("file","file","Debe ingresar un archivo válido")
+	        }
+
 			def ddjjRegs = []
-			dest.eachLine { line ->
+			dest.eachLine { line, fila ->
 				String[] fd = line.split(',')
 				def registry
 				if(fd.length != 20){
-					registry = new DdjjExhibidorRegistry()
+					registry = new DdjjExhibidorRegistry(fila:fila)
 				} else {
-					def map = [periodoFiscal:fd[0], mes:fd[1], anio:fd[2],
+					def map = [fila:fila, periodoFiscal:fd[0], mes:fd[1], anio:fd[2],
                                         exhibidor:Exhibidor.findByCodigo(fd[3]),
                                         sala:Sala.findByCodigo(fd[4]),
                                         renglon:fd[5], dia:fd[6], hora:fd[7],
@@ -41,7 +43,6 @@ class DdjjExhibidorController {
                                         impuestoTotal:fd[19], registry: fd, ddjj:ddjj]
 					registry = new DdjjExhibidorRegistry(map)
 				}
-				/**TODO validateHourZero union validateRepetitions union ddjjRegs (puedo filtrar ddjjRegs por los que tienen error) **/
 				if(fd.length != 20){
 					valid = valid & false
 					registry.errors.reject("ddjjExhibidorRegistry.invalid")

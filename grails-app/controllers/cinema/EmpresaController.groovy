@@ -5,7 +5,7 @@ import grails.converters.*
 class EmpresaController {
     def scaffold = true
     def index = { }
-
+	
 //	def create = {
 //		render (view:"/cinema/empresa/$params.action" )
 //		redirect(controller:"exhibidor", action:"create")
@@ -25,6 +25,9 @@ class EmpresaController {
 			empresa = grailsApplication.getDomainClass("cinema.$params.dom").newInstance()
 		}	
 		empresa.properties = params.findAll{ it.key != "personaFisica" && it.key != "personaJuridica" }
+		empresa.fechaInicioActividad = (params.fechaInicioActividad != '' ? Empresa.dateFormat.parse(params.fechaInicioActividad):null)
+		empresa.fechaFinActividad = (params.fechaFinActividad != '' ? Empresa.dateFormat.parse(params.fechaFinActividad):null)
+		empresa.fechaUltimaRevalida = (params.fechaUltimaRevalida != '' ? Empresa.dateFormat.parse(params.fechaUltimaRevalida):null)
 		if(params.personaFisica){
 			def cuit = params.personaFisica.split(" cuit:")[1]
         	def pFisica = PersonaFisica.findByCuit(cuit)

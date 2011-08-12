@@ -24,14 +24,17 @@ class PersonaJuridicaController {
 		}else{
 			p = new PersonaJuridica(params.findAll{ it.key != "pJuridicaPFisicas.personaFisica" && it.key != "pJuridicaPFisicas.cargo"})
 		}
-		def allPeopleOk = false
+//		def allPeopleOk = false
 
 		PersonaJuridica.withTransaction { status ->
 //		if(p.validate()){
 //				p.save()
-				p.pJuridicaPFisicas.each{
-					PJuridicaPFisica.unlink(it.pFisica, p)
-				}	
+				if(params.id){
+					PFisicaPJuridica.findAllByPersonaJuridica(p)?.each{
+						PFisicaPJuridica.unlink(it.personaFisica, p)
+					}
+					def x = PFisicaPJuridica.findAllByPersonaJuridica(p)	
+				}
 			    params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
 					println "ENTRO AL LOOP!!! $i"
 					if(pf){
@@ -40,19 +43,19 @@ class PersonaJuridicaController {
 						if(pFisica){
 							def fj = PFisicaPJuridica.link(pFisica, p, params.list("pJuridicaPFisicas.cargo").get(i))
 							println "personafisica $i, $fj?.personaFisica.nombre"
-							allPeopleOk = (i==0 ? allPeopleOk || (fj != null && !fj.hasErrors()): allPeopleOk && (fj != null && !fj.hasErrors()))
-							if(fj?.hasErrors()){
+//							allPeopleOk = (i==0 ? allPeopleOk || (fj != null && !fj.hasErrors()): allPeopleOk && (fj != null && !fj.hasErrors()))
+/*							if(fj?.hasErrors()){
 								fj.errors.allErrors.each {
 									println "errores de $i, $it.code"
 									p.errors.reject(it.code, "Errores en persona física")
 								}
-							}
+							}*/
 						}
 					}
 				}
 				println "ACA TENGO PFISICAPJURIDICAS: ${p.pJuridicaPFisicas.size()}"
 //		}
-		if(p.validate() && allPeopleOk){
+		if(p.validate() && p.pJuridicaPFisicas.size() > 0){
 			p.save()
 			p.pJuridicaPFisicas.each{ it.save() }
 			redirect action:"show", id: p.id
@@ -67,7 +70,7 @@ class PersonaJuridicaController {
 					println "PORQUE DUPLICA!!! $i"
             	}
         	}*/
-			if(!allPeopleOk){
+			if(p.pJuridicaPFisicas.size() == 0){
 				p.errors.reject("personaJuridica.unlessOnePerson")
 			}
 			print "personaJuridicaInstance.pJuridicaPFisicas:"+p.pJuridicaPFisicas

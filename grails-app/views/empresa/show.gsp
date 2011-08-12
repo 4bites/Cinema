@@ -16,14 +16,6 @@
             <div class="dialog">
                 <table>
                     <tbody>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="empresa.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: empresaInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="empresa.codigo.label" default="Codigo" /></td>
                             

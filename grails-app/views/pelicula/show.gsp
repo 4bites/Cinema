@@ -23,16 +23,9 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="pelicula.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${peliculaInstance.id}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="pelicula.codigo.label" default="Codigo" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: peliculaInstance, field: "codigo")}</td>
+                            <td valign="top" class="value">${peliculaInstance?.codigo}</td>
                             
                         </tr>
                     
@@ -52,14 +45,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="pelicula.distribuidor.label" default="Distribuidor" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="distribuidor" action="show" id="${peliculaInstance?.distribuidor?.id}">${peliculaInstance?.distribuidor?.desc()}</g:link></td>
+                            <td valign="top" class="value"><g:link mapping="empresa" params="[dom:'Distribuidor']" action="show" id="${peliculaInstance?.distribuidor?.id}">${peliculaInstance?.distribuidor?.desc()}</g:link></td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="pelicula.productor.label" default="Productor" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="productor" action="show" id="${peliculaInstance?.productor?.id}">${peliculaInstance?.productor?.desc()}</g:link></td>
+                            <td valign="top" class="value"><g:link mapping="empresa" params="[dom:'Productor']" action="show" id="${peliculaInstance?.productor?.id}">${peliculaInstance?.productor?.desc()}</g:link></td>
                             
                         </tr>
                     

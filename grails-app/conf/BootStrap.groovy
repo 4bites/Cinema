@@ -1,5 +1,6 @@
 import cinema.*
 import grails.converters.*
+import groovy.lang.ExpandoMetaClass
 //import org.springframework.web.context.request.RequestContextHolder as RCH
 
 class BootStrap {
@@ -22,6 +23,8 @@ class BootStrap {
 			}
 		}
 */
+		ExpandoMetaClass.enableGlobally()
+
 		Provincia.metaClass.encodeAsHTML = { -> delegate.name }
 		Localidad.metaClass.encodeAsHTML = { -> delegate.name }
 

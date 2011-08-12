@@ -23,6 +23,10 @@ public class PermissionRolesAndUserBootStrap {
         findAndUpdatePermission('gsecUser.create',"gsecUser", "create, save, saveAndRedirectToCreate")
         findAndUpdatePermission('gsecUser.delete',"gsecUser", "delete")
 
+		findAndUpdatePermission('complejo.view','complejo', 'index,list,show')
+		findAndUpdatePermission('complejo.edit','complejo', 'edit, update')
+		findAndUpdatePermission('complejo.create','complejo', 'create, save, saveAndRedirectToCreate')
+		findAndUpdatePermission('complejo.delete','complejo', 'delete')
 
     }
 
@@ -35,6 +39,11 @@ public class PermissionRolesAndUserBootStrap {
         adminRole.addToPermissions(permissions['gsecUser.edit'])
         adminRole.addToPermissions(permissions['gsecUser.create'])
         adminRole.addToPermissions(permissions['gsecUser.delete'])
+
+		adminRole.addToPermissions(permissions['complejo.view']);
+		adminRole.addToPermissions(permissions['complejo.edit']);
+		adminRole.addToPermissions(permissions['complejo.create']);
+		adminRole.addToPermissions(permissions['complejo.delete']);
 
         adminRole.save()
 

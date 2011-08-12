@@ -2,6 +2,7 @@ package cinema
 import java.math.BigDecimal
 
 class DdjjExhibidorRegistry {
+	Integer fila
 	Integer periodoFiscal
 	Integer dia
 	Integer mes
@@ -24,6 +25,7 @@ class DdjjExhibidorRegistry {
 	static belongsTo = [ddjj:DdjjExhibidor]
 	static transients = ['registry']
     static constraints = {
+		fila(nullable:true)
 		periodoFiscal(blank:false,range:1..4, validator:{ val, obj, errors ->
 			def dias = []
 			switch (val){

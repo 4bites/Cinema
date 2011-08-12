@@ -30,7 +30,7 @@ class SalaController {
 			sala.complejo = Complejo.get(params["complejo.id"])
 		}
 		def dias = []
-	    params.diasExhibicion.each{
+	    params.list("diasExhibicion").each{
 	    	print "dia:$it"
             dias << Dia.byId(it)
         }

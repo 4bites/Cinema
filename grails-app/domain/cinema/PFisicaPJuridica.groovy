@@ -2,8 +2,6 @@ package cinema
 
 class PFisicaPJuridica {
 	
-//	PersonaFisica personaFisica
-//	PersonaJuridica personaJuridica
 	String cargo
 	static belongsTo = [personaFisica: PersonaFisica, personaJuridica: PersonaJuridica]	
     static constraints = {
@@ -17,8 +15,8 @@ class PFisicaPJuridica {
 //		{
 			def pp = new PFisicaPJuridica()
 			pp.cargo = cargo
-//			pp.personaFisica = pFisica
-//			pp.personaJuridica = pJuridica
+			pp.personaFisica = pFisica
+			pp.personaJuridica = pJuridica
 			pFisica?.addToPFisicaPJuridicas(pp)
 			pJuridica?.addToPJuridicaPFisicas(pp) 
 			pp.validate()
@@ -34,8 +32,8 @@ class PFisicaPJuridica {
 		def pp = PFisicaPJuridica.findByPersonaFisicaAndPersonaJuridica(pFisica, pJuridica)
 		if (pp)
 		{
-//			pFisica?.removeFromPFisicaPJuridicas(pp)
-//			pJuridica?.removeFromPJuridicaPFisicas(pp)
+			pFisica?.removeFromPFisicaPJuridicas(pp)
+			pJuridica?.removeFromPJuridicaPFisicas(pp)
 			pp.delete(flush:true)
 		}
 	}
