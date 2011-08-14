@@ -91,13 +91,21 @@ class DdjjExhibidor {
 		def valid = true
 		def map = [:]
 		def hora = [:]
+		def map2 = [:]
 
 		ddjjRegs.each {
 		    if(map[[it.dia, it.mes, it.anio, it.sala]]) {
         		map[[it.dia, it.mes, it.anio, it.sala]] << it
 		    } else {
         		map[[it.dia, it.mes, it.anio, it.sala]] = [it]
-    		}          
+    		} 
+			if(it.hora != '0'){	
+	            if(map2[[it.dia, it.mes, it.anio, it.hora, it.sala, it.precioBasico]]) {
+    	            map2[[it.dia, it.mes, it.anio, it.hora, it.sala, it.precioBasico]] << it
+        	    } else {
+            	    map2[[it.dia, it.mes, it.anio, it.hora, it.sala, it.precioBasico]] = [it]
+            	}
+         	}
 		}
     	println "MAP: ${map}" 
 		map.each{ key, value ->
@@ -115,6 +123,26 @@ class DdjjExhibidor {
 											"Existen otros registros de la misma fecha [{0}] con horario en cero")
 				}
     		}
+		}
+		map2.each { key, value ->
+			def base = value.findAll{ it.tipoFuncion == 'BASE' }
+			def devo = value.findAll{ it.tipoFuncion == 'DEVO' }
+			def baseTotal = base.sum {it.cantidadEntradas}
+			def devoTotal = devo.sum{it.cantidadEntradas}
+			if(baseTotal < devoTotal){
+				base.each {
+					it.errors.rejectValue("cantidadEntradas","cantidadEntradas",["${baseTotal}","${devoTotal}"] as Object[],
+                                          "La cantidad de entradas vendidas [{0}] de la función es menor a la cantidad devuelta [{1}]")
+				}
+				devo.each {
+                    it.errors.rejectValue("cantidadEntradas","cantidadEntradas",["${devoTotal}","${baseTotal}"] as Object[],
+                                          "La cantidad de entradas devueltas [{0}] de la función es mayor a la cantidad vendida [{1}]")
+                }
+				valid = false
+			}
+		}
+		valid
+	}
 /*
 		    value.each{
         		if(hora[it.hora]){
@@ -133,10 +161,7 @@ class DdjjExhibidor {
         		}
     		}
 */
-		}
-		valid
-
-	}
+		
 /*	static transients = ['file']
 
 	String getFilePath(){

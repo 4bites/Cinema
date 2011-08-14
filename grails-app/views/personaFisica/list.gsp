@@ -18,12 +18,10 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="list">
-                <table>
+				<g:render template="/shared/list" model="[domain:PersonaFisica]" />
+<!--                <table>
                     <thead>
                         <tr>
-                        
-                            <!--    <g:sortableColumn property="id" title="${message(code: 'personaFisica.id.label', default: 'Id')}" /> 
-                        	-->
                             <g:sortableColumn property="cuit" title="${message(code: 'personaFisica.cuit.label', default: 'Cuit')}" />
                         
                             <g:sortableColumn property="nombre" title="${message(code: 'personaFisica.nombre.label', default: 'Nombre')}" />
@@ -42,8 +40,6 @@
                         
                             <td><g:link action="show" id="${personaFisicaInstance.id}">${fieldValue(bean: personaFisicaInstance, field: "cuit")}</g:link></td>
                         
-                            <!--  <td>${fieldValue(bean: personaFisicaInstance, field: "cuit")}</td> -->
-                        
                             <td>${fieldValue(bean: personaFisicaInstance, field: "nombre")}</td>
                         
                             <td>${fieldValue(bean: personaFisicaInstance, field: "apellido")}</td>
@@ -55,7 +51,7 @@
                         </tr>
                     </g:each>
                     </tbody>
-                </table>
+                </table>-->
             </div>
             <div class="paginateButtons">
                 <g:paginate total="${personaFisicaInstanceTotal}" />

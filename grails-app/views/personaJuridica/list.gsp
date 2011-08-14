@@ -10,7 +10,7 @@
             <g:render template="/js/prov-loc.js"/>
 
 		$(document).ready(function() {
-			$('#results').dataTable( {
+/*			$('#results').dataTable( {
 				"bProcessing": true,
 				"bDeferRender": true,
 				//"bServerSide": true,
@@ -29,7 +29,7 @@
 					});
 					return nRow;
 				}	
-			}).columnFilter({"aoColumns":[{type:"text"},{type:"text"},{type:"text"},{type:"text"},{type: "select", values: [${cinema.SocietyType.select()}] }, {type: "select", values: [${cinema.Provincia.select()}] } ]});
+			}).columnFilter({"aoColumns":[{type:"text"},{type:"text"},{type:"text"},{type:"text"},{type: "select", values: [${cinema.SocietyType.select()}] }, {type: "select", values: [${cinema.Provincia.select()}] } ]});*/
 		});
 		</script>
     </head>
@@ -44,6 +44,8 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="list">
+				<g:render model="['domain':PersonaJuridica]" template="/shared/list" />
+				<!--	
                 <table id="results">
                     <thead>
                         <tr>
@@ -53,7 +55,6 @@
                         	<td>${message(code: 'personaJuridica.telefono.label', default: 'Telefono')}</td>
 							<td>${message(code: 'personaJuridica.tipoSociedad.label', default: 'Tipo Sociedad')}</td>
 							<td>${message(code: 'personaJuridica.provincia.label', default: 'Provincia')}</td>
-							<!--td>${message(code: 'personaFisica.label', default: 'Persona Fisica')}</td-->
                         </tr>
                     </thead>
                     <tbody>
@@ -66,11 +67,10 @@
 							<th>${message(code: 'personaJuridica.telefono.label', default: 'Telefono')}</th>
 							<th>${message(code: 'personaJuridica.tipoSociedad.label', default: 'Tipo Sociedad')}</th>
 							<th>${message(code: 'personaJuridica.provincia.label', default: 'Provincia')}</th>
-							<!--th>${message(code: 'personaFisica.label', default: 'Persona Fisica')}</th-->
 						</tr>
 					</tfoot>
-
                 </table>
+				-->
             </div>
         </div>
     </body>

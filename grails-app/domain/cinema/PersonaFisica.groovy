@@ -46,7 +46,7 @@ class PersonaFisica {
 	}
 	
 	static def show_columns = {
-        ["cuit","nombre","apellido","provincia","localidad","email"]
+        ["cuit","nombre","apellido","provincia.name","localidad.name","email"]
     }
  
 	static def calculateCuit = { sexo, documento ->

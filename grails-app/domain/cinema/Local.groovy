@@ -3,7 +3,7 @@ package cinema
 class Local {
 	String codigo
 	String nombre
-	String Domicilio
+	String domicilio
 	String codigoPostal
 	Provincia provincia
 	Localidad localidad
@@ -12,6 +12,17 @@ class Local {
 	Date fechaApertura	
     static belongsTo = [video:VideoClub] 
     static constraints = {
-		codigo(unique:true)
+		codigo(unique:true, blank:false)
+		nombre(blank:false)
+		domicilio(blank:false)
+		codigoPostal(blank:false)
+		telefono(blank:false)
+		email(email:true)
+		provincia(nullable:false, validator: {
+            return (it.id != 0)
+        })
+        localidad(nullable:false, validator: {
+            return (it.id != 0)
+        })
     }
 }

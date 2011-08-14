@@ -47,4 +47,9 @@ class Sala {
 		capacidad(min:1, nullable:false)
 		complejo(nullable: true)
     }
+
+	static def show_columns = {
+		["codigo", "nombre", "provincia.name", "localidad.name", "capacidad", "complejo.denominacion", "tipo"]
+	}
+	
 }

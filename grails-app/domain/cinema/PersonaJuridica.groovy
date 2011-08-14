@@ -41,6 +41,6 @@ class PersonaJuridica {
 	}
 	
 	static def show_columns = {
-		["cuit","razonSocial","provincia","localidad","tipoSociedad"]
+		["cuit","razonSocial","codigoPostal", "telefono", "tipoSociedad.name", "provincia.name"]
 	}
 }

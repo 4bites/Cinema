@@ -21,7 +21,7 @@ class Empresa {
 						"La fecha de fin de actividad [{0}] debe ser mayor o igual a la fecha de inicio de actividad [{1}]")
 			}
 		})
-        fechaUltimaRevalida(nullable:true, validator:{ val, obj, errors ->
+        fechaUltimaRevalida( validator:{ val, obj, errors ->
 			if(val){
 				if(val < obj.fechaInicioActividad){
 					errors.rejectValue("fechaUltimaRevalida","fechaUltimaRevalida", [dateFormat.format(val), dateFormat.format(obj.fechaInicioActividad)] as Object[],
@@ -39,8 +39,9 @@ class Empresa {
 
 			}
 		})
-		personaJuridica(nullable:true, validator: {val, obj -> val == null && obj.personaFisica != null || val != null && obj.personaFisica == null})
-		personaFisica(nullable:true, validator: {val, obj -> val == null && obj.personaJuridica != null || val != null && obj.personaJuridica == null})
+		personaJuridica(nullable:true, validator: {val, obj -> val != null ^ obj.personaFisica != null
+		})
+		personaFisica(nullable:true, validator: {val, obj -> val != null ^ obj.personaJuridica != null })
     }
 
 	def desc = {
@@ -53,6 +54,6 @@ class Empresa {
 	}
 
 	static def show_columns = {
-		["codigo", "personaFisica", "personaJuridica"]
+		["codigo", "personaFisica", "personaJuridica.razonSocial"]
 	}
 }

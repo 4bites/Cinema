@@ -18,16 +18,9 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="local.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: localInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="local.codigo.label" default="Codigo" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: localInstance, field: "codigo")}</td>
+                            <td valign="top" class="value">${localInstance?.codigo}</td>
                             
                         </tr>
                     
@@ -62,7 +55,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="local.localidad.label" default="Localidad" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="localidad" action="show" id="${localInstance?.localidad?.id}">${localInstance?.localidad?.name}</g:link></td>
+                            <td valign="top" class="value">${localInstance?.localidad?.name}</td>
                             
                         </tr>
                     
@@ -76,7 +69,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="local.provincia.label" default="Provincia" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="provincia" action="show" id="${localInstance?.provincia?.id}">${localInstance?.provincia?.name}</g:link></td>
+                            <td valign="top" class="value">${localInstance?.provincia?.name}</td>
                             
                         </tr>
                     
@@ -90,7 +83,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="local.video.label" default="Video" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="videoClub" action="show" id="${localInstance?.video?.id}">${localInstance?.video?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value"><g:link params="[dom:'VideoClub']" mapping="empresa" action="show" id="${localInstance?.video?.id}">${localInstance?.video?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     

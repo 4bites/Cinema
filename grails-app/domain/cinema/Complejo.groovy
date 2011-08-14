@@ -11,4 +11,8 @@ class Complejo {
 		denominacion(blank:false)
 		fechaApertura()
     }
+
+	static def show_columns = {
+		["codigo","denominacion","fechaApertura"]
+	}
 }

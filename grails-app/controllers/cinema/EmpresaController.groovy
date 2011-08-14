@@ -92,4 +92,7 @@ class EmpresaController {
 		render json as JSON	
 	}
 
+	def search = {
+		searcher(params)
+	}	
 }

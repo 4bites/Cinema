@@ -2,6 +2,7 @@ import cinema.*
 import grails.converters.*
 import groovy.lang.ExpandoMetaClass
 //import org.springframework.web.context.request.RequestContextHolder as RCH
+import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler
 
 class BootStrap {
 
@@ -23,8 +24,7 @@ class BootStrap {
 			}
 		}
 */
-		ExpandoMetaClass.enableGlobally()
-
+//		ExpandoMetaClass.enableGlobally()
 		Provincia.metaClass.encodeAsHTML = { -> delegate.name }
 		Localidad.metaClass.encodeAsHTML = { -> delegate.name }
 
@@ -32,7 +32,12 @@ class BootStrap {
 	
 		String.metaClass.humanField = { ->
 			(delegate.capitalize().split("(?=\\p{Upper})") as List).findAll{it.size()>0}.join(" ")
-		}		
+		}	
+
+		String.metaClass.decapitalize = { ->
+			delegate.replaceFirst(/^./, delegate.getAt(0).toLowerCase())
+		}	
+
 		grailsApplication.getArtefacts("Domain")*.clazz.each{ domain ->
 //			domain.metaClass.'static'.methodMissing = { String name, args ->  null }
 			domain.metaClass.getValueFrom = { String field -> 
@@ -41,13 +46,42 @@ class BootStrap {
 												b.setVariable("delegate",delegate)
 												def shell = new GroovyShell(b)
 												return shell.evaluate("try{delegate.${field}} catch(Exception e){''}") }
+
+			domain.metaClass.static.filter = { ->
+				def filter = []
+		        try{
+        	        domain.show_columns().each { field ->
+                    	def domainDescriptor = grailsApplication.getArtefact(DomainClassArtefactHandler.TYPE, domain.name)
+                    	def property = domainDescriptor.getPropertyByName(field.tokenize(".")[0])
+                    	def type = property.getType()
+						println type.name
+                    	if(type.name == "java.util.Date"){
+                        	filter << "{type:\"date-range\"}"
+                    	} else if( type.name == "java.lang.Integer" || type.name=="java.lang.Long"){
+                        	filter << "{type:\"number-range\"}"
+	                    } else if(type.isEnum() || type.name in ["cinema.Provincia"]){
+    	                    def values = type.select()
+        	                filter << "{type:\"select\", values:[${values}]}"
+            	        } else if(type.name == "java.lang.String"){
+                	        filter << "{type:\"text\"}"
+                    	} else if (grailsApplication.getDomainClass(type.name) != null){
+                        	filter << "{type:\"text\"}"
+	                    } else {
+    	                    filter << "null"
+                   	 	}
+                	}
+                	filter.join(",")
+		        } catch (Exception e){}   
+
+			}	
 		}
 
 		grailsApplication.getArtefacts("Controller")*.clazz.each{ controller ->
 //			new org.codehaus.groovy.grails.commons.DefaultGrailsControllerClass(controller).registerMapping("search")
 			controller.metaClass.searcher = { params -> 
 //				def params = RCH.currentRequestAttributes().params
-				def domain = grailsApplication.getDomainClass(controller.name.replaceAll("Controller","")).clazz
+				def domain = params.dom? grailsApplication.classLoader.loadClass("cinema.${params.dom}") :
+										grailsApplication.getDomainClass(controller.name.replaceAll("Controller","")).clazz
 				def sep = params.sRangeSeparator
 	        	def dataToRender = [:]
     	    	dataToRender.sEcho = params.sEcho
@@ -131,8 +165,11 @@ class BootStrap {
 
      	}
 
+		
 	}
 
 	def destroy = {
     }
+
+
 } 

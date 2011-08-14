@@ -71,4 +71,8 @@ class PersonaFisicaController {
 		render view:"create", model:[personaFisicaInstance:person]
 	}
 
+	def search = {
+		searcher(params)
+	}
+
 }

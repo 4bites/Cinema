@@ -20,4 +20,8 @@ class ComplejoController {
         render complejos as JSON
     }
 
+	def search = {
+        searcher(params)
+    }
+
 }

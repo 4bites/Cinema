@@ -9,6 +9,8 @@
 // if(System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
+jqueryUi.minified=false
+jqueryDataTables.minified=false
 grails.json.legacy.builder=false
 migrations.enabled = false
 migrations.changelogs = ['migrations/changelog.xml']

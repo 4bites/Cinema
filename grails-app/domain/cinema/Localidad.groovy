@@ -15,5 +15,5 @@ class Localidad {
 	static def show_columns = {
         ["name"]
     }
-
+	
 }

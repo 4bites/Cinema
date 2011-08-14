@@ -38,12 +38,11 @@ class PoweredDomainClassMarshaller extends DomainClassMarshaller{
 		println "${refObj.class} ${referencedDomainClass}, ${refObj.metaClass.respondsTo(refObj, 'show_columns')}"
         if(refObj.metaClass.hasProperty(refObj, 'show_columns')){
             includes = refObj.show_columns()
-			println "show_columns: ${includes.join(',')}"
         }
         JSONWriter writer = json.getWriter();
         writer.object();
 		includes.each {
-			writer.key(it).value(refObj."${it}")
+			writer.key(it.tokenize(".")[0]).value(refObj."${it.tokenize(".")[0]}")
         }
         writer.key("class").value(referencedDomainClass.getName());
         writer.key("id").value(idValue);

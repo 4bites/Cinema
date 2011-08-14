@@ -65,7 +65,7 @@
 						i++;
                         return false;
                     });
-					for(j=1;j<=i;j++){
+					for(j=1;j<i;j++){
 					  $("#remove"+j).click(function() {
                             $(this).parent().remove();
                       });
