@@ -54,6 +54,6 @@ class Empresa {
 	}
 
 	static def show_columns = {
-		["codigo", "personaFisica", "personaJuridica.razonSocial"]
+		["codigo", "personaFisica.to_string", "personaJuridica.razonSocial"]
 	}
 }
