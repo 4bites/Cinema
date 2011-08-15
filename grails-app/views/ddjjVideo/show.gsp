@@ -23,16 +23,9 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="ddjjVideo.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: ddjjVideoInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="ddjjVideo.videoClub.label" default="Video Club" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="videoClub" action="show" id="${ddjjVideoInstance?.videoClub?.id}">${ddjjVideoInstance?.videoClub?.desc()}</g:link></td>
+                            <td valign="top" class="value"><g:link mapping="empresa" params="[dom:'VideoClub']" action="show" id="${ddjjVideoInstance?.videoClub?.id}">${ddjjVideoInstance?.videoClub?.desc()}</g:link></td>
                             
                         </tr>
                     

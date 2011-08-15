@@ -29,5 +29,8 @@ class BocIngresoController {
         def boc = BocIngreso.get(params.id)
         render view:"create", model:[bocIngresoInstance: boc]
     }
-	
+
+	def search = {
+		searcher(params)
+	}	
 }

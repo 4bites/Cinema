@@ -18,39 +18,7 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="list">
-                <table>
-                    <thead>
-                        <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'ddjjExhibidor.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="fecha" title="${message(code: 'ddjjExhibidor.fecha.label', default: 'Fecha')}" />
-                        
-                            <g:sortableColumn property="file" title="${message(code: 'ddjjExhibidor.file.label', default: 'File')}" />
-                        
-                            <th><g:message code="ddjjExhibidor.exhibidora.label" default="Exhibidora" /></th>
-                   	    
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${ddjjExhibidorInstanceList}" status="i" var="ddjjExhibidorInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${ddjjExhibidorInstance.id}">${fieldValue(bean: ddjjExhibidorInstance, field: "id")}</g:link></td>
-                        
-                            <td><g:formatDate date="${ddjjExhibidorInstance.fecha}" /></td>
-                        
-                            <td>${fieldValue(bean: ddjjExhibidorInstance, field: "file")}</td>
-                        
-                            <td>${fieldValue(bean: ddjjExhibidorInstance, field: "exhibidora")}</td>
-                        
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
-            <div class="paginateButtons">
-                <g:paginate total="${ddjjExhibidorInstanceTotal}" />
+               <g:render template="/shared/list" model="[domain:DdjjExhibidor]" /> 
             </div>
         </div>
     </body>

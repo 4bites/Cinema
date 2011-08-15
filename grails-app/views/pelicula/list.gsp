@@ -18,40 +18,7 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="list">
-                <table>
-                    <thead>
-                        <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'pelicula.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="codigo" title="${message(code: 'pelicula.codigo.label', default: 'Codigo')}" />
-                        
-                            <g:sortableColumn property="titulo" title="${message(code: 'pelicula.titulo.label', default: 'Titulo')}" />
-                        
-                            <th><g:message code="pelicula.distribuidor.label" default="Distribuidor" /></th>
-                        
-                            <th><g:message code="pelicula.productor.label" default="Productor" /></th>
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${peliculaInstanceList}" status="i" var="peliculaInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${peliculaInstance.id}">${fieldValue(bean: peliculaInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: peliculaInstance, field: "codigo")}</td>
-                        
-                            <td>${fieldValue(bean: peliculaInstance, field: "titulo")}</td>
-                        
-                            <td>${fieldValue(bean: peliculaInstance, field: "distribuidor")}</td>
-                        
-                            <td>${fieldValue(bean: peliculaInstance, field: "productor")}</td>
-                        
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
+               <g:render template="/shared/list" model="[domain:Pelicula]" />
             </div>
             <div class="paginateButtons">
                 <g:paginate total="${peliculaInstanceTotal}" />

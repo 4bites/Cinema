@@ -18,47 +18,7 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="list">
-                <table>
-                    <thead>
-                        <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'bocIngreso.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="desde" title="${message(code: 'bocIngreso.desde.label', default: 'Desde')}" />
-                        
-                            <g:sortableColumn property="hasta" title="${message(code: 'bocIngreso.hasta.label', default: 'Hasta')}" />
-                        
-                            <g:sortableColumn property="serie" title="${message(code: 'bocIngreso.serie.label', default: 'Serie')}" />
-                        
-                            <g:sortableColumn property="cantidad" title="${message(code: 'bocIngreso.cantidad.label', default: 'Cantidad')}" />
-                        
-                            <th><g:message code="bocIngreso.exhibidor.label" default="Exhibidor" /></th>
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${bocIngresoInstanceList}" status="i" var="bocIngresoInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${bocIngresoInstance.id}">${fieldValue(bean: bocIngresoInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: bocIngresoInstance, field: "desde")}</td>
-                        
-                            <td>${fieldValue(bean: bocIngresoInstance, field: "hasta")}</td>
-                        
-                            <td>${fieldValue(bean: bocIngresoInstance, field: "serie")}</td>
-                        
-                            <td>${fieldValue(bean: bocIngresoInstance, field: "cantidad")}</td>
-                        
-                            <td>${fieldValue(bean: bocIngresoInstance, field: "exhibidor")}</td>
-                        
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
-            <div class="paginateButtons">
-                <g:paginate total="${bocIngresoInstanceTotal}" />
+               <g:render template="/shared/list" model="[domain:BocIngreso]" /> 
             </div>
         </div>
     </body>

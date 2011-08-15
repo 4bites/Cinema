@@ -76,4 +76,7 @@ class DdjjExhibidorController {
 	    }	
     }
 
+	def search = {
+		searcher(params)
+	}
 }

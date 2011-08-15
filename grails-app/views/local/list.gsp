@@ -18,44 +18,7 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="list">
-                <table>
-                    <thead>
-                        <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'local.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="codigo" title="${message(code: 'local.codigo.label', default: 'Codigo')}" />
-                        
-                            <g:sortableColumn property="codigoPostal" title="${message(code: 'local.codigoPostal.label', default: 'Codigo Postal')}" />
-                        
-                            <g:sortableColumn property="domicilio" title="${message(code: 'local.domicilio.label', default: 'Domicilio')}" />
-                        
-                            <g:sortableColumn property="email" title="${message(code: 'local.email.label', default: 'Email')}" />
-                        
-                            <g:sortableColumn property="fechaApertura" title="${message(code: 'local.fechaApertura.label', default: 'Fecha Apertura')}" />
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${localInstanceList}" status="i" var="localInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${localInstance.id}">${fieldValue(bean: localInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: localInstance, field: "codigo")}</td>
-                        
-                            <td>${fieldValue(bean: localInstance, field: "codigoPostal")}</td>
-                        
-                            <td>${fieldValue(bean: localInstance, field: "domicilio")}</td>
-                        
-                            <td>${fieldValue(bean: localInstance, field: "email")}</td>
-                        
-                            <td><g:formatDate date="${localInstance.fechaApertura}" /></td>
-                        
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
+               <g:render template="/shared/list" model="[domain:Local]"/> 
             </div>
             <div class="paginateButtons">
                 <g:paginate total="${localInstanceTotal}" />

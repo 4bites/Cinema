@@ -18,7 +18,7 @@ class PeliculaController {
 	def save = {
 		Pelicula pelicula
 		if(params.id){
-			pelicula = Peligula.get(id)
+			pelicula = Pelicula.get(id)
 	        pelicula.properties = params.findAll{it.key != "distribuidor" && it.key != "productor"}
 		}else{
 			pelicula = new Pelicula(params.findAll{it.key != "distribuidor" && it.key != "productor"})
@@ -40,5 +40,8 @@ class PeliculaController {
         def pelicula = Pelicula.get(params.id)
         render view:"create", model:[peliculaInstance:pelicula]
     }
-
+	
+	def search = {
+		searcher(params)
+	}
 }

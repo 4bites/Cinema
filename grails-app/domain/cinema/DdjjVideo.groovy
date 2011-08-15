@@ -12,8 +12,8 @@ class DdjjVideo {
     static belongsTo = [videoClub:VideoClub]
     static hasMany = [peliculas:Pelicula]
     static constraints = {
-        videoClub(nullable:true)
-		periodo(nullable:false)
+        videoClub()
+		periodo()
 		cantidadTotalVenta()
 		precioTotalVenta()
 		gravamenTotalVenta()
@@ -21,4 +21,8 @@ class DdjjVideo {
 		precioTotalAlquiler()
 		gravamenTotalAlquiler()
     }
+
+	static def show_columns = {
+		["periodo", "videoClub.to_string", "cantidadTotalVenta", "precioTotalVenta", "gravamenTotalVenta", "cantidadTotalAlquiler", "precioTotalAlquiler", "gravamenTotalAlquiler"]
+	}
 }

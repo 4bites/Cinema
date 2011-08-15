@@ -25,10 +25,16 @@ class BootStrap {
 		}
 */
 //		ExpandoMetaClass.enableGlobally()
+
+		JSON.registerObjectMarshaller(Date, 10) {
+            return it?.format("dd/MM/yyyy")
+        }
+
+		JSON.registerObjectMarshaller(new json.PoweredDomainClassMarshaller(false), 10)
+		
 		Provincia.metaClass.encodeAsHTML = { -> delegate.name }
 		Localidad.metaClass.encodeAsHTML = { -> delegate.name }
 
-		JSON.registerObjectMarshaller(new json.PoweredDomainClassMarshaller(false), 10)
 	
 		String.metaClass.humanField = { ->
 			(delegate.capitalize().split("(?=\\p{Upper})") as List).findAll{it.size()>0}.join(" ")

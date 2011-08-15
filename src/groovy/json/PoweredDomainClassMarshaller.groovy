@@ -21,8 +21,7 @@ class PoweredDomainClassMarshaller extends DomainClassMarshaller{
   	protected void asShortObject(Object refObj, JSON json,
                GrailsDomainClassProperty idProperty,
                GrailsDomainClass referencedDomainClass) throws ConverterException {
-		println "asShortObject override!!"
-        Object idValue;
+        Object idValue
 /*
         if(proxyHandler instanceof EntityProxyHandler) {
             idValue = ((EntityProxyHandler) proxyHandler).getProxyIdentifier(refObj);
@@ -32,20 +31,26 @@ class PoweredDomainClassMarshaller extends DomainClassMarshaller{
 
         }
         else {*/
-            idValue = extractValue(refObj, idProperty);
+        idValue = extractValue(refObj, idProperty);
 //        }
 		def includes = []
-		println "${refObj.class} ${referencedDomainClass}, ${refObj.metaClass.respondsTo(refObj, 'show_columns')}"
         if(refObj.metaClass.hasProperty(refObj, 'show_columns')){
             includes = refObj.show_columns()
         }
-        JSONWriter writer = json.getWriter();
-        writer.object();
+        JSONWriter writer = json.getWriter()
+        writer.object()
 		includes.each {
-			writer.key(it.tokenize(".")[0]).value(refObj."${it.tokenize(".")[0]}")
+			def value
+			if(refObj."${it.tokenize(".")[0]}" instanceof Date){
+				value = refObj."${it.tokenize(".")[0]}".format("dd/MM/yyyy")
+			} else {
+				value = refObj."${it.tokenize(".")[0]}"
+			}
+			writer.key(it.tokenize(".")[0]).value(value)
         }
-        writer.key("class").value(referencedDomainClass.getName());
-        writer.key("id").value(idValue);
-        writer.endObject();
+        writer.key("class").value(referencedDomainClass.getName())
+		writer.key("to_string").value(refObj.toString())
+        writer.key("id").value(idValue)
+        writer.endObject()
   	}
 }

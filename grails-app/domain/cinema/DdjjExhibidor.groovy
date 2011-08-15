@@ -143,6 +143,10 @@ class DdjjExhibidor {
 		}
 		valid
 	}
+
+	static def show_columns = {
+		["fecha", "file", "exhibidora.to_string"]
+	}
 /*
 		    value.each{
         		if(hora[it.hora]){

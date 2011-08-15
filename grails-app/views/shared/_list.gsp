@@ -5,14 +5,14 @@
                 "bProcessing": true,
                 "bDeferRender": true,
                 //"bServerSide": true,
-//                "sAjaxSource": "/${domain.simpleName.decapitalize()}/search",
+				"bAutoWidth": true,
 				"sAjaxSource": "${createLink(mapping:mapping, params:[dom:params.dom], action:'search')}",	
                 "aoColumns": [ <%=domain.show_columns().collect{"{\"mDataProp\":\"$it\",\"sDefaultContent\":\"-\"}"}.join(",") %>
                 ],
                 fnRowCallback: function(nRow, aData, iDisplayIndex) {
                     $(nRow).click(function(){
 //                        location.href = "/${domain.simpleName.decapitalize()}/show/"+aData["id"];
-						location.href = "${createLink(mapping:mapping, params:[dom:params.dom], action:'show')}&id="+aData["id"];
+						location.href = "${createLink(mapping:mapping, params:[dom:params.dom,_dummy:''], action:'show')}&id="+aData["id"];
                     });
                     return nRow;
                 }   

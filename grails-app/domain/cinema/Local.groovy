@@ -25,4 +25,8 @@ class Local {
             return (it.id != 0)
         })
     }
+
+	static def show_columns = {
+		["codigo", "nombre", "codigoPostal", "provincia.name", "fechaApertura"]
+	}
 }

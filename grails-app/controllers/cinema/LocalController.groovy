@@ -29,5 +29,8 @@ class LocalController {
     def update = {
         save()
     }
-
+	
+	 def search = {
+        searcher(params)
+	}
 }

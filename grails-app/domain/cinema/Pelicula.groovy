@@ -11,4 +11,8 @@ class Pelicula {
         titulo(maxLength:70, blank:false)
         fechaEstreno(nullable:false)
     }
+	
+	static def show_columns(){
+		["codigo", "titulo", "fechaEstreno", "productor.to_string", "distribuidor.to_string"]
+	}	
 }

@@ -1,3 +1,4 @@
+import org.codehaus.groovy.grails.commons.ApplicationHolder
 class UrlMappings {
     static mappings = {
 		name empresa: "/empresas/$dom/$action"(controller:"empresa")
@@ -10,5 +11,8 @@ class UrlMappings {
 
       	"/"(view:"/index")
 	  	"500"(view:'/error')
+
 	}
+
+	
 }

@@ -80,7 +80,7 @@
             </div>
             </g:hasErrors>
             <g:form action="save" >
-		 		<g:if test="${salaInstance?.id}">
+		 		<g:if test="${ddjjVideoInstance?.id}">
                     <g:hiddenField name="id" value="${ddjjVideoInstance?.id}" />
                     <g:hiddenField name="version" value="${ddjjVideoInstance?.version}" />
                </g:if>
