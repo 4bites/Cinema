@@ -19,7 +19,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="empresa.codigo.label" default="Codigo" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: empresaInstance, field: "codigo")}</td>
+                            <td valign="top" class="value">${empresaInstance?.codigo}</td>
                             
                         </tr>
                     

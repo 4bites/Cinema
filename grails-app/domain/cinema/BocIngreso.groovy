@@ -3,6 +3,7 @@ package cinema
 class BocIngreso {
     Integer desde
     Integer hasta
+	Integer cantidad
     String serie
     Date fechaAlta
 /*    public Integer getCantidad(){

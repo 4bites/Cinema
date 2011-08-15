@@ -46,7 +46,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="bocIngreso.cantidad.label" default="Cantidad" /></td>
                             
-                            <td valign="top" class="value">${bocIngresoInstance.getCantidad()}</td>
+                            <td valign="top" class="value">${bocIngresoInstance?.cantidad}</td>
                             
                         </tr>
                     

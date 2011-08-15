@@ -25,16 +25,9 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="complejo.id" default="Id" />:</td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: complejoInstance, field: "id")}</td>
-                            
-                        </tr>
-                      
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="complejo.codigo" default="Codigo" />:</td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: complejoInstance, field: "codigo")}</td>
+                            <td valign="top" class="value">${complejoInstance?.codigo}</td>
                             
                         </tr>
                       
