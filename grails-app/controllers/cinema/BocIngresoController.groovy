@@ -1,4 +1,5 @@
 package cinema
+import static cinema.Empresa.dateFormat
 
 class BocIngresoController {
 	def scaffold = true
@@ -13,6 +14,7 @@ class BocIngresoController {
 			boc = new BocIngreso()
 		}
 		boc.properties = params.findAll{ it.key != 'exhibidor'}
+		boc.fechaAlta = (params.fechaAlta ? dateFormat.parse(params.fechaAlta):null)
 		if(boc.validate()){
 			boc.save()
 			redirect action:"show", id: boc.id

@@ -15,7 +15,7 @@ class PFisicaPJuridica {
 //		def pp = pJuridica.id?PFisicaPJuridica.findByPersonaFisicaAndPersonaJuridica(pFisica, pJuridica):null
 //		if (!pp)
 //		{
-			pp = new PFisicaPJuridica()
+			def pp = new PFisicaPJuridica()
 		
 			pp.cargo = cargo
 			pp.personaFisica = pFisica
