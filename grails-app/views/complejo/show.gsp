@@ -8,12 +8,14 @@
     </head>
     <body>
         <div class="nav">
+			<!--
             <gsec:hasBasicPermission target="complejo" action="list">
               <span class="menuButton"><gti:link class="list" action="list"><g:message code="complejo.list" default="Complejo List" /></gti:link></span>
             </gsec:hasBasicPermission>
             <gsec:hasBasicPermission target="complejo" action="create">
               <span class="menuButton"><gti:link class="create" action="create"><g:message code="complejo.new" default="New Complejo" /></gti:link></span>
             </gsec:hasBasicPermission>
+			-->
         </div>
         <div class="body">
             <h1><g:message code="complejo.show" default="Show Complejo" /></h1>
@@ -66,6 +68,13 @@
                     </tbody>
                 </table>
             </div>
+			<div class="buttons">
+	            <g:form>
+    	            <g:hiddenField name="id" value="${complejoInstance?.id}" />
+        	        <span class="button"><g:link action="edit" id="${complejoInstance?.id}">${message(code: 'default.button.edit.label', default: 'Edit')}</g:link></span>
+            	    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+	            </g:form>
+<!--
             <g:form useToken="true">
                 <g:hiddenField name="id" value="${complejoInstance?.id}" />
                 <div class="buttons">
@@ -77,6 +86,7 @@
                   </gsec:hasBasicPermission>
                 </div>
             </g:form>
+-->
         </div>
     </body>
 </html>

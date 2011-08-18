@@ -76,7 +76,7 @@
                                     <label for="desde"><g:message code="bocIngreso.desde.label" default="Desde número" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocIngresoInstance, field: 'desde', 'errors')}">
-                                    <g:textField name="desde" value="${fieldValue(bean: bocIngresoInstance, field: 'desde')}" />
+                                    <g:textField name="desde" value="${bocIngresoInstance?.desde}" />
                                 </td>
                             </tr>
                         
@@ -85,7 +85,7 @@
                                     <label for="hasta"><g:message code="bocIngreso.hasta.label" default="Hasta número" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocIngresoInstance, field: 'hasta', 'errors')}">
-                                    <g:textField name="hasta" value="${fieldValue(bean: bocIngresoInstance, field: 'hasta')}" />
+                                    <g:textField name="hasta" value="${bocIngresoInstance?.hasta}" />
                                 </td>
                             </tr>
                         
@@ -101,15 +101,6 @@
 
                                 </td>
                             </tr>
-                       <!-- 
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="cantidad"><g:message code="bocIngreso.cantidad.label" default="Cantidad" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: bocIngresoInstance, field: 'cantidad', 'errors')}">
-                                </td>
-                            </tr>
-                        -->
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="exhibidor"><g:message code="bocIngreso.exhibidor.label" default="Exhibidor" /></label>

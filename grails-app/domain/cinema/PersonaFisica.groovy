@@ -16,10 +16,15 @@ class PersonaFisica {
     String condicionIVA
 //    static hasMany = [personasJuridicas:PersonaJuridica]
 //	List pFisicaPJuridicas
+	static mapping = {
+//        pFisicaPJuridicas batchSize:10
+    }
+
 	static hasMany = [pFisicaPJuridicas:PFisicaPJuridica]
     static constraints = {
         cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/, validator:{ val, obj ->
-			val == PersonaFisica.calculateCuit(obj.sexo.toString(), "${obj.numeroDocumento}")
+			def c = PersonaFisica.calculateCuit(obj.sexo.toString(), obj.numeroDocumento)
+			c && val == c
 		})
         nombre(blank:false)
         apellido(blank:false)
@@ -50,8 +55,12 @@ class PersonaFisica {
     }
  
 	static def calculateCuit = { sexo, documento ->
+		println "que le pasa al doc: $documento"
+		if(documento == null || documento == [] || !"${documento}".isNumber()){
+			return "" 
+		}	
         def multi = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]
-        def numDoc = documento.replaceAll("\\.","")
+        def numDoc = "${documento}"
         def sexNum = (sexo=='MASCULINO'?'20':'27')
         def doc = (sexNum+numDoc).toList()
         doc.eachWithIndex { obj,i ->

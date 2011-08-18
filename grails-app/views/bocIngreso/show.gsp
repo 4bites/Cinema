@@ -25,14 +25,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="bocIngreso.desde.label" default="Desde número" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: bocIngresoInstance, field: "desde")}</td>
+                            <td valign="top" class="value">${bocIngresoInstance?.desde}</td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="bocIngreso.hasta.label" default="Hasta número" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: bocIngresoInstance, field: "hasta")}</td>
+                            <td valign="top" class="value">${bocIngresoInstance?.hasta}</td>
                             
                         </tr>
                     
@@ -53,7 +53,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="bocIngreso.exhibidor.label" default="Exhibidor" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="exhibidor" action="show" id="${bocIngresoInstance?.exhibidor?.id}">${bocIngresoInstance?.exhibidor?.desc()}</g:link></td>
+                            <td valign="top" class="value"><g:link mapping="empresa" params="[dom:'Exhibidor']" action="show" id="${bocIngresoInstance?.exhibidor?.id}">${bocIngresoInstance?.exhibidor?.desc()}</g:link></td>
                             
                         </tr>
                     

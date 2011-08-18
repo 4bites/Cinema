@@ -78,7 +78,7 @@
             </div>
             </g:hasErrors>
             <g:form action="save">
-                <g:if test="${empresaInstance?.id}">
+                <g:if test="${peliculaInstance?.id}">
                     <g:hiddenField name="id" value="${peliculaInstance?.id}" />
                     <g:hiddenField name="version" value="${peliculaInstance?.version}" />
                 </g:if>

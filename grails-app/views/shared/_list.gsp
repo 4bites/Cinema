@@ -17,6 +17,12 @@
                     return nRow;
                 }   
             }).columnFilter({"aoColumns":[ ${domain.filter()} ]});
+
+/*			$('#results tbody tr').hover(function() {
+				$(this).css('cursor', 'pointer');
+			}, function() {
+				$(this).css('cursor', 'auto');
+			});*/
         });
         </script>
 

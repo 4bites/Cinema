@@ -6,7 +6,33 @@ class ComplejoController {
     
     def index = { }
 
-	  def autocomplete = {
+	def save = {
+		def complejo
+		if(params.id){
+			complejo = Complejo.get(params.id)
+		} else {
+			complejo = new Complejo()
+		}
+		complejo.properties = params
+		complejo.fechaApertura = (params.fechaApertura != '' ? Empresa.dateFormat.parse(params.fechaApertura):null)
+		if(complejo.validate()){
+			complejo.save()
+			redirect action:"show", id: complejo.id
+		} else {
+			render view:"create", model:[complejoInstance:complejo]
+		}
+	}
+
+	def update = {
+		save()
+	}
+	
+	def edit = {
+        def complejo = Complejo.get(params.id)
+        render view:"create", model:[complejoInstance:complejo]
+    }
+
+	def autocomplete = {
 		def complejos
 /*		def c = List.createCriteria(); 
 		results = c { 
@@ -23,5 +49,7 @@ class ComplejoController {
 	def search = {
         searcher(params)
     }
+
+
 
 }

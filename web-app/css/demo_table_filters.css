@@ -129,8 +129,8 @@ table.display thead th {
 	padding: 3px 18px 3px 10px;
 	border-bottom: 1px solid black;
 	font-weight: bold;
-	cursor: pointer;
-	* cursor: hand;
+	*cursor: pointer;
+	cursor: hand;
 }
 
 table.display tfoot th {
@@ -219,10 +219,14 @@ table.display tr.even.gradeU {
 
 tr.odd {
 	background-color: #E2E4FF;
+	cursor: hand;
+	*cursor: pointer;
 }
 
 tr.even {
 	background-color: white;
+	cursor: hand;
+    *cursor: pointer;
 }
 
 

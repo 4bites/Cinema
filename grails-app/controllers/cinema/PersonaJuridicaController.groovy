@@ -25,60 +25,81 @@ class PersonaJuridicaController {
 			p = new PersonaJuridica(params.findAll{ it.key != "pJuridicaPFisicas.personaFisica" && it.key != "pJuridicaPFisicas.cargo"})
 		}
 //		def allPeopleOk = false
-
-		PersonaJuridica.withTransaction { status ->
+//		PersonaJuridica.withTransaction { status ->
 //		if(p.validate()){
 //				p.save()
 				if(params.id){
-					PFisicaPJuridica.findAllByPersonaJuridica(p)?.each{
-						PFisicaPJuridica.unlink(it.personaFisica, p)
-					}
-					def x = PFisicaPJuridica.findAllByPersonaJuridica(p)	
+//					PFisicaPJuridica.findAllByPersonaJuridica(p)?.each{
+//						PFisicaPJuridica.unlink(it.personaFisica, p)
+//					}
 				}
+				def duplicates = [:]	
+				params.list("pJuridicaPFisicas.personaFisica").findAll{it}.each{
+					def countRep = params.list("pJuridicaPFisicas.personaFisica").count(it)
+					if(countRep > 1){
+						duplicates[it]=countRep
+					}
+				}
+				def pfpj = []
 			    params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
 					println "ENTRO AL LOOP!!! $i"
 					if(pf){
 						def cuit = pf.split(" cuit:")[1]?.trim()
-						def pFisica = PersonaFisica.findByCuit(cuit)
-						if(pFisica){
-							def fj = PFisicaPJuridica.link(pFisica, p, params.list("pJuridicaPFisicas.cargo").get(i))
-							println "personafisica $i, $fj?.personaFisica.nombre"
-//							allPeopleOk = (i==0 ? allPeopleOk || (fj != null && !fj.hasErrors()): allPeopleOk && (fj != null && !fj.hasErrors()))
-/*							if(fj?.hasErrors()){
-								fj.errors.allErrors.each {
-									println "errores de $i, $it.code"
-									p.errors.reject(it.code, "Errores en persona física")
-								}
-							}*/
-						}
+							def pFisica = PersonaFisica.findByCuit(cuit)
+							if(pFisica){
+								def fj = PFisicaPJuridica.link(pFisica, p, params.list("pJuridicaPFisicas.cargo").get(i))
+								pfpj << fj
+								if(fj.hasErrors()){
+									fj.errors.allErrors.each {
+						                println "pfpj ERRORsss: $it"
+            						}
+								}	
+								println "personafisica $i, $fj?.personaFisica.nombre"
+							}
 					}
 				}
 				println "ACA TENGO PFISICAPJURIDICAS: ${p.pJuridicaPFisicas.size()}"
 //		}
-		if(p.validate() && p.pJuridicaPFisicas.size() > 0){
+		if( p.validate() && pfpj.findAll{it.hasErrors()}.size() == 0 && pfpj.size() > 0 && duplicates.size()==0 ){
+//		if( p.validate() && p.pJuridicaPFisicas.size() > 0 && duplicates.size()==0){
+			if(params.id){
+				PFisicaPJuridica.findAllByPersonaJuridica(p)?.each{
+					if(!(it.personaFisica in pfpj.collect{it.personaFisica})){
+//					if(!(it.personaFisica in p.pJuridicaPFisicas.collect{it.personaFisica})){
+	            		PFisicaPJuridica.unlink(it.personaFisica, p)
+					}
+            	}
+			}
 			p.save()
-			p.pJuridicaPFisicas.each{ it.save() }
+//			p.pJuridicaPFisicas.each{ 
+			pfpj.each{
+				it.personaFisica?.addToPFisicaPJuridicas(it)
+				it.personaJuridica?.addToPJuridicaPFisicas(it) 
+ 
+				it.save() }
 			redirect action:"show", id: p.id
 		}else{
-/*			params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
-        	    if(pf && !unlessOnePerson){
-            	    def cuit = pf.split(" cuit:")[1]
-					def desc = pf.split(" cuit:")[0]
-                	def pFisica = new PersonaFisica(nombre:desc.split(" ")[0],apellido:desc.split(" ")[1],cuit:cuit)
-                	def pfj = new PFisicaPJuridica(personaFisica:pFisica, cargo:params.list("pJuridicaPFisicas.cargo").get(i))
-                	p.pJuridicaPFisicas << pfj
-					println "PORQUE DUPLICA!!! $i"
-            	}
-        	}*/
-			if(p.pJuridicaPFisicas.size() == 0){
-				p.errors.reject("personaJuridica.unlessOnePerson")
+			if(pfpj.size()==0){
+				print "PORQUE NO MOSTRAS EL ERROR HIJO DE PUTA"
+//			if(p.pJuridicaPFisicas.size() == 0){
+				p.errors.rejectValue("razonSocial","personaJuridica.unlessOnePerson",null,"una persona!!")
+			} 
+			duplicates.each{key, val ->
+				println "La persona [${key}] se encuentra mas de una vez [${val}]"
+				p.errors.rejectValue("razonSocial","repetidas",[key, val] as Object[], "La persona [{0}] se encuentra mas de una vez [{1}]")
 			}
-			print "personaJuridicaInstance.pJuridicaPFisicas:"+p.pJuridicaPFisicas
-			def map = [personaJuridicaInstance: p, status: status]
-			render(view:"create", model: map)
+			println "quedan en pfpj ${pfpj.size()}"	
+			p.pJuridicaPFisicas=pfpj
+			def map = [personaJuridicaInstance: p, pfPjs:pfpj]//, status: status]
+			p.errors.allErrors.each {
+        		println "ERRORsss: $it"
+		    }
+			println "quedan en pfpj ${p.pJuridicaPFisicas.size()}"
+
+			render view:"create", model: map
 //			status.setRollbackOnly()
 		}
-		}
+//		} 
 	}	
 
 	def update = {
@@ -87,7 +108,7 @@ class PersonaJuridicaController {
 
 	def edit = {
         def pj = PersonaJuridica.get(params.id)
-        render view:"create", model:[personaJuridicaInstance:pj]
+        render view:"create", model:[personaJuridicaInstance:pj, pfPjs:pj?.pJuridicaPFisicas]
     }
 
 	def autocomplete = {

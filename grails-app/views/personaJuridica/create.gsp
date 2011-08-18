@@ -12,12 +12,9 @@
 				$.expr[':'].textEquals = function (a, i, m) {
   		  			return $(a).text().match("^" + m[3] + "$");
 				};
+
 			    $(document).ready(function() {
-					var i = 1+${personaJuridicaInstance && personaJuridicaInstance.pJuridicaPFisicas ?personaJuridicaInstance.pJuridicaPFisicas.size():'0'};
-	//				$("#remove").click(function() {
-	//					if($("#remove").length > 1)
-	//						$(this).parent().remove();
-	//				});
+					var i = 1+${personaJuridicaInstance && personaJuridicaInstance.pJuridicaPFisicas?personaJuridicaInstance.pJuridicaPFisicas.size():'0'};
         		
 					autocomplete= {
 						source: function(request, response) {
@@ -57,14 +54,14 @@
                     $("#add").click(function() {
                         newPf = $("#pfs > p:first-child").clone().attr('id', 'pf'+i).insertBefore("#pfs > p:last-child");
 						$("#pf"+i+" input:first").autocomplete(autocomplete);
-//						$("#pf"+i+" input:first").val('');
 						$("#pf"+i+" input[type!='button']").val('');
-						$("#pf"+i+" #remove").click(function() {
+						$("#remove"+i).click(function() {
                         	$(this).parent().remove();
                     	});
 						i++;
                         return false;
                     });
+
 					for(j=1;j<i;j++){
 					  $("#remove"+j).click(function() {
                             $(this).parent().remove();
@@ -90,16 +87,22 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <g:hasErrors bean="${personaJuridicaInstance}">
-            <div class="errors">
+				<div class="errors">
                 <g:renderErrors bean="${personaJuridicaInstance}" as="list" />
-            </div>
+				</div>
             </g:hasErrors>
+			<g:if test="${personaJuridicaInstance.pJuridicaPFisicas.any{it.hasErrors()}}">
+				<div class="errors">	
+			<g:each in="${personaJuridicaInstance.pJuridicaPFisicas.findAll{it.hasErrors()}}" var="err">
+				<g:renderErrors bean="${err}" as="list" />
+			</g:each>	
+				</div>	
+			</g:if>
             <g:form action="save" method=get>
                <g:if test="${personaJuridicaInstance?.id}">
                     <g:hiddenField name="id" value="${personaJuridicaInstance?.id}" />
                     <g:hiddenField name="version" value="${personaJuridicaInstance?.version}" />
                 </g:if>
-
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -210,7 +213,7 @@
 							</tr>  
 							<tr class="prop">
                                 <td valign="top" class="name" colspan=2 id="pfs">
-									<g:each status="i" in="${personaJuridicaInstance.pJuridicaPFisicas}" var="p">								
+									<g:each status="i" in="${pfPjs}" var="p">								
 										<p id="pf${i+1}">
 										<label>Persona Fisica</label><g:textField name="pJuridicaPFisicas.personaFisica" value="${p.personaFisica} cuit:${p.personaFisica.cuit}" size="50"/>
 										<label>Cargo</label><g:textField name="pJuridicaPFisicas.cargo" value="${p.cargo}"/>
@@ -237,4 +240,4 @@
         </div>
     </body>
 </html>
-<% status?.setRollbackOnly() %>
+<!--% status?.setRollbackOnly() %-->

@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="${resource(dir:'css',file:'demo_table_filters.css')}" />
         <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
 		<g:javascript library="jquery" plugin="jquery"/>
+		<g:javascript library="jquery/jquery.ui.datepicker-es" />
 		<jqui:resources />
         <g:layoutHead />
         <g:javascript library="application" />
