@@ -18,7 +18,7 @@ class PeliculaController {
 	def save = {
 		Pelicula pelicula
 		if(params.id){
-			pelicula = Pelicula.get(id)
+			pelicula = Pelicula.get(params.id)
 	        pelicula.properties = params.findAll{it.key != "distribuidor" && it.key != "productor"}
 		}else{
 			pelicula = new Pelicula(params.findAll{it.key != "distribuidor" && it.key != "productor"})
