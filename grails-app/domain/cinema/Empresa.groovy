@@ -31,12 +31,12 @@ class Empresa {
 					errors.rejectValue("fechaUltimaRevalida","fechaUltimaRevalida", [dateFormat.format(val), dateFormat.format(obj.fechaFinActividad)] as Object[],
                         "La fecha de última reválida [{0}] debe ser menor o igual a la fecha de fin de actividad [{1}]")
 				}
-				def hoy = new Date() 
+/*				def hoy = new Date() 
 				if(val > hoy){
                     errors.rejectValue("fechaUltimaRevalida","fechaUltimaRevalida", [dateFormat.format(val), dateFormat.format(hoy)] as Object[],
                         "La fecha de última reválida [{0}] debe ser menor o igual a la fecha de hoy [{1}]")
                 }
-
+*/
 			}
 		})
 		personaJuridica(nullable:true, validator: {val, obj -> val != null ^ obj.personaFisica != null

@@ -28,13 +28,14 @@ class EmpresaController {
 		empresa.fechaInicioActividad = (params.fechaInicioActividad != '' ? Empresa.dateFormat.parse(params.fechaInicioActividad):null)
 		empresa.fechaFinActividad = (params.fechaFinActividad != '' ? Empresa.dateFormat.parse(params.fechaFinActividad):null)
 		empresa.fechaUltimaRevalida = (params.fechaUltimaRevalida != '' ? Empresa.dateFormat.parse(params.fechaUltimaRevalida):null)
+		println "fechaInicio: $empresa.fechaInicioActividad"
 		if(params.personaFisica){
-			def cuit = params.personaFisica.split(" cuit:")[1]
+			def cuit = params.personaFisica.split(" cuit:").length==2?params.personaFisica.split(" cuit:")[1]:""
         	def pFisica = PersonaFisica.findByCuit(cuit)
 			empresa.personaFisica = pFisica
 			empresa.personaJuridica = null	
 		} else if(params.personaJuridica){
-			def cuit = params.personaJuridica.split(" cuit:")[1]
+			def cuit = params.personaJuridica.split(" cuit:").length==2?params.personaFisica.split(" cuit:")[1]:""
         	def pJuridica = PersonaJuridica.findByCuit(cuit)
 			empresa.personaJuridica = pJuridica
 			empresa.personaFisica = null

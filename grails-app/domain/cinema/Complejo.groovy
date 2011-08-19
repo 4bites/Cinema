@@ -9,7 +9,6 @@ class Complejo {
     static constraints = {
 		codigo(unique:true)
 		denominacion(blank:false)
-		fechaApertura(nullable:false)
     }
 
 	static def show_columns = {

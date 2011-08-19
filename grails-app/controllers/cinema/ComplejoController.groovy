@@ -14,7 +14,8 @@ class ComplejoController {
 			complejo = new Complejo()
 		}
 		complejo.properties = params
-		complejo.fechaApertura = (params.fechaApertura != '' ? Empresa.dateFormat.parse(params.fechaApertura):null)
+		complejo.fechaApertura = (params.fechaApertura ? Empresa.dateFormat.parse(params.fechaApertura):null)
+		print "fecha:  ${Empresa.dateFormat.parse(params.fechaApertura)}"
 		if(complejo.validate()){
 			complejo.save()
 			redirect action:"show", id: complejo.id

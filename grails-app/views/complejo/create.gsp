@@ -31,7 +31,7 @@
             </div>
             </g:hasErrors>
             <!--g:form method="post" useToken="true"-->
-			<g:form method="post" action="save">
+			<g:form method="get" action="save">
 				 <g:if test="${complejoInstance?.id}">
                     <g:hiddenField name="id" value="${complejoInstance?.id}" />
                     <g:hiddenField name="version" value="${complejoInstance?.version}" />
@@ -63,7 +63,7 @@
                                     <label for="fechaApertura"><g:message code="complejo.fechaApertura" default="Fecha Apertura" />:</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: complejoInstance, field: 'fechaApertura', 'errors')}">
-                                    <g:textField name="fechaApertura" value="${formatDate(date:complejoInstance?.fechaApertura)}" />
+                                    <g:textField name="fechaApertura" value="${formatDate(date:complejoInstance?.fechaApertura, format:'dd/MM/yyyy')}" />
                                 </td>
                             </tr>
                         
