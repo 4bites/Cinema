@@ -20,9 +20,6 @@
             <div class="list">
                <g:render template="/shared/list" model="[domain:Local]"/> 
             </div>
-            <div class="paginateButtons">
-                <g:paginate total="${localInstanceTotal}" />
-            </div>
         </div>
     </body>
 </html>

@@ -19,42 +19,6 @@
             </g:if>
             <div class="list">
 				<g:render template="/shared/list" model="[domain:PersonaFisica]" />
-<!--                <table>
-                    <thead>
-                        <tr>
-                            <g:sortableColumn property="cuit" title="${message(code: 'personaFisica.cuit.label', default: 'Cuit')}" />
-                        
-                            <g:sortableColumn property="nombre" title="${message(code: 'personaFisica.nombre.label', default: 'Nombre')}" />
-                        
-                            <g:sortableColumn property="apellido" title="${message(code: 'personaFisica.apellido.label', default: 'Apellido')}" />
-                        
-                            <g:sortableColumn property="tipoDocumento" title="${message(code: 'personaFisica.tipoDocumento.label', default: 'Tipo Documento')}" />
-                        
-                            <g:sortableColumn property="numeroDocumento" title="${message(code: 'personaFisica.numeroDocumento.label', default: 'Numero Documento')}" />
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${personaFisicaInstanceList}" status="i" var="personaFisicaInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${personaFisicaInstance.id}">${fieldValue(bean: personaFisicaInstance, field: "cuit")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: personaFisicaInstance, field: "nombre")}</td>
-                        
-                            <td>${fieldValue(bean: personaFisicaInstance, field: "apellido")}</td>
-                        
-                            <td>${fieldValue(bean: personaFisicaInstance, field: "tipoDocumento")}</td>
-                        
-                            <td>${fieldValue(bean: personaFisicaInstance, field: "numeroDocumento")}</td>
-                        
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>-->
-            </div>
-            <div class="paginateButtons">
-                <g:paginate total="${personaFisicaInstanceTotal}" />
             </div>
         </div>
     </body>

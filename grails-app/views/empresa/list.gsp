@@ -17,9 +17,6 @@
 				<g:render template="/shared/list" model='[mapping:"empresa", domain:grailsApplication.classLoader.loadClass("cinema.${params.dom}")]' />
                 
             </div>
-            <div class="paginateButtons">
-                <g:paginate total="${empresaInstanceTotal}" />
-            </div>
         </div>
     </body>
 </html>

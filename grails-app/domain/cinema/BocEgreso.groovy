@@ -16,8 +16,8 @@ class BocEgreso {
     static constraints = {
         desde(blank:false, validator: {val, obj -> !obj.hasta || val < obj.hasta})
         hasta(blank:false, validator: {val, obj -> !obj.desde || val > obj.desde})
-		serie(nullable:false, matches:"A|B|C|D|E|Z")
-		tipo(inList:['ENTREGA','DEVOLUCION'])
+		serie(blank:false, matches:"A|B|C|D|E|Z")
+		tipo(blank:false, inList:['ENTREGA','DEVOLUCION'])
 		exhibidor(nullable: true, validator: { val, obj, errors ->
 			if(obj.tipo	== 'DEVOLUCION' && !val){
 				errors.rejectValue("exhibidor", "exhibidor", null, "El exhibidor es obligatorio cuando se trata de una devolución")
