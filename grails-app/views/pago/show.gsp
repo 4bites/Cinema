@@ -1,6 +1,6 @@
 
-<%@ page import="cinema.DdjjExhibidor" %>
-<%@ page import="cinema.DdjjExhibidorRegistry" %>
+<%@ page import="cinema.Pago" %>
+<%@ page import="cinema.PagoRegistry" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -38,20 +38,12 @@
                             
                         </tr>
                     
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="pago.exhibidora.label" default="Exhibidora" /></td>
-                            
-                            <td valign="top" class="value"><g:link controller="exhibidor" action="show" id="${pagoInstance?.exhibidora?.id}">${pagoInstance?.exhibidora?.desc()}</g:link></td>
-                            
-                        </tr>
                     	<tr>
 							<td valign="top" class="name" colspan="2">
 								<table cellpadding="0" cellspacing="0" border="0" id="ddjjRegs">
 								<thead>
 									<tr>
-									<g:each in="${DdjjExhibidorRegistry.show_columns()}" var="field">
+									<g:each in="${PagoRegistry.show_columns()}" var="field">
 										<th>${field.tokenize(".")[0].humanField()}</th>
 									</g:each>
 									</tr>
@@ -59,7 +51,7 @@
 								<tbody>
 								<g:each in="${pagoInstance?.pagoRegs}" var="reg">
 									<tr>
-                                    <g:each in="${DdjjExhibidorRegistry.show_columns()}" var="field">
+                                    <g:each in="${PagoRegistry.show_columns()}" var="field">
                                         <td>${reg.getValueFrom(field)}</td>
                                     </g:each>
 									</tr>

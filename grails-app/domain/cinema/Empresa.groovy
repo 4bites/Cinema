@@ -56,4 +56,20 @@ class Empresa {
 	static def show_columns = {
 		["codigo", "personaFisica.to_string", "personaJuridica.razonSocial"]
 	}
+
+	static def findByPersona = { cuit ->
+		def c = delegate.createCriteria()
+        def empresa = c.get {
+	        or{	
+    	        personaFisica{
+        	        eq "cuit", cuit
+                }
+                personaJuridica{
+                    eq "cuit", cuit
+                }
+            }
+			maxResults 1
+        }
+	}
+
 }

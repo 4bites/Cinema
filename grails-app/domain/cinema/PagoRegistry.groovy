@@ -21,7 +21,7 @@ class PagoRegistry {
 		})
 		codigoImpuesto(inList:[304, 305], validator:{ val, obj, errors ->
 			if(obj.empresa instanceof Exhibidor && val != 304 || obj.empresa instanceof VideoClub && val != 305){
-				errors.rejectValue("codigoImpuesto", "codigoImpuesto", [val, obj.class.simpleName] as Object[], 
+				errors.rejectValue("codigoImpuesto", "codigoImpuesto", [val, obj.empresa.class.simpleName] as Object[], 
 					"El código de impuesto [{0}] no corresponde con el tipo de empresa [{1}]")
 			}	
 		})
@@ -30,9 +30,13 @@ class PagoRegistry {
 		cuota(range:0..4, unique:['empresa','anio','mes','tipoIngreso']) 
 		tipoIngreso(validator:{ val, obj, errors ->
 			if(obj.empresa instanceof Exhibidor && val != '02' || obj.empresa instanceof VideoClub && !(val in ['00','01'])){
-				errors.rejectValue("tipoIngreso", "tipoIngreso", [obj.class.simpleName], "El tipo de empresa [{0}] no acepta el valor [{1}] como tipo de ingreso")
+				errors.rejectValue("tipoIngreso", "tipoIngreso", [obj.empresa.class.simpleName, val] as Object[], "El tipo de empresa [{0}] no acepta el valor [{1}] como tipo de ingreso")
 			}
 		})
 		importeAbonado(min:0.1)
     }
+
+	static def show_columns = {
+		["anio", "mes", "cuota", "empresa", "codigoImpuesto", "tipoIngreso", "importeAbonado"]
+	}
 }

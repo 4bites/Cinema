@@ -28,10 +28,14 @@ class PagoController {
                 if(fd.length != 14){
                     registry = new PagoRegistry(fila:fila)
                 } else {
-                    def map = [fila:fila, empresa:Empresa.findByCuit(fd[0]), codigoImpuesto:fd[2],
-                                        anio:fd[4],
-                                        mes:fd[5], cuota:fd[6], tipoIngreso:fd[9],
-                                        importeAbonado:fd[13], registry: fd]
+					def empresa = Exhibidor.findByPersona(fd[0])
+					empresa = (empresa ? empresa : VideoClub.findByPersona(fd[0]))
+                    def map = [fila:fila, 
+								empresa:empresa, 
+								codigoImpuesto:fd[2],
+                                anio:fd[4],
+                                mes:fd[5], cuota:fd[6], tipoIngreso:fd[9],
+                                importeAbonado:fd[13], registry: fd, pago:pago]
                     registry = new PagoRegistry(map)
                 }
 				if(fd.length != 14){
@@ -51,9 +55,9 @@ class PagoController {
                 pagos << registry
 			}
 			def map = [pagoInstance:pago]
-            if(!pago.hasErrors() & valid ){
+            if(!pago.hasErrors() & valid & pago.validateUniqueness(pagos)){
                 pago.save()
-                redirect action:"show", id:ddjj.id
+                redirect action:"show", id:pago.id
             }else{
                 pagos.findAll{it.hasErrors()}.each{ it.errors.each{ reg -> println reg}}
                 map.pagoRegs = pagos.findAll{it.hasErrors()}
@@ -69,4 +73,9 @@ class PagoController {
         searcher(params)
     }
 	
+	def edit = {
+		def pago = Pago.get(params.int("id"))
+		render view:"create", model:[pagoInstance: pago, pagoRegs: pago.pagoRegs]
+	}
+
 }
