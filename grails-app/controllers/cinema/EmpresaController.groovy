@@ -35,7 +35,7 @@ class EmpresaController {
 			empresa.personaFisica = pFisica
 			empresa.personaJuridica = null	
 		} else if(params.personaJuridica){
-			def cuit = params.personaJuridica.split(" cuit:").length==2?params.personaFisica.split(" cuit:")[1]:""
+			def cuit = params.personaJuridica.split(" cuit:").length==2?params.personaJuridica.split(" cuit:")[1]:""
         	def pJuridica = PersonaJuridica.findByCuit(cuit)
 			empresa.personaJuridica = pJuridica
 			empresa.personaFisica = null

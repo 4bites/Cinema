@@ -1,7 +1,10 @@
 package cinema
 
 class Pago {
-    static belongsTo = [videoClub:VideoClub, exhibidor:Exhibidor]
+	Date fecha
+	String file
+		
+	static hasMany = [pagoReg: PagoRegistry]
     static constraints = {
     }
 }

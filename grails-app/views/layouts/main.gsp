@@ -88,7 +88,10 @@
             <gui:menuitem url='${webRequest.getContextPath()}/bocEgreso/list'>Listar</gui:menuitem>
         </gui:submenu>
     </gui:submenu>
-    
+   	<gui:submenu label='Pagos AFIP'> 
+		<gui:menuitem url='${webRequest.getContextPath()}/pago/create'>Alta</gui:menuitem>
+        <gui:menuitem url='${webRequest.getContextPath()}/pago/list'>Listar</gui:menuitem>
+	</gui:submenu>
 </gui:menubar>
 </div>
 		<g:layoutBody />
