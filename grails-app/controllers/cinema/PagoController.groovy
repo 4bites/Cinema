@@ -26,7 +26,7 @@ class PagoController {
                 String[] fd = line.split(',')
                 def registry
                 if(fd.length != 14){
-                    registry = new PagoRegistry(fila:fila)
+                    registry = new PagoRegistry(fila:fila, registry: fd)
                 } else {
 					def empresa = Exhibidor.findByPersona(fd[0])
 					empresa = (empresa ? empresa : VideoClub.findByPersona(fd[0]))

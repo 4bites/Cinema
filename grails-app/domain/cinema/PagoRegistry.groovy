@@ -12,6 +12,11 @@ class PagoRegistry {
 	String[] registry
     static belongsTo = [pago:Pago]
     static transients = ['registry']	
+	String periodo
+
+    static mapping = {
+        periodo formula: "concat(convert(anio,char(4)),  right(concat('0',convert(mes,char(2)) ),2) )"
+    }
 
     static constraints = {
 		empresa(validator:{ val, obj, errors ->
@@ -25,7 +30,7 @@ class PagoRegistry {
 					"El código de impuesto [{0}] no corresponde con el tipo de empresa [{1}]")
 			}	
 		})
-		anio(range:2011..9999)
+		anio(range:2000..9999)
 		mes(range:1..12)
 		cuota(range:0..4, unique:['empresa','anio','mes','tipoIngreso']) 
 		tipoIngreso(validator:{ val, obj, errors ->

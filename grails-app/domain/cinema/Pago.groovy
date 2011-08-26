@@ -16,10 +16,12 @@ class Pago {
 		def map = [:]
 		def valid = true
 		pagoRegs.each {
+			if(it.registry.size() == 14){
 			if(map[[it.registry[0], it.codigoImpuesto, it.anio, it.mes, it.cuota]]){
 				map[[it.registry[0], it.codigoImpuesto, it.anio, it.mes, it.cuota]] << it
 			} else {
 				map[[it.registry[0], it.codigoImpuesto, it.anio, it.mes, it.cuota]] = [it]
+			}
 			}
 		}
 		map.each{ key, value ->

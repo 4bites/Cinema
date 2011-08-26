@@ -13,7 +13,7 @@
        			changeMonth: true,
         		changeYear: true,
         		showButtonPanel: true,
-        		dateFormat: 'mm/yy',
+        		dateFormat: 'yymm',
         		onClose: function(dateText, inst) { 
             		var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
             		var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
@@ -21,8 +21,10 @@
         		},
 				beforeShow : function(input, inst) {
             	    if ((datestr = $(this).val()).length > 0) {
-                	    year = datestr.substring(datestr.length-4, datestr.length);
-						month = datestr.substring(0,datestr.length-5);
+//                	    year = datestr.substring(datestr.length-4, datestr.length);
+						year = datestr.substring(0,4);
+//						month = datestr.substring(0,datestr.length-5);
+						month = datestr.substring(datestr.length -2, datestr.length);
 //                    	month = jQuery.inArray(datestr.substring(0, datestr.length-5), $(this).datepicker('option', 'monthNames'));
                     	$(this).datepicker('option', 'defaultDate', new Date(year, month-1, 1));
                     	$(this).datepicker('setDate', new Date(year, month-1, 1));

@@ -95,5 +95,19 @@ class EmpresaController {
 
 	def search = {
 		searcher(params)
+	}
+
+	def controlPagos = {
+		def results = Empresa.controlPagos(params.desde, params.hasta)
+		def map = [:]
+		map.aaData = results
+		map.sEcho = null
+		map.iTotalRecords = results.size()
+        map.iTotalDisplayRecords = map.iTotalRecords			
+		render map as JSON
+	}
+	
+	def controlPagosList = {
+		render view:"controlPagos"
 	}	
 }

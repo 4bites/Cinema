@@ -53,4 +53,14 @@ class PoweredDomainClassMarshaller extends DomainClassMarshaller{
         writer.key("id").value(idValue)
         writer.endObject()
   	}
+/*
+	public void marshalObject(Object value, JSON json) throws ConverterException {
+		super.marshalObject(value, json)
+        JSONWriter writer = json.getWriter()
+		writer.key("to_string").value(value.toString())
+	}
+*/
+
+
+
 }

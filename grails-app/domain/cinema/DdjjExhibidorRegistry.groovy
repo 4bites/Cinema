@@ -22,8 +22,12 @@ class DdjjExhibidorRegistry {
 	Integer cantidadEntradas
 	BigDecimal impuestoTotal
 	String[] registry
+	String periodo	
 	static belongsTo = [ddjj:DdjjExhibidor]
 	static transients = ['registry']
+	static mapping = {
+		periodo formula: "concat(convert(anio,char(4)),  right(concat('0',convert(mes,char(2)) ),2) )"
+	}
     static constraints = {
 		fila(nullable:true)
 		periodoFiscal(blank:false,range:1..4, validator:{ val, obj, errors ->

@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat
 
 class Empresa {
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy")
+	static SimpleDateFormat periodFormat = new SimpleDateFormat("yyyyMM")
     Integer codigo
     Date fechaInicioActividad
     Date fechaFinActividad
@@ -70,6 +71,20 @@ class Empresa {
             }
 			maxResults 1
         }
+	}
+
+	static def controlPagos = { desde, hasta ->
+		use( [groovy.time.TimeCategory] ){ 
+			desde = desde?desde:periodFormat.format(new Date()-1.month)
+			hasta = hasta?hasta:periodFormat.format(new Date()-1.month)
+		}
+//		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, case when d.exhibidor.personaFisica is not null then d.exhibidor.personaFisica.cuit else d.exhibidor.personaJuridica.cuit end as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.impuestoTotal)- sum(p.importeAbonado) as diferencia from DdjjExhibidorRegistry d, PagoRegistry p where d.periodo=p.periodo and d.exhibidor=p.empresa and d.periodo between ? and ? group by d.periodo, d.exhibidor union all select d.periodo, d.videoClub as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(p.importeAbonado) as diferencia from DdjjVideo d, PagoRegistry p where d.periodo=p.periodo and d.videoClub=p.empresa and d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub", desde, hasta)
+		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, d.exhibidor.personaFisica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.impuestoTotal)- sum(p.importeAbonado) as diferencia from DdjjExhibidorRegistry d, PagoRegistry p where d.periodo=p.periodo and d.exhibidor=p.empresa and d.periodo between ? and ? group by d.periodo, d.exhibidor union all select d.periodo, d.exhibidor.personaJuridica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.impuestoTotal)- sum(p.importeAbonado) as diferencia from DdjjExhibidorRegistry d, PagoRegistry p where d.periodo=p.periodo and d.exhibidor=p.empresa and d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor union all select d.periodo, d.videoClub.personaJuridica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(p.importeAbonado) as diferencia from DdjjVideo d, PagoRegistry p where d.periodo=p.periodo and d.videoClub=p.empresa and d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub union all select d.periodo, d.videoClub.personaFisica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(p.importeAbonado) as diferencia from DdjjVideo d, PagoRegistry p where d.periodo=p.periodo and d.videoClub=p.empresa and d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub", desde, hasta)
+		def response = []
+		results.each { res ->
+			response << [periodo: res[0], empresa: res[1], impuestoTotal:res[2], impuestoDeclarado: res[3], diferencia: res[4]]
+		}
+		response
 	}
 
 }
