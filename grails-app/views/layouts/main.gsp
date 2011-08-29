@@ -38,8 +38,6 @@
     	<gui:submenu label='Exhibidor'>
 	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/Exhibidor/create'>Alta</gui:menuitem>
 	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/Exhibidor/list'>Listar</gui:menuitem>
-            <gui:menuitem url='${webRequest.getContextPath()}/empresas/empresa/controlpagosList'>Control de Pagos</gui:menuitem>
-
 	    </gui:submenu>
     	<gui:submenu label='Productor'>
 	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/Productor/create'>Alta</gui:menuitem>
@@ -53,6 +51,7 @@
 	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/VideoClub/create'>Alta</gui:menuitem>
 	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/VideoClub/list'>Listar</gui:menuitem>
 	    </gui:submenu>
+		<gui:menuitem url='${webRequest.getContextPath()}/empresas/empresa/controlPagosList'>Control de Pagos</gui:menuitem>
     </gui:submenu>
    	<gui:submenu label='Sala'>
         <gui:menuitem url='${webRequest.getContextPath()}/sala/create'>Alta</gui:menuitem>

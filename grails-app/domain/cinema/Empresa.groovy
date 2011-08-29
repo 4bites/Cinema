@@ -78,13 +78,32 @@ class Empresa {
 			desde = desde?desde:periodFormat.format(new Date()-1.month)
 			hasta = hasta?hasta:periodFormat.format(new Date()-1.month)
 		}
-//		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, case when d.exhibidor.personaFisica is not null then d.exhibidor.personaFisica.cuit else d.exhibidor.personaJuridica.cuit end as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.impuestoTotal)- sum(p.importeAbonado) as diferencia from DdjjExhibidorRegistry d, PagoRegistry p where d.periodo=p.periodo and d.exhibidor=p.empresa and d.periodo between ? and ? group by d.periodo, d.exhibidor union all select d.periodo, d.videoClub as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(p.importeAbonado) as diferencia from DdjjVideo d, PagoRegistry p where d.periodo=p.periodo and d.videoClub=p.empresa and d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub", desde, hasta)
-		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, d.exhibidor.personaFisica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.impuestoTotal)- sum(p.importeAbonado) as diferencia from DdjjExhibidorRegistry d, PagoRegistry p where d.periodo=p.periodo and d.exhibidor=p.empresa and d.periodo between ? and ? group by d.periodo, d.exhibidor union all select d.periodo, d.exhibidor.personaJuridica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.impuestoTotal)- sum(p.importeAbonado) as diferencia from DdjjExhibidorRegistry d, PagoRegistry p where d.periodo=p.periodo and d.exhibidor=p.empresa and d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor union all select d.periodo, d.videoClub.personaJuridica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(p.importeAbonado) as diferencia from DdjjVideo d, PagoRegistry p where d.periodo=p.periodo and d.videoClub=p.empresa and d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub union all select d.periodo, d.videoClub.personaFisica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(p.importeAbonado) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(p.importeAbonado) as diferencia from DdjjVideo d, PagoRegistry p where d.periodo=p.periodo and d.videoClub=p.empresa and d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub", desde, hasta)
-		def response = []
+		print "desde: $desde, hasta: $hasta"
+//		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, d.exhibidor.personaFisica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(coalesce(p.importeAbonado,0)) as impuestoAbonado, sum(d.impuestoTotal)- sum(coalesce(p.importeAbonado,0)) as diferencia from DdjjExhibidorRegistry d left outer join PagoRegistry p with d.periodo=p.periodo and d.exhibidor=p.empresa where d.periodo between ? and ? group by d.periodo, d.exhibidor union all select d.periodo, d.exhibidor.personaJuridica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(coalesce(p.importeAbonado,0)) as impuestoAbonado, sum(d.impuestoTotal)- sum(coalesce(p.importeAbonado,0)) as diferencia from DdjjExhibidorRegistry d left outer join PagoRegistry p with d.periodo=p.periodo and d.exhibidor=p.empresa where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor union all select d.periodo, d.videoClub.personaJuridica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(coalesce(p.importeAbonado,0)) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(coalesce(p.importeAbonado,0)) as diferencia from DdjjVideo d left outer join PagoRegistry p with d.periodo=p.periodo and d.videoClub=p.empresa where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub union all select d.periodo, d.videoClub.personaFisica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(coalesce(p.importeAbonado,0)) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(coalesce(p.importeAbonado,0)) as diferencia from DdjjVideo d left outer join PagoRegistry p with d.periodo=p.periodo and d.videoClub=p.empresa where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub", desde, hasta)
+
+		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, d.exhibidor.personaFisica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado from DdjjExhibidorRegistry d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor.personaFisica.cuit union all select d.periodo, d.exhibidor.personaJuridica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado from DdjjExhibidorRegistry d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor.personaJuridica.cuit union all select d.periodo, d.videoClub.personaJuridica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado from DdjjVideo d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub.personaJuridica.cuit union all select d.periodo, d.videoClub.personaFisica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado from DdjjVideo d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub.personaFisica.cuit")
+/*		def response = []
 		results.each { res ->
 			response << [periodo: res[0], empresa: res[1], impuestoTotal:res[2], impuestoDeclarado: res[3], diferencia: res[4]]
 		}
 		response
+*/
+		def resp = [:]
+		results.each { res ->
+			resp[[res[0], res[1]]] = [periodo: res[0], empresa: res[1], impuestoTotal:res[2], impuestoDeclarado:0, diferencia:res[2]]
+		} 
+
+		def pagos = PagoRegistry.executeQuery("select p.periodo, p.empresa.personaJuridica.cuit as empresax, sum(p.importeAbonado) as impuestoAbonado from PagoRegistry p  where p.periodo between '${desde}' and '${hasta}' group by p.periodo, p.empresa.personaJuridica.cuit union all select p.periodo, p.empresa.personaFisica.cuit as empresax, sum(p.importeAbonado) as impuestoAbonado from PagoRegistry p where p.periodo between '${desde}' and '${hasta}' group by p.periodo, p.empresa.personaFisica.cuit")
+
+		pagos.each { pago ->
+			if(resp[[pago[0], pago[1]]]){
+				resp[[pago[0], pago[1]]].impuestoDeclarado = pago[2]
+				resp[[pago[0], pago[1]]].diferencia = resp[[pago[0],pago[1]]].impuestoTotal - pago[2]
+			} else {
+				resp[[pago[0],pago[1]]] = [periodo: pago[0], empresa: pago[1], impuestoTotal: 0, impuestoDeclarado: pago[2], diferencia: -pago[2] ]
+			}
+		}	
+		resp
 	}
 
 }

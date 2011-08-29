@@ -100,7 +100,7 @@ class EmpresaController {
 	def controlPagos = {
 		def results = Empresa.controlPagos(params.desde, params.hasta)
 		def map = [:]
-		map.aaData = results
+		map.aaData = results.values()
 		map.sEcho = null
 		map.iTotalRecords = results.size()
         map.iTotalDisplayRecords = map.iTotalRecords			
