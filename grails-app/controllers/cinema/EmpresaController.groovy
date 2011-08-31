@@ -109,5 +109,31 @@ class EmpresaController {
 	
 	def controlPagosList = {
 		render view:"controlPagos"
-	}	
+	}
+
+	def revalidas = {
+        def results = Empresa.controlRevalidas()
+        def map = [:]
+        map.aaData = results
+        map.sEcho = null
+        map.iTotalRecords = results.size()
+        map.iTotalDisplayRecords = map.iTotalRecords
+        render map as JSON
+	}
+
+	def revalidasList = {
+		render view:"controlRevalidas"
+	}
+
+	def sendRevalidasByMail = {
+		sendMail {
+    	    to "javier.iseruk@gmail.com"
+        	subject "Reválidas de empresas vencidas o próximas a vencer"
+        	body( view:"mailTemplate", model:[empresas:Empresa.controlRevalidas()])
+//			html Empresa.controlRevalidas()
+		}
+		render "Enviado" 
+	}
+ 		
+
 }

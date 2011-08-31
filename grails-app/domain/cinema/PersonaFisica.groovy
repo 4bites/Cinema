@@ -60,7 +60,7 @@ class PersonaFisica {
 			return "" 
 		}	
         def multi = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]
-        def numDoc = "${documento}"
+        def numDoc = "${documento}".padLeft(8,"0")
         def sexNum = (sexo=='MASCULINO'?'20':'27')
         def doc = (sexNum+numDoc).toList()
         doc.eachWithIndex { obj,i ->

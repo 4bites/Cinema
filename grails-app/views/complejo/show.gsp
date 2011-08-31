@@ -54,10 +54,10 @@
                                 <ul>
                                 <g:each in="${complejoInstance?.salas.sort()}" var="salaInstance">
                                 <gsec:hasBasicPermission target="sala" action="show">
-                                      <li><gti:link controller="sala" action="show" id="${salaInstance.id}">${salaInstance.encodeAsHTML()}</gti:link></li>
+                                      <li><gti:link controller="sala" action="show" id="${salaInstance.id}">${salaInstance}</gti:link></li>
                                 </gsec:hasBasicPermission>
                                 <gsec:hasNot>
-                                    <li>${salaInstance.encodeAsHTML()}</li>
+                                    <li>${salaInstance}</li>
                                 </gsec:hasNot>
                                 </g:each>
                                 </ul>

@@ -55,7 +55,7 @@ class Empresa {
 	}
 
 	static def show_columns = {
-		["codigo", "personaFisica.to_string", "personaJuridica.razonSocial"]
+		["codigo", "personaFisica.to_string", "personaJuridica.razonSocial", "fechaUltimaRevalida"]
 	}
 
 	static def findByPersona = { cuit ->
@@ -79,7 +79,6 @@ class Empresa {
 			hasta = hasta?hasta:periodFormat.format(new Date()-1.month)
 		}
 		print "desde: $desde, hasta: $hasta"
-//		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, d.exhibidor.personaFisica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(coalesce(p.importeAbonado,0)) as impuestoAbonado, sum(d.impuestoTotal)- sum(coalesce(p.importeAbonado,0)) as diferencia from DdjjExhibidorRegistry d left outer join PagoRegistry p with d.periodo=p.periodo and d.exhibidor=p.empresa where d.periodo between ? and ? group by d.periodo, d.exhibidor union all select d.periodo, d.exhibidor.personaJuridica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado, sum(coalesce(p.importeAbonado,0)) as impuestoAbonado, sum(d.impuestoTotal)- sum(coalesce(p.importeAbonado,0)) as diferencia from DdjjExhibidorRegistry d left outer join PagoRegistry p with d.periodo=p.periodo and d.exhibidor=p.empresa where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor union all select d.periodo, d.videoClub.personaJuridica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(coalesce(p.importeAbonado,0)) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(coalesce(p.importeAbonado,0)) as diferencia from DdjjVideo d left outer join PagoRegistry p with d.periodo=p.periodo and d.videoClub=p.empresa where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub union all select d.periodo, d.videoClub.personaFisica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado, sum(coalesce(p.importeAbonado,0)) as impuestoAbonado, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler)- sum(coalesce(p.importeAbonado,0)) as diferencia from DdjjVideo d left outer join PagoRegistry p with d.periodo=p.periodo and d.videoClub=p.empresa where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub", desde, hasta)
 
 		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, d.exhibidor.personaFisica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado from DdjjExhibidorRegistry d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor.personaFisica.cuit union all select d.periodo, d.exhibidor.personaJuridica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado from DdjjExhibidorRegistry d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor.personaJuridica.cuit union all select d.periodo, d.videoClub.personaJuridica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado from DdjjVideo d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub.personaJuridica.cuit union all select d.periodo, d.videoClub.personaFisica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado from DdjjVideo d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub.personaFisica.cuit")
 /*		def response = []
@@ -105,5 +104,19 @@ class Empresa {
 		}	
 		resp
 	}
+
+	static def controlRevalidas = {
+		use( groovy.time.TimeCategory ){
+			def vencidas = new Date()-4.year
+			def porVencer = vencidas+1.month
+			def vencidasOPorVencer = Empresa.findAllByFechaUltimaRevalidaLessThan(porVencer)
+			def results = []
+			vencidasOPorVencer.each {
+				results << [empresa: it, revalida_status : it.fechaUltimaRevalida < vencidas ? "VENCIDA":"PROXIMA A VENCER" ]
+			}
+			results
+		}
+	}
+
 
 }
