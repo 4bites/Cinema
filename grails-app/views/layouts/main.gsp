@@ -52,6 +52,7 @@
 	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/VideoClub/list'>Listar</gui:menuitem>
 	    </gui:submenu>
 		<gui:menuitem url='${webRequest.getContextPath()}/empresas/empresa/controlPagosList'>Control de Pagos</gui:menuitem>
+		<gui:menuitem url='${webRequest.getContextPath()}/empresas/empresa/revalidasList'>Vencimientos de Reválidas</gui:menuitem>
     </gui:submenu>
    	<gui:submenu label='Sala'>
         <gui:menuitem url='${webRequest.getContextPath()}/sala/create'>Alta</gui:menuitem>
