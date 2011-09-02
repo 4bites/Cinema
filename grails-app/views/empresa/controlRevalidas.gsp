@@ -23,7 +23,7 @@
                 "bServerSide": false,
                 "bAutoWidth": true,
                 "sAjaxSource": "${createLink(mapping:mapping, params:[dom:params.dom], action:'revalidas')}",
-                "aoColumns": [ <%=Empresa.show_columns().collect{"{\"mDataProp\":\"empresa.$it\",\"sDefaultContent\":\"-\"}"}.join(",") %>, {"mDataProp":"revalida_status","sDefaultContent":"-"} ]
+                "aoColumns": [ <%=Empresa.show_columns().collect{"{\"mDataProp\":\"empresa.$it\",\"sDefaultContent\":\"-\"}"}.join(",") %>, {"mDataProp":"revalida_status","sDefaultContent":"-"}]
             });
 		
 			$("#load_callback").click(function(){  

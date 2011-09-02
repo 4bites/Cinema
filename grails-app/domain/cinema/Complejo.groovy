@@ -8,7 +8,7 @@ class Complejo {
 
     static constraints = {
 		codigo(unique:true)
-		denominacion(blank:false)
+		denominacion(blank:false, size:1..100)
     }
 
 	static def show_columns = {

@@ -3,6 +3,7 @@
                     <thead>
                         <tr>
                             <td>Codigo</td>
+							<td>Cuit</td>
 							<td>Persona Física/Jurídica</td>
 							<td>Fecha Ultima Reválida</td>	
                             <td>Status de reválida</td>
@@ -10,8 +11,10 @@
                     </thead>
                     <tbody>
                         <g:each in="${empresas}" var="empresa">
-                            <td>${empresa.empresa.codigo}</td><td>${empresa.empresa.desc()}</td><td>${formatDate(date:empresa.empresa.fechaUltimaRevalida)}</td>
+						<tr>
+                            <td>${empresa.empresa.codigo}</td><td>${empresa.empresa.personaFisica?empresa.empresa.personaFisica.cuit:empresa.empresa.personaJuridica.cuit}</td><td>${empresa.empresa.desc()}</td><td>${formatDate(date:empresa.empresa.fechaUltimaRevalida)}</td>
 							<td>${empresa.revalida_status}</td>
+						</tr>
                         </g:each>
                     </tbody>
                 </table>

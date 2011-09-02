@@ -166,14 +166,14 @@ class DdjjExhibidorRegistry {
 		sala(nullable: true, validator:{val, obj, errors ->
 			if(val == null){
 				errors.rejectValue("sala","salaNull",["${obj.registry[4]}"] as Object[], "El código [{0}] no corresponde a ninguna sala válida")	
-			} else if(val.exhibidor != obj.exhibidor){
-				errors.rejectValue("sala","sala",["${obj.sala.codigo}","${obj.exhibidor.codigo}"] as Object[],"La sala [{0}] no pertenece al exhibidor [{1}]")
+			} else if(obj.exhibidor && val.exhibidor != obj.exhibidor){
+				errors.rejectValue("sala","sala",["${val.codigo}","${obj.exhibidor.codigo}"] as Object[],"La sala [{0}] no pertenece al exhibidor [{1}]")
 			}
 		})
 		exhibidor(nullable: true, validator:{ val, obj, errors ->
 			if(val == null){
                 errors.rejectValue("exhibidor","exhibidor",["${obj.registry[3]}"] as Object[], "El código [{0}] no corresponde a ningun exhibidor válido")
-			} else if(val != obj.ddjj.exhibidora){
+			} else if(obj.ddjj.exhibidora && val != obj.ddjj.exhibidora){
 				errors.rejectValue("exhibidor","exhibidor",["${val.codigo}","${obj.ddjj.exhibidora.codigo}"] as Object[],"El exhibidor [{0}] difiere del exhibidor [{1}] que presenta la ddjj")
 			}	
 		})

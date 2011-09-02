@@ -127,7 +127,7 @@ class EmpresaController {
 
 	def sendRevalidasByMail = {
 		sendMail {
-    	    to "nosotros@4bites.com.ar"
+    	    to "nosotros@4bites.com.ar", "germadevanesa@gmail.com", "javier.iseruk@gmail.com", "julio@tuozzo.com.ar", "diego.rossotti@citi.com", "gabrielmarcos2001@gmail.com"
         	subject "Reválidas de empresas vencidas o próximas a vencer"
         	body( view:"mailTemplate", model:[empresas:Empresa.controlRevalidas()])
 //			html Empresa.controlRevalidas()

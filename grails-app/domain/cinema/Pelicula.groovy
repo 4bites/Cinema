@@ -7,7 +7,7 @@ class Pelicula {
     Productor productor
 	Distribuidor distribuidor
     static constraints = {
-        codigo(max:99999999999999)
+        codigo(max:99999999999999, unique:true)
         titulo(maxLength:70, blank:false)
         fechaEstreno(nullable:false)
     }
