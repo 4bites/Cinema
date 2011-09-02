@@ -13,6 +13,7 @@
         <gui:resources components="menu"/>
 		<jqDT:resources/>
 		<g:javascript library="jquery/jquery.dataTables.columnFilter" />
+		<g:javascript library="jquery/jquery.dataTables.tableTools" />
     </head>
     <body class="yui-skin-sam">
         <div id="spinner" class="spinner" style="display:none;">

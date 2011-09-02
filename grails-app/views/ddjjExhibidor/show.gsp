@@ -9,7 +9,27 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
 		<script>
 			$(document).ready(function() {
-			//	$('#results').dataTable({ });
+				$('#results').dataTable( {
+                	"bProcessing": true,
+                	"bDeferRender": true,
+                	//"bServerSide": true,
+                	"bAutoWidth": true,
+                	//"sAjaxSource": "${createLink( action:'search')}",
+					"sDom": 'T<"clear">lfrtip',
+					"oTableTools": {
+						"sSwfPath": "/js/copy_cvs_xls_pdf.swf",
+						"aButtons": [
+							{
+								"sExtends": "pdf",
+								"sPdfOrientation": "landscape",
+								"sPdfMessage": "Registros del archivo adjunto a la ddjj"
+							},
+							"copy",
+							"print"
+						]
+					}
+
+            	});
 			});
 
 		</script>		
@@ -21,7 +41,7 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="dialog">
-                <table id="results">
+                <table>
                     <tbody>
                     
                         <tr class="prop">
@@ -48,7 +68,7 @@
                         </tr>
                     	<tr>
 							<td valign="top" class="name" colspan="2">
-								<table cellpadding="0" cellspacing="0" border="0" id="ddjjRegs">
+								<table cellpadding="0" cellspacing="0" border="0" id="results">
 								<thead>
 									<tr>
 									<g:each in="${DdjjExhibidorRegistry.show_columns()}" var="field">
@@ -64,7 +84,6 @@
                                     </g:each>
 									</tr>
                                 </g:each>
-									
 								</tbody>		
 								</table>
 							</td>
