@@ -14,9 +14,7 @@
 					"bSort":false,
 					"bPaginate": false,
                 	"bDeferRender": true,
-                	//"bServerSide": true,
                 	"bAutoWidth": true,
-                	//"sAjaxSource": "${createLink( action:'search')}",
 					"sDom": 'T<"clear">lfrtip',
 					"oTableTools": {
 						"sSwfPath": "/js/copy_cvs_xls_pdf.swf",

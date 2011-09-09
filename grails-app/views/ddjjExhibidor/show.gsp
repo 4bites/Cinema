@@ -12,24 +12,12 @@
 				$('#results').dataTable( {
                 	"bProcessing": true,
                 	"bDeferRender": true,
-                	//"bServerSide": true,
-                	"bAutoWidth": true,
-                	//"sAjaxSource": "${createLink( action:'search')}",
-					"sDom": 'T<"clear">lfrtip',
-					"oTableTools": {
-						"sSwfPath": "/js/copy_cvs_xls_pdf.swf",
-						"aButtons": [
-							{
-								"sExtends": "pdf",
-								"sPdfOrientation": "landscape",
-								"sPdfMessage": "Registros del archivo adjunto a la ddjj"
-							},
-							"copy",
-							"print"
-						]
-					}
-
+                	"bAutoWidth": true
             	});
+
+				$('#export').click( function (){
+					location.href='${createLink(action:"pdf", id:ddjjExhibidorInstance?.id)}';
+				});
 			});
 
 		</script>		
@@ -66,6 +54,10 @@
                             <td valign="top" class="value"><g:link controller="exhibidor" action="show" id="${ddjjExhibidorInstance?.exhibidora?.id}">${ddjjExhibidorInstance?.exhibidora?.desc()}</g:link></td>
                             
                         </tr>
+						<tr class="prop">
+                            <td valign="top" class="name"><input type="button" value="EXPORTAR DOCUMENTO" id="export" /></td>
+                        </tr>
+
                     	<tr>
 							<td valign="top" class="name" colspan="2">
 								<table cellpadding="0" cellspacing="0" border="0" id="results">
