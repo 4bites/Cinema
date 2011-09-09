@@ -54,6 +54,13 @@ class Empresa {
 		return desc()
 	}
 
+	def cuit = {
+		personaFisica?personaFisica.cuit:personaJuridica.cuit
+	}
+
+	def denominacion = {
+		personaFisica? "${personaFisica.nombre} ${personaFisica.apellido}" : personaJuridica?.razonSocial
+	}
 	static def show_columns = {
 		["codigo", "personaFisica.to_string", "personaJuridica.razonSocial", "fechaUltimaRevalida"]
 	}

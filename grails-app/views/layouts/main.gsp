@@ -19,7 +19,11 @@
         <div id="spinner" class="spinner" style="display:none;">
             <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
         </div>
-        <div id="grailsLogo" class="logo"><img src="${resource(dir:'images',file:'incaa.png')}" alt="4Bites INCAA" border="0" /></div>
+        <div id="grailsLogo" class="logo"><img src="${resource(dir:'images',file:'incaa.png')}" alt="4Bites INCAA" border="0" />
+			<gsec:isLoggedIn>
+				<span style="margin-left:auto;margin-right:0px">Usuario:<gsec:user /><a href="${createLink(controller:'auth', action:'signOut')}">Logout</a></span>
+			</gsec:isLoggedIn>	
+		</div>
         
     	<div>
     	<gui:menubar renderTo="div">
@@ -95,6 +99,30 @@
 		<gui:menuitem url='${webRequest.getContextPath()}/pago/create'>Alta</gui:menuitem>
         <gui:menuitem url='${webRequest.getContextPath()}/pago/list'>Listar</gui:menuitem>
 	</gui:submenu>
+	<gsec:isLoggedIn>
+         <gui:submenu label="${session.gsecUsername}" >
+			<gsec:hasRole name="Administrator" >
+				<gui:submenu label='Users'>
+	            	<gui:menuitem url="${createLink(controller:'gsecUser', action:'create')}" >Alta</gui:menuitem>
+    	            <gui:menuitem url="${createLink(controller:'gsecUser', action:'create')}" >Listar</gui:menuitem>
+				</gui:submenu>
+				<gui:submenu label='Roles'>
+                    <gui:menuitem url="${createLink(controller:'gsecRole', action:'create')}" >Alta</gui:menuitem>
+                    <gui:menuitem url="${createLink(controller:'gsecRole', action:'list')}" >Listar</gui:menuitem>
+                </gui:submenu>
+				<gui:submenu label='Permisos'>
+                    <gui:menuitem url="${createLink(controller:'gsecPermission', action:'create')}" >Alta</gui:menuitem>
+                    <gui:menuitem url="${createLink(controller:'gsecPermission', action:'list')}" >Listar</gui:menuitem>
+                </gui:submenu>
+
+            </gsec:hasRole>
+
+			<gui:menuitem url="${createLink(controller:'auth', action:'signOut')}">Logout</gui:menuitem>
+		</gui:submenu>	
+    </gsec:isLoggedIn>
+	<gsec:isNotLoggedIn>
+		<gui:menuitem url="${createLink(controller:'auth', action:'login')}" >Login</gui:menuitem>
+	</gsec:isNotLoggedIn>
 </gui:menubar>
 </div>
 		<g:layoutBody />

@@ -147,6 +147,42 @@ class DdjjExhibidor {
 	static def show_columns = {
 		["fecha", "file", "exhibidora.to_string"]
 	}
+
+	def groupAndSubtotal = {
+		def map = [:]
+		ddjjExhibidorRegs.each{ reg ->
+			if(!map[[reg.dia, reg.mes, reg.anio]]){
+				map[[reg.dia, reg.mes, reg.anio]] = [:]
+			} 
+			if(!map[[reg.dia, reg.mes, reg.anio]][reg.sala] ){
+				map[[reg.dia, reg.mes, reg.anio]][reg.sala] = [:]
+			}
+			if(map[[reg.dia, reg.mes, reg.anio]][reg.sala].registry){
+				map[[reg.dia, reg.mes, reg.anio]][reg.sala].registry << reg
+				map[[reg.dia, reg.mes, reg.anio]][reg.sala].entradas += reg.cantidadEntradas
+            	map[[reg.dia, reg.mes, reg.anio]][reg.sala].totalImpuestos += reg.impuestoTotal
+			} else {
+				map[[reg.dia, reg.mes, reg.anio]][reg.sala].registry = [reg]
+               	map[[reg.dia, reg.mes, reg.anio]][reg.sala].entradas = reg.cantidadEntradas
+                map[[reg.dia, reg.mes, reg.anio]][reg.sala].totalImpuestos = reg.impuestoTotal
+ 
+			}
+		}
+		map.each { key, value ->
+			value.entradas = 0
+			value.totalImpuestos = 0
+			value.each {k, v ->
+				println "que es: $v"	
+				try{ 
+					value.entradas += v.entradas
+					value.totalImpuestos += v.totalImpuestos
+				}catch(Exception e){}
+			}
+//			value.entradas = value.values().sum { it.entradas }
+//			value.totalImpuestos = value.values().sum { it.totalImpuestos }
+		}
+		map
+	}
 /*
 		    value.each{
         		if(hora[it.hora]){

@@ -79,4 +79,9 @@ class DdjjExhibidorController {
 	def search = {
 		searcher(params)
 	}
+
+	def pdf = {
+		def ddjj = DdjjExhibidor.get(params.id)
+		render view:"pdf", model:[ddjjExhibidorInstance:ddjj]
+	}
 }
