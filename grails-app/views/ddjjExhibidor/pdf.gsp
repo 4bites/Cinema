@@ -94,10 +94,14 @@
                                     </tr>
 								<% } catch(Exception e){} %>
                                 </g:each>
-								</tbody>		
+								</tbody>	
+								<tfoot>
+										<tr><td colspan="12"><img src="${createLink(action:'barcode')}"></td></tr>
+								</tfoot>	
 								</table>
 							</td>
 						</tr>
+						<tr><td><!--img src="${createLink(action:'barcode')}"--></td></tr>
                     </tbody>
                 </table>
             </div>

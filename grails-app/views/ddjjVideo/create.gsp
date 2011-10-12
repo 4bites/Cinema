@@ -115,7 +115,7 @@
                                     <label for="cantidadTotalVenta"><g:message code="ddjjVideo.cantidadTotalVenta.label" default="Cantidad Total Venta" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjVideoInstance, field: 'cantidadTotalVenta', 'errors')}">
-                                    <g:textField name="cantidadTotalVenta" value="${fieldValue(bean: ddjjVideoInstance, field: 'cantidadTotalVenta')}" />
+                                    <g:textField name="cantidadTotalVenta" value="${ddjjVideoInstance?.cantidadTotalVenta}" />
                                 </td>
                             </tr>
                         
@@ -124,7 +124,7 @@
                                     <label for="precioTotalVenta"><g:message code="ddjjVideo.precioTotalVenta.label" default="Precio Total Venta" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjVideoInstance, field: 'precioTotalVenta', 'errors')}">
-                                    <g:textField name="precioTotalVenta" value="${fieldValue(bean: ddjjVideoInstance, field: 'precioTotalVenta')}" />
+                                    <g:textField name="precioTotalVenta" value="${ddjjVideoInstance?.precioTotalVenta}" />
                                 </td>
                             </tr>
                         
@@ -133,7 +133,7 @@
                                     <label for="gravamenTotalVenta"><g:message code="ddjjVideo.gravamenTotalVenta.label" default="Gravamen Total Venta" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjVideoInstance, field: 'gravamenTotalVenta', 'errors')}">
-                                    <g:textField name="gravamenTotalVenta" value="${fieldValue(bean: ddjjVideoInstance, field: 'gravamenTotalVenta')}" />
+                                    <g:textField name="gravamenTotalVenta" value="${ddjjVideoInstance?.gravamenTotalVenta}" />
                                 </td>
                             </tr>
                         
@@ -142,7 +142,7 @@
                                     <label for="cantidadTotalAlquiler"><g:message code="ddjjVideo.cantidadTotalAlquiler.label" default="Cantidad Total Alquiler" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjVideoInstance, field: 'cantidadTotalAlquiler', 'errors')}">
-                                    <g:textField name="cantidadTotalAlquiler" value="${fieldValue(bean: ddjjVideoInstance, field: 'cantidadTotalAlquiler')}" />
+                                    <g:textField name="cantidadTotalAlquiler" value="${ddjjVideoInstance?.cantidadTotalAlquiler}" />
                                 </td>
                             </tr>
                         
@@ -151,7 +151,7 @@
                                     <label for="precioTotalAlquiler"><g:message code="ddjjVideo.precioTotalAlquiler.label" default="Precio Total Alquiler" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjVideoInstance, field: 'precioTotalAlquiler', 'errors')}">
-                                    <g:textField name="precioTotalAlquiler" value="${fieldValue(bean: ddjjVideoInstance, field: 'precioTotalAlquiler')}" />
+                                    <g:textField name="precioTotalAlquiler" value="${ddjjVideoInstance?.precioTotalAlquiler}" />
                                 </td>
                             </tr>
                         
@@ -160,7 +160,7 @@
                                     <label for="gravamenTotalAlquiler"><g:message code="ddjjVideo.gravamenTotalAlquiler.label" default="Gravamen Total Alquiler" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjVideoInstance, field: 'gravamenTotalAlquiler', 'errors')}">
-                                    <g:textField name="gravamenTotalAlquiler" value="${fieldValue(bean: ddjjVideoInstance, field: 'gravamenTotalAlquiler')}" />
+                                    <g:textField name="gravamenTotalAlquiler" value="${ddjjVideoInstance?.gravamenTotalAlquiler}" />
                                 </td>
                             </tr>
                         

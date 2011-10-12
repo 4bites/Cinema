@@ -24,8 +24,13 @@ class BootStrap {
 			}
 		}
 */
-//		ExpandoMetaClass.enableGlobally()
-
+		ExpandoMetaClass.enableGlobally()
+/*		Complejo.metaClass.afterUpdate = {
+//		de.ppi.grails.gsec.GsecUser.metaClass.afterUpdate = {
+			print "afterUpdate!!!!"
+			sessions.HttpSessionCollector.invalidateAll()		
+		}
+*/
 		JSON.registerObjectMarshaller(Date, 10) {
             return it?.format("dd/MM/yyyy")
         }

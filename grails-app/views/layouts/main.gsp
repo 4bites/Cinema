@@ -94,6 +94,11 @@
             <gui:menuitem url='${webRequest.getContextPath()}/bocEgreso/create'>Alta</gui:menuitem>
             <gui:menuitem url='${webRequest.getContextPath()}/bocEgreso/list'>Listar</gui:menuitem>
         </gui:submenu>
+		<gui:submenu label='BOC'>
+            <gui:menuitem url='${webRequest.getContextPath()}/boc/create'>Alta</gui:menuitem>
+            <gui:menuitem url='${webRequest.getContextPath()}/boc/list'>Listar</gui:menuitem>
+        </gui:submenu>
+
     </gui:submenu>
    	<gui:submenu label='Pagos AFIP'> 
 		<gui:menuitem url='${webRequest.getContextPath()}/pago/create'>Alta</gui:menuitem>

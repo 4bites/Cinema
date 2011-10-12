@@ -1,5 +1,6 @@
 package cinema
 import java.io.File
+import org.krysalis.barcode4j.impl.code39.Code39Bean
 
 class DdjjExhibidorController {
     def scaffold = true
@@ -83,5 +84,15 @@ class DdjjExhibidorController {
 	def pdf = {
 		def ddjj = DdjjExhibidor.get(params.id)
 		render view:"pdf", model:[ddjjExhibidorInstance:ddjj]
+	}
+
+	def barcode = {
+		def barcodeValue = "123"
+        renderBarcodePng("code39Generator", barcodeValue)
+
+	}
+
+	def sessions = {
+		sessions.HttpSessionCollector.invalidateAll()
 	}
 }
