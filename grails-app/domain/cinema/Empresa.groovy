@@ -65,8 +65,8 @@ class Empresa {
 		["codigo", "personaFisica.to_string", "personaJuridica.razonSocial", "fechaUltimaRevalida"]
 	}
 
-	static def findByPersona = { cuit ->
-		def c = delegate.createCriteria()
+	static def findByPersona = { domain, cuit ->
+		def c = domain.createCriteria()
         def empresa = c.get {
 	        or{	
     	        personaFisica{

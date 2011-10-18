@@ -28,8 +28,8 @@ class PagoController {
                 if(fd.length != 14){
                     registry = new PagoRegistry(fila:fila, registry: fd)
                 } else {
-					def empresa = Exhibidor.findByPersona(fd[0])
-					empresa = (empresa ? empresa : VideoClub.findByPersona(fd[0]))
+					def empresa = Exhibidor.findByPersona(Exhibidor.class, fd[0])
+					empresa = (empresa ? empresa : VideoClub.findByPersona(VideoClub.class, fd[0]))
                     def map = [fila:fila, 
 								empresa:empresa, 
 								codigoImpuesto:fd[2],
