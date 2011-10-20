@@ -1,7 +1,7 @@
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 class UrlMappings {
     static mappings = {
-		name empresa: "/empresas/$dom/$action"(controller:"empresa")
+		name empresa: "/empresas/$dom/$action/$id?"(controller:"empresa")
 
     	"/$controller/$action?/$id?"{
 	    	constraints {

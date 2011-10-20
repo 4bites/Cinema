@@ -51,7 +51,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="ddjjExhibidor.exhibidora.label" default="Exhibidora" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="exhibidor" action="show" id="${ddjjExhibidorInstance?.exhibidora?.id}">${ddjjExhibidorInstance?.exhibidora?.desc()}</g:link></td>
+                            <td valign="top" class="value"><g:link mapping="empresa" params="[dom:'Exhibidor']" controller="exhibidor" action="show" id="${ddjjExhibidorInstance?.exhibidora?.id}">${ddjjExhibidorInstance?.exhibidora?.desc()}</g:link></td>
                             
                         </tr>
 						<tr class="prop">

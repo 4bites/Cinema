@@ -33,6 +33,12 @@
                         minLength:2,
 						select: function(event, ui) {
                             $('#productor\\.id').val(ui.item.title);
+                        },
+						change: function(event, ui) {
+                            if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
+                                $(this).val('');
+								$('#productor\\.id').val('');	
+                            }
                         }
                     });
 
@@ -57,6 +63,12 @@
                         minLength:2,
 						select: function(event, ui) {
                             $('#distribuidor\\.id').val(ui.item.title);
+                        },
+						change: function(event, ui) {
+                            if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
+                                $(this).val('');
+								$('#distribuidor\\.id').val('');
+                            }
                         }
 
                     });

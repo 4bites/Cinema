@@ -5,4 +5,8 @@ class Distribuidor extends Empresa{
     static belongsTo = Pelicula  
     static constraints = {
     }
+
+	static mapping = {
+		peliculas cascade: 'none'
+	}
 }
