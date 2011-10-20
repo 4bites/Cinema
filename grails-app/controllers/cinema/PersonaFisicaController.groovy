@@ -70,6 +70,18 @@ class PersonaFisicaController {
 		def person = PersonaFisica.get(params.id)
 		render view:"create", model:[personaFisicaInstance:person]
 	}
+	
+	def delete = {
+		def person = PersonaFisica.get(params.id)
+		if (Empresa.findByPersonaFisica(person) || PFisicaPJuridica.findByPersonaFisica(person)){
+			flash.message = "No se pudo eliminar la Persona Física por pertenecer a alguna empresa o persona jurídica."
+			render view:"show", model:[personaFisicaInstance:person]
+		} else {
+			person.delete()
+			flash.message = "Persona Fisica eliminada"	
+			redirect action:"list"
+		}
+	}
 
 	def search = {
 		searcher(params)

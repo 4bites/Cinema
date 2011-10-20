@@ -52,6 +52,28 @@ class EmpresaController {
 		save()
 	}
 
+	def delete = {
+		def empresa = grailsApplication.getDomainClass("cinema.$params.dom").clazz.get(params.id)
+		try {
+			empresa.delete()
+			flash.message = "Empresa eliminada"
+            redirect uri:"/empresas/$params.dom/list"
+		} catch(Exception e) {
+			flash.message = "No se pudo eliminar la empresa por tener pagos, bocs o salas"
+            render view:"show", model:[empresaInstance:empresa]
+		}
+/*        if (empresa.clazz.name=="Exhibidor" && (DdjjExhibidor.findByExhibidor(empresa) || PagoRegistry.findByEmpresa(empresa) || Sala.findByExhibidor(empresa)) 
+			|| empresa.clazz.name=="Productor" && (Pelicula.findByProductor(empresa) || ){
+            flash.message = "No se pudo eliminar la Persona Física por pertenecer a alguna empresa o persona jurídica."
+            render view:"show", model:[personaFisicaInstance:person]
+        } else {
+            person.delete()
+            flash.message = "Persona Fisica eliminada"
+            redirect action:"list"
+        }
+*/			
+	}
+
 	def list = {
 		def empresas = grailsApplication.getDomainClass("cinema.$params.dom").clazz.findAll()
 		[empresaInstanceList: empresas, empresaInstanceTotal: empresas?.size]	

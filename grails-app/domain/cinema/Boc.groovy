@@ -129,7 +129,7 @@ class Boc {
 	}
 	
 	static def show_columns = {
-        ["desde", "hasta","serie","cantidad","exhibidor.to_string"]
+        ["fechaAlta", "desde", "hasta","serie","cantidad","exhibidor.to_string"]
     }
 
 }

@@ -19,7 +19,7 @@
         <div id="spinner" class="spinner" style="display:none;">
             <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
         </div>
-        <div id="grailsLogo" class="logo"><img src="${resource(dir:'images',file:'incaa.png')}" alt="4Bites INCAA" border="0" />
+        <div id="grailsLogo" class="logo"><img src="${resource(dir:'images',file:'4bites.png')}" alt="4Bites INCAA" border="0" />
 			<gsec:isLoggedIn>
 				<span style="margin-left:auto;margin-right:0px">Usuario:<gsec:user /><a href="${createLink(controller:'auth', action:'signOut')}">Logout</a></span>
 			</gsec:isLoggedIn>	
@@ -86,19 +86,10 @@
 		</gui:submenu>
     </gui:submenu>
    	<gui:submenu label='BOC'>
-		<gui:submenu label='BOC Ingreso'>
-	        <gui:menuitem url='${webRequest.getContextPath()}/bocIngreso/create'>Alta</gui:menuitem>
-			<gui:menuitem url='${webRequest.getContextPath()}/bocIngreso/list'>Listar</gui:menuitem>
-		</gui:submenu>
-       <gui:submenu label='BOC Egreso'>
-            <gui:menuitem url='${webRequest.getContextPath()}/bocEgreso/create'>Alta</gui:menuitem>
-            <gui:menuitem url='${webRequest.getContextPath()}/bocEgreso/list'>Listar</gui:menuitem>
-        </gui:submenu>
 		<gui:submenu label='BOC'>
-            <gui:menuitem url='${webRequest.getContextPath()}/boc/create'>Alta</gui:menuitem>
+            <gui:menuitem url='${webRequest.getContextPath()}/boc/create'>Movimientos</gui:menuitem>
             <gui:menuitem url='${webRequest.getContextPath()}/boc/list'>Listar</gui:menuitem>
         </gui:submenu>
-
     </gui:submenu>
    	<gui:submenu label='Pagos AFIP'> 
 		<gui:menuitem url='${webRequest.getContextPath()}/pago/create'>Alta</gui:menuitem>
