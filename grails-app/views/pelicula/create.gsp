@@ -22,15 +22,18 @@
                                 success: function(data) {
                                     response($.map(data, function(item) {
                                         return {
-											label: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
-                                            value: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
+											label: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Código: "+item.codigo,
+                                            value: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Código: "+item.codigo,
+                                            
+											//label: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
+                                            //value: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
                                             title: item.id
                                         }
                                     }))
                                 }
                             })
                         },
-                        minLength:2,
+                        minLength:1,
 						select: function(event, ui) {
                             $('#productor\\.id').val(ui.item.title);
                         },
@@ -52,8 +55,11 @@
                                 success: function(data) {
                                     response($.map(data, function(item) {
                                         return {
-                                            label: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
-                                            value: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
+                                           label: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Código: "+item.codigo,
+                                            value: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Código: "+item.codigo,
+
+                                           // label: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
+                                           // value: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
                                             title: item.id
                                         }
                                     }))

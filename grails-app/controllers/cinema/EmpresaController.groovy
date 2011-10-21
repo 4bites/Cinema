@@ -104,7 +104,7 @@ class EmpresaController {
 		}
 		def json = []
 		empresas.each {
-			def map = ["id":it.id]
+			def map = ["id":it.id, "codigo": it.codigo]
 			if(it.personaFisica){
 				map << ["nombre":it.personaFisica.nombre, "apellido":it.personaFisica.apellido, "cuit":it.personaFisica.cuit]
 			}else {
