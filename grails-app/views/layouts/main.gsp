@@ -100,7 +100,7 @@
 			<gsec:hasRole name="Administrator" >
 				<gui:submenu label='Users'>
 	            	<gui:menuitem url="${createLink(controller:'gsecUser', action:'create')}" >Alta</gui:menuitem>
-    	            <gui:menuitem url="${createLink(controller:'gsecUser', action:'create')}" >Listar</gui:menuitem>
+    	            <gui:menuitem url="${createLink(controller:'gsecUser', action:'list')}" >Listar</gui:menuitem>
 				</gui:submenu>
 				<gui:submenu label='Roles'>
                     <gui:menuitem url="${createLink(controller:'gsecRole', action:'create')}" >Alta</gui:menuitem>

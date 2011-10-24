@@ -23,6 +23,9 @@ class SalaController {
 		} else {
             sala = new Sala(params.findAll{it.key != "exhibidor" && it.key != "complejo"})
         }
+		sala.fechaInicioActividad = (params.fechaInicioActividad != '' ? Empresa.dateFormat.parse(params.fechaInicioActividad):null)
+        sala.fechaRenovacion = (params.fechaRenovacion != '' ? Empresa.dateFormat.parse(params.fechaRenovacion):null)
+       
 		if(params["exhibidor.id"]){
 			sala.exhibidor = Exhibidor.get(params["exhibidor.id"])
 		}
