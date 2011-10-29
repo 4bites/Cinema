@@ -22,12 +22,12 @@ public class PermissionRolesAndUserBootStrap {
         findAndUpdatePermission('gsecUser.edit',"gsecUser", "edit, update")
         findAndUpdatePermission('gsecUser.create',"gsecUser", "create, save, saveAndRedirectToCreate")
         findAndUpdatePermission('gsecUser.delete',"gsecUser", "delete")
-
+/*
 		findAndUpdatePermission('complejo.view','complejo', 'index,list,show')
 		findAndUpdatePermission('complejo.edit','complejo', 'edit, update')
 		findAndUpdatePermission('complejo.create','complejo', 'create, save, saveAndRedirectToCreate')
 		findAndUpdatePermission('complejo.delete','complejo', 'delete')
-
+*/
         findAndUpdatePermission('gsecPermission.view',"gsecPermission", "index,list,show")
         findAndUpdatePermission('gsecPermission.edit',"gsecPermission", "edit, update")
         findAndUpdatePermission('gsecPermission.create',"gsecPermission", "create, save, saveAndRedirectToCreate")
@@ -50,11 +50,11 @@ public class PermissionRolesAndUserBootStrap {
         adminRole.addToPermissions(permissions['gsecPermission.create'])
         adminRole.addToPermissions(permissions['gsecPermission.delete'])
 
-		adminRole.addToPermissions(permissions['complejo.view']);
+/*		adminRole.addToPermissions(permissions['complejo.view']);
 		adminRole.addToPermissions(permissions['complejo.edit']);
 		adminRole.addToPermissions(permissions['complejo.create']);
 		adminRole.addToPermissions(permissions['complejo.delete']);
-
+*/
         adminRole.save()
 
     }
