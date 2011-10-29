@@ -19,13 +19,19 @@
         <div id="spinner" class="spinner" style="display:none;">
             <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
         </div>
-        <div id="grailsLogo" class="logo"><img src="${resource(dir:'images',file:'4bites.png')}" alt="4Bites INCAA" border="0" />
+        <div id="grailsLogo" class="logo">
+			<table style="border-width:0px">
+			<tr class="prop"><td>
+			<img src="${resource(dir:'images',file:'4bites.png')}" alt="4Bites INCAA" border="0" />
+				</td><td align="right">
 			<gsec:isLoggedIn>
-				<span style="margin-left:auto;margin-right:0px">Usuario:<gsec:user /><a href="${createLink(controller:'auth', action:'signOut')}">Logout</a></span>
+				<span style="margin-left:auto;margin-right:0px">Usuario:<gsec:user /> | <a href="${createLink(controller:'auth', action:'signOut')}">Logout</a></span>
 			</gsec:isLoggedIn>	
+			</td></tr></table>
 		</div>
         
     	<div>
+		<gsec:isLoggedIn>
     	<gui:menubar renderTo="div">
     
 	<gui:menuitem url='${webRequest.getContextPath()}/'>Home</gui:menuitem>
@@ -86,10 +92,8 @@
 		</gui:submenu>
     </gui:submenu>
    	<gui:submenu label='BOC'>
-		<gui:submenu label='BOC'>
-            <gui:menuitem url='${webRequest.getContextPath()}/boc/create'>Movimientos</gui:menuitem>
-            <gui:menuitem url='${webRequest.getContextPath()}/boc/list'>Listar</gui:menuitem>
-        </gui:submenu>
+         <gui:menuitem url='${webRequest.getContextPath()}/boc/create'>Movimientos</gui:menuitem>
+         <gui:menuitem url='${webRequest.getContextPath()}/boc/list'>Listar</gui:menuitem>
     </gui:submenu>
    	<gui:submenu label='Pagos AFIP'> 
 		<gui:menuitem url='${webRequest.getContextPath()}/pago/create'>Alta</gui:menuitem>
@@ -120,6 +124,7 @@
 		<gui:menuitem url="${createLink(controller:'auth', action:'login')}" >Login</gui:menuitem>
 	</gsec:isNotLoggedIn>
 </gui:menubar>
+</gsec:isLoggedIn>
 </div>
 		<g:layoutBody />
     </body>

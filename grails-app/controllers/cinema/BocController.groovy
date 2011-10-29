@@ -14,7 +14,7 @@ class BocController {
         boc.properties = params.findAll{ it.key != 'exhibidor'}
         boc.fechaAlta = new Date()
 //		boc.exhibidor = Exhibidor.get(params.int('exhibidor.id'))
-		boc.exhibidor = params.exhibidor?Exhibidor.findByPersona(Exhibidor.class, params.exhibidor?.split(" cuit:")[1]):null
+		boc.exhibidor = params["exhibidor.id"]?Exhibidor.get(params["exhibidor.id"]):null
         if(boc.validate() && boc."${params.accion}"()){
             redirect action:"show", id: boc.id
         } else {

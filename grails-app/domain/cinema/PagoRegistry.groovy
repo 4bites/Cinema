@@ -11,8 +11,10 @@ class PagoRegistry {
 	BigDecimal importeAbonado	
 	String[] registry
     static belongsTo = [pago:Pago]
-    static transients = ['registry']	
+    static transients = ['registry','codigoConceptro','tasaPercepcion']	
 	String periodo
+	String codigoConcepto
+	Integer tasaPercepcion
 
     static mapping = {
         periodo formula: "concat(convert(anio,char(4)),  right(concat('0',convert(mes,char(2)) ),2) )"
@@ -39,6 +41,8 @@ class PagoRegistry {
 			}
 		})
 		importeAbonado(min:0.1)
+		codigoConcepto(inList:["019"])
+		tasaPercepcion(inList:[10])
     }
 
 	static def show_columns = {

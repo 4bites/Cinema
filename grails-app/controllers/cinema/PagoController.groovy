@@ -35,7 +35,7 @@ class PagoController {
 								codigoImpuesto:fd[2],
                                 anio:fd[4],
                                 mes:fd[5], cuota:fd[6], tipoIngreso:fd[9],
-                                importeAbonado:fd[13], registry: fd, pago:pago]
+                                importeAbonado:fd[13], registry: fd, pago:pago, codigoConcepto:fd[3], tasaPercepcion:fd[11]]
                     registry = new PagoRegistry(map)
                 }
 				if(fd.length != 14){

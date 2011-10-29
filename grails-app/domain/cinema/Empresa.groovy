@@ -119,7 +119,9 @@ class Empresa {
 			def vencidasOPorVencer = Empresa.findAllByFechaUltimaRevalidaLessThan(porVencer)
 			def results = []
 			vencidasOPorVencer.each {
-				results << [empresa: it, revalida_status : it.fechaUltimaRevalida < vencidas ? "VENCIDA":"PROXIMA A VENCER" ]
+				if(!it.fechaFinActividad || it.fechaFinActividad > new Date()){
+					results << [empresa: it, revalida_status : it.fechaUltimaRevalida < vencidas ? "VENCIDA":"PROXIMA A VENCER" ]
+				}
 			}
 			results
 		}
