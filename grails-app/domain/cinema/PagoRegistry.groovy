@@ -11,7 +11,7 @@ class PagoRegistry {
 	BigDecimal importeAbonado	
 	String[] registry
     static belongsTo = [pago:Pago]
-    static transients = ['registry','codigoConceptro','tasaPercepcion']	
+    static transients = ['registry','codigoConcepto','tasaPercepcion']	
 	String periodo
 	String codigoConcepto
 	Integer tasaPercepcion
@@ -21,9 +21,9 @@ class PagoRegistry {
     }
 
     static constraints = {
-		empresa(validator:{ val, obj, errors ->
-			if(!val instanceof Exhibidor && !val instanceof VideoClub){
-				errors.rejectValue("empresa","empresa",[val] as Object[], "El codigo de empresa [{0}] no pertenece a un video club o a un exhibidor")
+		empresa(nullable:true, validator:{ val, obj, errors ->
+			if(val == null || !val instanceof Exhibidor && !val instanceof VideoClub){
+				errors.rejectValue("empresa","empresa",[registry[0]] as Object[], "El codigo de empresa [{0}] no pertenece a un video club o a un exhibidor")
 			}
 		})
 		codigoImpuesto(inList:[304, 305], validator:{ val, obj, errors ->

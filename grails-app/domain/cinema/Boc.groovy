@@ -85,6 +85,9 @@ class Boc {
 					Boc.executeUpdate("delete from Boc where serie=? and desde=? and hasta=?", boc.serie, boc.desde, boc.hasta)
                     new Boc(desde: hasta+1, hasta: boc.hasta, serie:serie, fechaAlta: new Date()).save()
                 }
+				if(boc.hasta == hasta && boc.desde == desde) {
+					Boc.executeUpdate("delete from Boc where serie=? and desde=? and hasta=?", boc.serie, boc.desde, boc.hasta)
+				}
             }
 			save()
         } else {
