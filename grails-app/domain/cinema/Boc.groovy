@@ -91,7 +91,6 @@ class Boc {
             }
 			save()
         } else {
-            print "no se pueden entregar porque no existen o existen, pero estan asignados"
 			errors.reject("no se pueden entregar porque no existen o existen, pero estan asignados")
 			false
         }
@@ -118,6 +117,10 @@ class Boc {
                     new Boc(desde: hasta+1, hasta: boc.hasta, serie:serie, exhibidor: exhibidor, fechaAlta: new Date()).save()
 					Boc.executeUpdate("delete from Boc where serie=? and desde=? and hasta=?", boc.serie, boc.desde, boc.hasta)
                 }
+				if(boc.hasta == hasta && boc.desde == desde) {
+                    Boc.executeUpdate("delete from Boc where serie=? and desde=? and hasta=?", boc.serie, boc.desde, boc.hasta)
+                }
+
             }
 			accion = 'alta'
 			exhibidor = null
