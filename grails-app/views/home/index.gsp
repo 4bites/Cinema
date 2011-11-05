@@ -55,18 +55,15 @@
 		</gsec:isNotLoggedIn>
 		<gsec:isLoggedIn>
 		<div id="pageBody">
-	        <h1>Bienvenidos a nuestra aplicacion!</h1>
+<!--	        <h1>Bienvenidos a nuestra aplicacion!</h1>
 	        <p>Vamos gente que se puede!! tiene pagina de home la aplicacion? no tenemos definido eso en ningun lado.
 	           Me parece que algo deberiamos tener</p>
 
 	        <div id="controllerList" class="dialog">
-				<h2>Links a lo que esta hecho</h2>
 	            <ul>
-	              <g:each var="c" in="${grailsApplication.controllerClasses}">
-	                    <li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-	              </g:each>
 	            </ul>
 	        </div>
+-->
 		</div>
 		</gsec:isLoggedIn>
     </body>
