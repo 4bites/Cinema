@@ -104,7 +104,7 @@ class Empresa {
 		} 
 
 		def pagos = PagoRegistry.executeQuery("select p.periodo, p.empresa.personaFisica.cuit as empresax, p.empresa.codigo as codigo, sum(p.importeAbonado) as impuestoAbonado from PagoRegistry p where p.periodo between '${desde}' and '${hasta}' group by p.periodo, p.empresa.personaFisica.cuit")
-		pagos.addAll( PagoRegistry.executeQuery("select p.periodo, p.empresa.personaFisica.cuit as empresax, p.empresa.codigo as codigo, sum(p.importeAbonado) as impuestoAbonado from PagoRegistry p where p.periodo between '${desde}' and '${hasta}' group by p.periodo, p.empresa.personaFisica.cuit") )
+		pagos.addAll( PagoRegistry.executeQuery("select p.periodo, p.empresa.personaJuridica.cuit as empresax, p.empresa.codigo as codigo, sum(p.importeAbonado) as impuestoAbonado from PagoRegistry p where p.periodo between '${desde}' and '${hasta}' group by p.periodo, p.empresa.personaJuridica.cuit") )
 		pagos.findAll{it}.each { pago ->
 			println "resp: ${resp[[pago[0], pago[1]]]}, pago: $pago"
 			if(resp[[pago[0], pago[1]]]){
