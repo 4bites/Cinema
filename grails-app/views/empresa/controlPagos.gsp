@@ -24,7 +24,7 @@
                 "bServerSide": false,
                 "bAutoWidth": true,
                 "sAjaxSource": "${createLink(mapping:mapping, params:[dom:params.dom], action:'controlPagos')}?desde=&hasta=",
-                "aoColumns": [ <%=["periodo","empresa","impuestoTotal","impuestoDeclarado", "diferencia"].collect{"{\"mDataProp\":\"$it\",\"sDefaultContent\":\"-\"}"}.join(",") %>
+                "aoColumns": [ <%=["periodo","empresa","codigo", "impuestoTotal","impuestoDeclarado", "diferencia"].collect{"{\"mDataProp\":\"$it\",\"sDefaultContent\":\"-\"}"}.join(",") %>
                 ]
             });
 			
@@ -53,7 +53,7 @@
                 <table id="results">
                     <thead>
                         <tr>
-                            <g:each in='${["periodo","cuit","impuestoTotal","impuestoDeclarado", "diferencia"]}' var=" field" >
+                            <g:each in='${["periodo","cuit","codigo", "impuestoTotal","impuestoDeclarado", "diferencia"]}' var=" field" >
                             <td>${field.tokenize(".")[0].humanField()}</td>
                             </g:each>
                         </tr>
