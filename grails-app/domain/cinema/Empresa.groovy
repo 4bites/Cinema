@@ -87,7 +87,10 @@ class Empresa {
 		}
 		print "desde: $desde, hasta: $hasta"
 
-		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, d.exhibidor.personaFisica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado from DdjjExhibidorRegistry d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor.personaFisica.cuit union all select d.periodo, d.exhibidor.personaJuridica.cuit as empresax, sum(d.impuestoTotal) as impuestoDeclarado from DdjjExhibidorRegistry d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor.personaJuridica.cuit union all select d.periodo, d.videoClub.personaJuridica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado from DdjjVideo d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub.personaJuridica.cuit union all select d.periodo, d.videoClub.personaFisica.cuit as empresax, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado from DdjjVideo d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub.personaFisica.cuit")
+		def results = DdjjExhibidorRegistry.executeQuery("select d.periodo, d.exhibidor.personaFisica.cuit as empresax, d.exhibidor.codigo as codigo, sum(d.impuestoTotal) as impuestoDeclarado from DdjjExhibidorRegistry d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor.personaFisica.cuit")
+		results.addAll( DdjjExhibidorRegistry.executeQuery("select d.periodo, d.exhibidor.personaJuridica.cuit as empresax, d.exhibidor.codigo as codigo, sum(d.impuestoTotal) as impuestoDeclarado from DdjjExhibidorRegistry d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.exhibidor.personaJuridica.cuit") )
+		results.addAll( DdjjExhibidorRegistry.executeQuery("select d.periodo, d.videoClub.personaJuridica.cuit as empresax, d.videoClub.codigo as codigo, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado from DdjjVideo d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub.personaJuridica.cuit") )
+		results.addAll( DdjjExhibidorRegistry.executeQuery("select d.periodo, d.videoClub.personaFisica.cuit as empresax, d.videoClub.codigo as codigo, sum(d.gravamenTotalVenta+d.gravamenTotalAlquiler) as impuestoDeclarado from DdjjVideo d where d.periodo between '${desde}' and '${hasta}' group by d.periodo, d.videoClub.personaFisica.cuit") )
 /*		def response = []
 		results.each { res ->
 			response << [periodo: res[0], empresa: res[1], impuestoTotal:res[2], impuestoDeclarado: res[3], diferencia: res[4]]
@@ -95,18 +98,20 @@ class Empresa {
 		response
 */
 		def resp = [:]
-		results.each { res ->
-			resp[[res[0], res[1]]] = [periodo: res[0], empresa: res[1], impuestoTotal:res[2], impuestoDeclarado:0, diferencia:res[2]]
+		results.findAll{it}.each { res ->
+			resp[[res[0], res[1]]] = [periodo: res[0], empresa: res[1], codigo:res[2], impuestoTotal:res[3], impuestoDeclarado:0, diferencia:res[3]]
+			println "results: $res, ${resp[[res[0], res[1]]]}"
 		} 
 
-		def pagos = PagoRegistry.executeQuery("select p.periodo, p.empresa.personaJuridica.cuit as empresax, sum(p.importeAbonado) as impuestoAbonado from PagoRegistry p  where p.periodo between '${desde}' and '${hasta}' group by p.periodo, p.empresa.personaJuridica.cuit union all select p.periodo, p.empresa.personaFisica.cuit as empresax, sum(p.importeAbonado) as impuestoAbonado from PagoRegistry p where p.periodo between '${desde}' and '${hasta}' group by p.periodo, p.empresa.personaFisica.cuit")
-
-		pagos.each { pago ->
+		def pagos = PagoRegistry.executeQuery("select p.periodo, p.empresa.personaFisica.cuit as empresax, p.empresa.codigo as codigo, sum(p.importeAbonado) as impuestoAbonado from PagoRegistry p where p.periodo between '${desde}' and '${hasta}' group by p.periodo, p.empresa.personaFisica.cuit")
+		pagos.addAll( PagoRegistry.executeQuery("select p.periodo, p.empresa.personaFisica.cuit as empresax, p.empresa.codigo as codigo, sum(p.importeAbonado) as impuestoAbonado from PagoRegistry p where p.periodo between '${desde}' and '${hasta}' group by p.periodo, p.empresa.personaFisica.cuit") )
+		pagos.findAll{it}.each { pago ->
+			println "resp: ${resp[[pago[0], pago[1]]]}, pago: $pago"
 			if(resp[[pago[0], pago[1]]]){
-				resp[[pago[0], pago[1]]].impuestoDeclarado = pago[2]
-				resp[[pago[0], pago[1]]].diferencia = resp[[pago[0],pago[1]]].impuestoTotal - pago[2]
+				resp[[pago[0], pago[1]]].impuestoDeclarado = pago[3]
+				resp[[pago[0], pago[1]]].diferencia = resp[[pago[0],pago[1]]].impuestoTotal - pago[3]
 			} else {
-				resp[[pago[0],pago[1]]] = [periodo: pago[0], empresa: pago[1], impuestoTotal: 0, impuestoDeclarado: pago[2], diferencia: -pago[2] ]
+				resp[[pago[0],pago[1]]] = [periodo: pago[0], empresa: pago[1], codigo:pago[2], impuestoTotal: 0, impuestoDeclarado: pago[3], diferencia: -pago[3] ]
 			}
 		}	
 		resp
