@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!--meta name="layout" content="main" /-->
+        <meta name="layout" content="main" ></meta>
         <g:set var="entityName" value="${message(code: 'empresa.label', default: params.dom)}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
@@ -40,7 +40,9 @@
 						<g:if test="${empresaInstance?.personaJuridica}" >
                     	<tr>
 							<td colspan=2>
-								<g:include action="show_mini" controller="personaJuridica" id="${empresaInstance?.personaJuridica?.id}" />
+								<g:applyLayout name="empty">
+									<g:include action="show_mini" controller="personaJuridica" id="${empresaInstance?.personaJuridica?.id}" />
+								</g:applyLayout>	
 							</td>
 						</tr>
 						</g:if>

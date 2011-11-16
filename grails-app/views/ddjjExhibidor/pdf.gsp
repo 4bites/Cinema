@@ -96,7 +96,7 @@
                                 </g:each>
 								</tbody>	
 								<tfoot>
-										<tr><td colspan="12"><img src="${createLink(action:'barcode')}"></td></tr>
+										<tr><td colspan="12"><img src="${createLink(action:'barcode', params:[id:ddjjExhibidorInstance.exhibidora.codigo])}"></td></tr>
 								</tfoot>	
 								</table>
 							</td>

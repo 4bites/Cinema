@@ -111,7 +111,7 @@ gsec {
                                  //which are allowed for registration. Allowed mail-adresses can't be forbidden. Default: Empty-List
     gsec.forbiddenMailadresses = '' //List (separates by ',', ';' or <spaces>) of mail-adresses defined via regular-expression, 
                                     //which are forbidden for registration. Default: Empty-List
-    gsec.defaultRole="Administrator" //name of the defaultrole each user get.
+    gsec.defaultRole="guest" //name of the defaultrole each user get.
 
     gsec.replyAdress=null //Email-Adress for confirmation-reply.
     gsec.bccAdress=null //Email-Adress for bcc of all registrations and resetPassword.

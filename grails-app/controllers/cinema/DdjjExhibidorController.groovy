@@ -87,7 +87,7 @@ class DdjjExhibidorController {
 	}
 
 	def barcode = {
-		def barcodeValue = "123"
+		def barcodeValue = params.id
         renderBarcodePng("code39Generator", barcodeValue)
 
 	}

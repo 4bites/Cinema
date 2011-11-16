@@ -3,7 +3,7 @@ import cinema.*
 import grails.converters.*
 
 class EmpresaController {
-    def scaffold = true
+    //def scaffold = true
     def index = { }
 	
 //	def create = {
