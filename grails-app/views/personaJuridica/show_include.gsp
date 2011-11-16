@@ -1,0 +1,109 @@
+
+<%@ page import="cinema.PersonaJuridica" %>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="layout" content="main" />
+        <g:set var="entityName" value="${message(code: 'personaJuridica.label', default: 'PersonaJuridica')}" />
+        <title><g:message code="default.show.label" args="[entityName]" /></title>
+    </head>
+    <body>
+    
+        <div class="body">
+            <h1>Datos Persona Juridica: ${fieldValue(bean:personaJuridicaInstance, field:'razonSocial' )}</h1>
+            <g:if test="${flash.message}">
+            <div class="message">${flash.message}</div>
+            </g:if>
+            <div class="dialog">
+                <table>
+                    <tbody>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.cuit.label" default="Cuit" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personaJuridicaInstance, field: "cuit")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.razonSocial.label" default="Razon Social" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personaJuridicaInstance, field: "razonSocial")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.tipoSociedad.label" default="Tipo Sociedad" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personaJuridicaInstance, field: "tipoSociedad")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.domicilio.label" default="Domicilio" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personaJuridicaInstance, field: "domicilio")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.codigoPostal.label" default="Codigo Postal" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personaJuridicaInstance, field: "codigoPostal")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.provincia.label" default="Provincia" /></td>
+                            
+                            <td valign="top" class="value">${personaJuridicaInstance?.provincia?.name}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.localidad.label" default="Localidad" /></td>
+                            
+                            <td valign="top" class="value">${personaJuridicaInstance?.localidad?.name}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.telefono.label" default="Telefono" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personaJuridicaInstance, field: "telefono")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.email.label" default="Email" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personaJuridicaInstance, field: "email")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.condicionIVA.label" default="Condicion IVA" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: personaJuridicaInstance, field: "condicionIVA")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="personaJuridica.personas.label" default="Personas" /></td>
+                            
+                            <td valign="top" style="text-align: left;" class="value">
+                                <ul>
+                                <g:each in="${personaJuridicaInstance.pJuridicaPFisicas}" var="p">
+                                    <li><g:link controller="personaFisica" action="show" id="${p.personaFisica.id}">${p.personaFisica} ${p.cargo}</g:link></li>
+                                </g:each>
+                                </ul>
+                            </td>
+                            
+                        </tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

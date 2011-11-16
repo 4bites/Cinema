@@ -14,6 +14,11 @@ class PersonaJuridicaController {
 		]
 	]*/
     def index = { }
+	
+	def show_mini = {
+    	def p = PersonaJuridica.get(params.id)
+		render view:"show_include", model:[personaJuridicaInstance:p]
+	}
 
 	def save = {
 		print params
@@ -54,20 +59,22 @@ class PersonaJuridicaController {
 						                println "pfpj ERRORsss: $it"
             						}
 								}	
-								println "personafisica $i, $fj?.personaFisica.nombre"
+								println "personafisica $i, ${fj?.personaFisica.nombre}"
 							}
 					}
 				}
 				println "ACA TENGO PFISICAPJURIDICAS: ${p.pJuridicaPFisicas.size()}"
 //		}
 		if( p.validate() && pfpj.findAll{it.hasErrors()}.size() == 0 && pfpj.size() > 0 && duplicates.size()==0 ){
+			println "no hay duplicados supuestamente"
 //		if( p.validate() && p.pJuridicaPFisicas.size() > 0 && duplicates.size()==0){
 			if(params.id){
 				PFisicaPJuridica.findAllByPersonaJuridica(p)?.each{
-					if(!(it.personaFisica in pfpj.collect{it.personaFisica})){
+//					if(!(it.personaFisica.cuit in pfpj.collect{it.personaFisica.cuit})){
 //					if(!(it.personaFisica in p.pJuridicaPFisicas.collect{it.personaFisica})){
 	            		PFisicaPJuridica.unlink(it.personaFisica, p)
-					}
+						print "Elliminando $it"
+//					}
             	}
 			}
 			p.save()
@@ -79,6 +86,7 @@ class PersonaJuridicaController {
 				it.save() }
 			redirect action:"show", id: p.id
 		}else{
+			println "HAY ERRORES!!! como graba??"
 			if(pfpj.size()==0){
 				print "PORQUE NO MOSTRAS EL ERROR HIJO DE PUTA"
 //			if(p.pJuridicaPFisicas.size() == 0){
@@ -89,7 +97,7 @@ class PersonaJuridicaController {
 				p.errors.rejectValue("razonSocial","repetidas",[key, val] as Object[], "La persona [{0}] se encuentra mas de una vez [{1}]")
 			}
 			println "quedan en pfpj ${pfpj.size()}"	
-			p.pJuridicaPFisicas=pfpj
+			//p.pJuridicaPFisicas=pfpj
 			def map = [personaJuridicaInstance: p, pfPjs:pfpj]//, status: status]
 			p.errors.allErrors.each {
         		println "ERRORsss: $it"

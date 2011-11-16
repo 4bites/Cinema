@@ -64,7 +64,7 @@
 
 					for(j=1;j<i;j++){
 					  $("#remove"+j).click(function() {
-                            $(this).parent().remove();
+                            $("#remove"+j).parent().parent().remove();
                       });
 					  j++;
 					}
@@ -213,11 +213,12 @@
 							</tr>  
 							<tr class="prop">
                                 <td valign="top" class="name" colspan=2 id="pfs">
-									<g:each status="i" in="${pfPjs}" var="p">								
+									<g:each status="i" in="${personaJuridicaInstance?.pJuridicaPFisicas}" var="p">
+									<!--g:each status="i" in="${pfPjs}" var="p"-->								
 										<p id="pf${i+1}">
 										<label>Persona Fisica</label><g:textField name="pJuridicaPFisicas.personaFisica" value="${p.personaFisica} cuit:${p.personaFisica.cuit}" size="50"/>
 										<label>Cargo</label><g:textField name="pJuridicaPFisicas.cargo" value="${p.cargo}"/>
-										<span class="button" id="remove${i+1}"><input type="button" class="save" value="Remover" /></span>
+										<span class="button"><input type="button" class="save" value="Remover" id="remove${i+1}"/></span>
 										</p>
 									</g:each>
                                         <p>

@@ -9,5 +9,7 @@ class Exhibidor extends Empresa{
 		ddjjs cascade: 'none'
 	}	
     static constraints = {
+		personaFisica(unique: true)
+		personaJuridica(unique:true)
     }
 }

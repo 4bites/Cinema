@@ -157,5 +157,8 @@ class EmpresaController {
 		render "Enviado" 
 	}
  		
-
+	def comprobante = {
+		 def empresa = grailsApplication.getDomainClass("cinema.$params.dom").clazz.get(params.id)
+        render view:"comprobante", model:[empresaInstance:empresa]
+	}
 }
