@@ -1,6 +1,8 @@
 package cinema
 
 class Sala {
+	static auditable = true
+
     Integer codigo
     String nombre
     String domicilio

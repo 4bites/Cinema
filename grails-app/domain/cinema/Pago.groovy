@@ -1,6 +1,8 @@
 package cinema
 
 class Pago {
+	static auditable = true
+
 	Date fecha
 	String file
 		

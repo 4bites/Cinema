@@ -1,6 +1,8 @@
 package cinema
 
 class Pelicula {
+	static auditable = true
+
     Long codigo
     String titulo
 	Date fechaEstreno

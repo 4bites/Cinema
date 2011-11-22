@@ -1,6 +1,8 @@
 package cinema
 
 class DdjjVideo {
+	static auditable = true
+
     String periodo
     Integer cantidadTotalVenta
     Integer precioTotalVenta

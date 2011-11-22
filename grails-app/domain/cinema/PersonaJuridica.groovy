@@ -1,6 +1,8 @@
 package cinema
 
 class PersonaJuridica {
+	static auditable = true
+
     String razonSocial
     String cuit
     SocietyType tipoSociedad

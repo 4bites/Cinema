@@ -1,6 +1,8 @@
 package cinema
 
 class Complejo {
+	static auditable = true
+
 	Integer codigo
 	String denominacion
 	Date fechaApertura

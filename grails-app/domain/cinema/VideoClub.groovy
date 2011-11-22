@@ -1,6 +1,8 @@
 package cinema
 
 class VideoClub extends Empresa{
+	static auditable = true
+
     static hasMany = [locales:Local, ddjjs:DdjjVideo, pagos:PagoRegistry]
 	PersonaFisica personaFisica;
 	PersonaJuridica personaJuridica;
@@ -10,5 +12,7 @@ class VideoClub extends Empresa{
 	 	pagos   cascade: 'none'
 	}	
     static constraints = {
+		personaFisica(unique:true)
+		personaJuridica(unique:true)
     }
 }

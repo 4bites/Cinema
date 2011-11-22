@@ -1,6 +1,8 @@
 package cinema
 
 class Local {
+	static auditable = true
+
 	String codigo
 	String nombre
 	String domicilio

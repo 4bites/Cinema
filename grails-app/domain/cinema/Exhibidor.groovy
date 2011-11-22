@@ -1,6 +1,8 @@
 package cinema
 
 class Exhibidor extends Empresa{
+	static auditable = true
+
     static hasMany = [salas:Sala, pagos:Pago, bocs:Boc, ddjjs:DdjjExhibidor]
 	static mapping = {
 		salas cascade: 'none'

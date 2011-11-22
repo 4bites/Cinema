@@ -2,6 +2,8 @@ package cinema
 import java.io.File
 
 class DdjjExhibidor {
+	static auditable = true
+
     Date fecha
     String file
     static belongsTo = [exhibidora:Exhibidor]
