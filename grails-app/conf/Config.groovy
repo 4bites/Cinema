@@ -91,6 +91,11 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
+auditLog {
+  actorClosure = { request, session ->
+      session.gsecUsername
+  } 
+}
 
 gsec {
     //Default-Values. No one must be set.
@@ -98,7 +103,7 @@ gsec {
     nullMustBeAuthenticated = false    //true if the user must be authenticated if the controllername is null 
     publicControllers = ['public','auth','registration', 'passwordManagement']//, 'gsecPermission','gsecUser','gsecRole','sala', 'personaJuridica', 'personaFisica', 'localidad', 'empresa', 'exhibidor', 'distribuidor', 'productor', 'local', 'ddjjExhibidor', 'ddjjVideo', 'pelicula', 'videoClub', 'bocIngreso', 'bocEgreso', 'pago'] //list of controllernames without any security-checks
     maxLoginFailed = 10 //nr of failed logins before a user is disabled.
-    //gsec.rememberMeCryptKey='No Public Default' //String which is used as key for the rememberMe encryption.
+    gsec.rememberMeCryptKey='No Public Default' //String which is used as key for the rememberMe encryption.
     gsec.loginView = 'login' //defines the gsp for login, which has the model:[username, rememberMe, token]
                              //The gsp must be in the folder views/auth
                              //furthermore you must send back the parameter password. The button should be

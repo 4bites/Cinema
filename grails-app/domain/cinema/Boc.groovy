@@ -1,6 +1,8 @@
 package cinema
 
 class Boc {
+	static auditable = true
+
     Integer desde
     Integer hasta
     String serie

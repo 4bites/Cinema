@@ -22,7 +22,7 @@
         <div id="grailsLogo" class="logo">
 			<table style="border-width:0px">
 			<tr class="prop"><td>
-			<img src="${resource(dir:'images',file:'4bites.png')}" alt="4Bites INCAA" border="0" />
+			<img src="${resource(dir:'images',file:'4bites.png')}" alt="4Bites INCAA" />
 				</td><td align="right">
 			<gsec:isLoggedIn>
 				<span style="margin-left:auto;margin-right:0px">Usuario:<gsec:user /> | <a href="${createLink(controller:'auth', action:'signOut')}">Logout</a></span>
@@ -114,7 +114,7 @@
                     <gui:menuitem url="${createLink(controller:'gsecPermission', action:'create')}" >Alta</gui:menuitem>
                     <gui:menuitem url="${createLink(controller:'gsecPermission', action:'list')}" >Listar</gui:menuitem>
                 </gui:submenu>
-
+				<gui:menuitem url="${createLink(controller:'auditLogEvent', action:'list')}">Logs</gui:menuitem>
             </gsec:hasRole>
 
 			<gui:menuitem url="${createLink(controller:'auth', action:'signOut')}">Logout</gui:menuitem>

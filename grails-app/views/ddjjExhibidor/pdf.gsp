@@ -1,13 +1,15 @@
-
 <%@ page import="cinema.DdjjExhibidor" %>
 <%@ page import="cinema.DdjjExhibidorRegistry" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
         <g:set var="entityName" value="${message(code: 'ddjjExhibidor.label', default: 'DdjjExhibidor')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
-		<script>
+		<script type="text/javascript">
+		<!--	
+
 			$(document).ready(function() {
 				$('#results').dataTable( {
                 	"bProcessing": false,
@@ -31,7 +33,7 @@
 
             	});
 			});
-
+		-->
 		</script>		
     </head>
     <body>
@@ -95,13 +97,10 @@
 								<% } catch(Exception e){} %>
                                 </g:each>
 								</tbody>	
-								<tfoot>
-										<tr><td colspan="12"><img src="${createLink(action:'barcode', params:[id:ddjjExhibidorInstance.exhibidora.codigo])}"></td></tr>
-								</tfoot>	
 								</table>
 							</td>
 						</tr>
-						<tr><td><!--img src="${createLink(action:'barcode')}"--></td></tr>
+						<tr><td><img src="${createLink(action:'barcode', params:[id:ddjjExhibidorInstance.exhibidora.codigo])}" alt="barcode" /></td></tr>
                     </tbody>
                 </table>
             </div>

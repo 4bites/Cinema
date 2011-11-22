@@ -84,6 +84,7 @@ class DdjjExhibidorController {
 	def pdf = {
 		def ddjj = DdjjExhibidor.get(params.id)
 		render view:"pdf", model:[ddjjExhibidorInstance:ddjj]
+//		renderPdf template:"pdf", model:[ddjjExhibidorInstance:ddjj], controller: this
 	}
 
 	def barcode = {

@@ -21,7 +21,8 @@ environments {
 			
 			dbCreate = "update" // one of 'create', 'create-drop','update'
 			//url = "jdbc:hsqldb:file:devDb"
-            url = "jdbc:mysql://localhost/cinema"
+            //url = "jdbc:mysql://localhost/cinema"
+			url = "jdbc:mysql://localhost/prodDb"
             driverClassName = "com.mysql.jdbc.Driver"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             username = "root"

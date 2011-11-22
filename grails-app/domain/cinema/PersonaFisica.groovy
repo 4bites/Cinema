@@ -1,6 +1,8 @@
 package cinema
 
 class PersonaFisica {
+ 	static auditable = true	
+
     String nombre
     String apellido
     String cuit
