@@ -20,8 +20,8 @@ class PFisicaPJuridica {
 			pp.cargo = cargo
 			pp.personaFisica = pFisica
 			pp.personaJuridica = pJuridica
-//			pFisica?.addToPFisicaPJuridicas(pp)
-//			pJuridica?.addToPJuridicaPFisicas(pp) 
+			pFisica?.addToPFisicaPJuridicas(pp)
+			pJuridica?.addToPJuridicaPFisicas(pp) 
 			pp.validate()
 //		}
 		return pp

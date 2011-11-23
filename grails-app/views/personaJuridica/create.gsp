@@ -52,7 +52,11 @@
 
 					
                     $("#add").click(function() {
-                        newPf = $("#pfs > p:first-child").clone().attr('id', 'pf'+i).insertBefore("#pfs > p:last-child");
+						var persona = '<p id="pf'+i+'"><label>Persona Fisica</label><input name="pJuridicaPFisicas.personaFisica" size="50"/>\
+										<label>Cargo</label><input name="pJuridicaPFisicas.cargo" /><span class="button" id="remove'+i+'">\
+										<input type="button" class="save" value="Remover" /></span></p>';
+						$("#pfs").append( persona );
+                        //newPf = $("#pfs > p:first-child").clone().attr('id', 'pf'+i).insertBefore("#pfs > p:last-child");
 						$("#pf"+i+" input:first").autocomplete(autocomplete);
 						$("#pf"+i+" input[type!='button']").val('');
 						$("#remove"+i).click(function() {
@@ -64,7 +68,7 @@
 
 					for(j=1;j<i;j++){
 					  $("#remove"+j).click(function() {
-                            $("#remove"+j).parent().parent().remove();
+                            $(this).parent().remove();
                       });
 					  j++;
 					}
@@ -212,13 +216,14 @@
 								<td valign="top" class="name" colspan=2>Personas Fisicas</td>
 							</tr>  
 							<tr class="prop">
-                                <td valign="top" class="name" colspan=2 id="pfs">
-									<g:each status="i" in="${personaJuridicaInstance?.pJuridicaPFisicas}" var="p">
-									<!--g:each status="i" in="${pfPjs}" var="p"-->								
+                                <td valign="top" class="name" colspan=2 >
+									<div id="pfs">
+									<!--g:each status="i" in="${personaJuridicaInstance?.pJuridicaPFisicas}" var="p"-->
+									<g:each status="i" in="${pfPjs}" var="p">								
 										<p id="pf${i+1}">
 										<label>Persona Fisica</label><g:textField name="pJuridicaPFisicas.personaFisica" value="${p.personaFisica} cuit:${p.personaFisica.cuit}" size="50"/>
 										<label>Cargo</label><g:textField name="pJuridicaPFisicas.cargo" value="${p.cargo}"/>
-										<span class="button"><input type="button" class="save" value="Remover" id="remove${i+1}"/></span>
+										<span class="button" id="remove${i+1}"><input type="button" class="save" value="Remover"/></span>
 										</p>
 									</g:each>
                                         <p>
@@ -226,6 +231,7 @@
                                         <label>Cargo</label><g:textField name="pJuridicaPFisicas.cargo" />
                                         <span class="button" id="remove"><input type="button" class="save" value="Remover" /></span>
                                         </p>
+									</div>
 									<p id="addPfs">
 										<span class="button" id="add"><input type="button" class="save" value="Agregar Persona Fisica" /></span>
 									</p>

@@ -3,16 +3,6 @@ import grails.converters.*
 
 class PersonaJuridicaController {
     def scaffold = true
-/*	static navigation = [
-		group:'menu', 
-		order:3, 
-		action:'create',
-		subItems: [
-			[action:'create',order:1, title:'Alta'],
-			[action:'update',order:2, title:'Modificar'],
-			[action:'list',order:3, title:'Listar']
-		]
-	]*/
     def index = { }
 	
 	def show_mini = {
@@ -20,7 +10,7 @@ class PersonaJuridicaController {
 		render view:"show_include", model:[personaJuridicaInstance:p]
 	}
 
-	def save = {
+	def save_old = {
 		print params
 		def p 
 		if(params.id){
@@ -125,6 +115,68 @@ class PersonaJuridicaController {
             ilike('razonSocial', params.term + '%')
         }
         render pJuridicas as JSON
+	}
+
+	def save = {
+		def p
+        if(params.id){
+            p = PersonaJuridica.get(params.id)
+            p.properties=params.findAll{ it.key != "pJuridicaPFisicas.personaFisica" && it.key != "pJuridicaFisicas.cargo"}
+        }else{
+            p = new PersonaJuridica(params.findAll{ it.key != "pJuridicaPFisicas.personaFisica" && it.key != "pJuridicaPFisicas.cargo"})
+        }
+		PersonaJuridica.withTransaction { status ->
+			if(p.validate()){
+				println "juridica valida"
+				if(params.id){
+					println "pf: $p.pJuridicaPFisicas.size()"	
+					PFisicaPJuridica.findAllByPersonaJuridica(p).each {
+					//p.pJuridicaPFisicas.each {
+						println "delete $it.personaFisica.cuit"
+
+						it.personaFisica.removeFromPFisicaPJuridicas(it)
+           				p.removeFromPJuridicaPFisicas(it)
+           
+						it.delete()
+					}
+				}
+				def valid = true
+				def pfpj = []
+				params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
+
+					if(pf){
+                        def cuit = pf.split(" cuit:")[1]?.trim()
+                        def pFisica = PersonaFisica.findByCuit(cuit)
+                        if(pFisica){
+                            def fj = PFisicaPJuridica.link(pFisica, p, params.list("pJuridicaPFisicas.cargo").get(i))
+							valid = valid && !fj.hasErrors()		
+							pfpj << fj				
+                        }
+    	            }
+				}
+				if(pfpj.size()==0){
+//          if(p.pJuridicaPFisicas.size() == 0){
+					valid = false	
+    	            p.errors.reject("personaJuridica.unlessOnePerson",null,"una persona!!")
+	            }
+
+				if(!valid){
+					status.setRollbackOnly()
+					//p.merge()
+					//p.provincia.merge()
+					p.provincia.localidades.each{it.read()}
+					render view:"create", model: [personaJuridicaInstance:p, pfPjs:pfpj]	
+				}else{
+					p.save()
+					redirect action:"show", id: p.id
+				}
+			}else{
+				println "juridica invalida"
+				status.setRollbackOnly()
+				p.provincia.localidades.each{it.read()}
+				render view:"create", model: [personaJuridicaInstance:p]
+			}	
+		}
 	}
 
 	def search = {

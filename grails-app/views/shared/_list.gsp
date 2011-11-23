@@ -2,6 +2,9 @@
 
         $(document).ready(function() {
             $('#results').dataTable( {
+				"oLanguage": {
+                	"sUrl": "/js/jquery/dataTables.spanish.txt"
+            	},	
                 "bProcessing": true,
                 "bDeferRender": true,
                 //"bServerSide": true,

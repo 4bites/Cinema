@@ -17,6 +17,9 @@ class PersonaJuridica {
     //static hasMany = [personas:PersonaFisica]
 	static hasMany = [pJuridicaPFisicas: PFisicaPJuridica]
     //static belongsTo = PersonaFisica
+    static mapping = {
+      pJuridicaPFisicas lazy:false
+    }
 
     static constraints = {
 		cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/)
@@ -36,6 +39,9 @@ class PersonaJuridica {
 		condicionIVA(blank:false, validator: {
             return (it != '0')
         })
+/*		pJuridicaPFisicas(validator: { pjpf ->
+			pjpf.every { it.validate() }	
+		})*/
     }
 
 	public String toString(){
