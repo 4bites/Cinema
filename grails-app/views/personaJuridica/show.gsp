@@ -9,12 +9,6 @@
     </head>
     <body>
     
-    	<div class="nav">
-            <!--  <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>-->
-            <span class="menuButton"><g:link class="list" action="list">Listado de Personas Juridicas</g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="Crear nueva Persona Juridica" args="[entityName]" /></g:link></span>
-        </div>
-        
         <div class="body">
             <h1>Detalle Persona Juridica: ${fieldValue(bean:personaJuridicaInstance, field:'razonSocial' )}</h1>
             <g:if test="${flash.message}">

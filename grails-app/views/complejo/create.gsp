@@ -3,8 +3,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<g:set var="entityName" value="${message(code: 'complejo.label', default: 'Complejo')}" />
         <meta name="layout" content="main" />
-        <title><g:message code="complejo.create" default="Create Complejo" /></title>
+        <title><g:message code="complejo.create" default="Crear Complejo" /></title>
 		<script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
 
@@ -21,7 +22,7 @@
         </div>
 		-->
         <div class="body">
-            <h1><g:message code="complejo.create" default="Create Complejo" /></h1>
+            <h1><g:message code="default.${complejoInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
             </g:if>

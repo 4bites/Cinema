@@ -80,11 +80,6 @@
     </head>
     <body>
     
-    	<div class="nav">
-           
-            <span class="menuButton"><g:link class="list" action="list">Listado de Personas Juridicas</g:link></span>
-            
-        </div>
         <div class="body">
             <h1><g:message code="default.${personaJuridicaInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">

@@ -12,10 +12,6 @@
 		</script>
     </head>
     <body>
-        <div class="nav">
-            <!--  <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span> -->
-            <span class="menuButton"><g:link class="create" action="create">Crear Persona Juridica</g:link></span>
-        </div>
         <div class="body">
             <h1>Listado de Personas Juridicas</h1>
             <g:if test="${flash.message}">

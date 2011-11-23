@@ -9,12 +9,6 @@
     </head>
     <body>
     
-    	<div class="nav">
-            <!--  <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>-->
-            <span class="menuButton"><g:link class="list" action="list">Listado de personas</g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="Crear nueva Persona Fisica" args="[entityName]" /></g:link></span>
-        </div>
-        
         <div class="body">
         	<h1>Detalle Persona Fisica: ${fieldValue(bean:personaFisicaInstance, field:'apellido' )} ,  ${fieldValue(bean:personaFisicaInstance, field:'nombre' )} </h1>
             <!--  <h1><g:message code="default.show.label" args="[entityName]" /></h1>-->
