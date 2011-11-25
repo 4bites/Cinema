@@ -46,7 +46,7 @@ environments {
 		dataSource {
 			dbCreate = "update"
 			//url = "jdbc:hsqldb:file:prodDb;shutdown=true"
-			url = "jdbc:mysql://ec2-50-17-107-213.compute-1.amazonaws.com/prodDb"
+			url = "jdbc:mysql://localhost/prodDb"
 			driverClassName = "com.mysql.jdbc.Driver"
 			dialect = org.hibernate.dialect.MySQL5InnoDBDialect
     		username = "app"

@@ -16,7 +16,7 @@ class BocController {
 //		boc.exhibidor = Exhibidor.get(params.int('exhibidor.id'))
 		boc.exhibidor = params["exhibidor.id"]?Exhibidor.get(params["exhibidor.id"]):null
         if(boc.validate() && boc."${params.accion}"()){
-            redirect action:"show", id: boc.id
+            redirect action:(boc.id?"show":"list"), id: boc.id
         } else {
             render view:"create", model:[bocInstance: boc]
         }

@@ -45,10 +45,11 @@ class Boc {
 	}
 
 	def baja = {
-		if(id){
-			delete()
+//		if(id){
+//			delete()
 		//	return
-		} else {
+//		} else {
+		println "BAJA!!!"
 		def results = Boc.executeQuery("select desde, hasta, serie from Boc where serie=? and desde <=? and hasta >=? and exhibidor is null", serie, desde, hasta)
 		if(results && results.size() == 1){
 			results.each {
@@ -64,13 +65,18 @@ class Boc {
 					Boc.executeUpdate("delete from Boc where serie=? and desde=? and hasta=?", boc.serie, boc.desde, boc.hasta)
 					
 				}
+                if(boc.hasta == hasta && boc.desde == desde) {
+                    Boc.executeUpdate("delete from Boc where serie=? and desde=? and hasta=?", boc.serie, boc.desde, boc.hasta)
+					println "delete!!!!"
+                }
+ 
 			}
 		} else {
 			errors.reject("no se pueden dar de baja porque no existen o existen, pero estan asignados")
 			false
 			print "no se pueden dar de baja porque no existen o existen, pero estan asignados"
 		}
-		}
+//		}
 				
 	}
 

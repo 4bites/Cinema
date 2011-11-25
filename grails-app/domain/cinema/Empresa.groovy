@@ -3,6 +3,9 @@ import java.text.SimpleDateFormat
 
 class Empresa {
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy")
+	static {
+		dateFormat.lenient = false  
+	}
 	static SimpleDateFormat periodFormat = new SimpleDateFormat("yyyyMM")
     Integer codigo
     Date fechaInicioActividad
