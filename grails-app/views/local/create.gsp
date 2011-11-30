@@ -47,7 +47,15 @@
 
                     });
 
-					$("#fechaApertura").datepicker({dateFormat: 'dd/mm/yy'});
+					$("#fechaApertura").datepicker({dateFormat: 'dd/mm/yy',
+	                    onClose: function(){
+    	                    try{
+        	                    $.datepicker.parseDate('dd/mm/yy', $(this).val());
+            	            } catch(e){
+                	            $(this).val('');
+                    	    }
+                    	}
+					});
 			});
 		</script>    
     </head>

@@ -15,9 +15,10 @@ class Boc {
     }
     static belongsTo = [exhibidor:Exhibidor]
     static constraints = {
-        desde(blank:false, validator: {val, obj -> 
+        desde(blank:false, min: 0, validator: {val, obj -> 
 			val < obj.hasta
 		})
+		hasta(min: 0)
         serie(nullable:false, matches:"A|B|C|D|E|Z")
 //      cantidad(max: 9999, validator: {val, obj -> val == obj.hasta - obj.desde + 1})  
         exhibidor(nullable:true, validator:{ val, obj, errors ->

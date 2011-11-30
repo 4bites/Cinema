@@ -3,7 +3,7 @@ package cinema
 class PFisicaPJuridica {
 	
 	String cargo
-	static belongsTo = [personaFisica: PersonaFisica, personaJuridica: PersonaJuridica]	
+	static belongsTo = [personaFisica: PersonaFisica,  personaJuridica: PersonaJuridica]	
     static constraints = {
 		personaFisica(unique:['personaJuridica'])
 		cargo(blank:false)
@@ -20,9 +20,12 @@ class PFisicaPJuridica {
 			pp.cargo = cargo
 			pp.personaFisica = pFisica
 			pp.personaJuridica = pJuridica
+//			if(!pJuridica.hasErrors()){
 			pFisica?.addToPFisicaPJuridicas(pp)
 			pJuridica?.addToPJuridicaPFisicas(pp) 
+//			}	
 			pp.validate()
+//			pp.save()
 //		}
 		return pp
 	}

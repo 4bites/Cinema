@@ -28,21 +28,21 @@ class PersonaFisica {
 			def c = PersonaFisica.calculateCuit(obj.sexo.toString(), obj.numeroDocumento)
 			c && val == c
 		})
-        nombre(blank:false)
-        apellido(blank:false)
+        nombre(blank:false, size:2..255)
+        apellido(blank:false, size: 2..255)
         tipoDocumento(blank:false)
         numeroDocumento(nullable:false)
         sexo(blank:false)
-        domicilio(blank:false)
-        codigoPostal(blank:false)
+        domicilio(blank:false, size:2..255)
+        codigoPostal(blank:false, size:1..10)
         provincia(nullable:false, validator: {
             return (it.id != 0)
     	})
         localidad(nullable:false, validator: {
             return (it.id != 0)
     	})
-        telefono(nullable:false, blank:false)
-        email(email:true, blank:false)
+        telefono(nullable:false, blank:false, size:8..255)
+        email(email:true, blank:false, size: 5..254)
         condicionIVA(blank:false, validator: {
 			return (it != '0')
 		})

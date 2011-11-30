@@ -18,7 +18,7 @@ class PersonaJuridica {
 	static hasMany = [pJuridicaPFisicas: PFisicaPJuridica]
     //static belongsTo = PersonaFisica
     static mapping = {
-      pJuridicaPFisicas lazy:false
+//      pJuridicaPFisicas lazy:false
     }
 
     static constraints = {

@@ -1,10 +1,12 @@
 package cinema
 import cinema.*
 import grails.converters.*
+import java.text.SimpleDateFormat
 
 class EmpresaController {
     def scaffold = true
     def index = { }
+	static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy")
 	
 //	def create = {
 //		render (view:"/cinema/empresa/$params.action" )
@@ -25,8 +27,10 @@ class EmpresaController {
 			empresa = grailsApplication.getDomainClass("cinema.$params.dom").newInstance()
 		}	
 		empresa.properties = params.findAll{ it.key != "personaFisica" && it.key != "personaJuridica" }
+		empresa.validate()
 		empresa.fechaInicioActividad = (params.fechaInicioActividad != '' ? Empresa.dateFormat.parse(params.fechaInicioActividad):null)
 		empresa.fechaFinActividad = (params.fechaFinActividad != '' ? Empresa.dateFormat.parse(params.fechaFinActividad):null)
+
 		empresa.fechaUltimaRevalida = (params.fechaUltimaRevalida != '' ? Empresa.dateFormat.parse(params.fechaUltimaRevalida):null)
 		println "fechaInicio: $empresa.fechaInicioActividad"
 		if(params.personaFisica){

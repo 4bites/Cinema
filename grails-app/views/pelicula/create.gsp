@@ -79,7 +79,15 @@
 
                     });
 					
-	                $("#fechaEstreno").datepicker({dateFormat: 'dd/mm/yy'});
+	                $("#fechaEstreno").datepicker({dateFormat: 'dd/mm/yy',
+	                    onClose: function(){
+    	                    try{
+        	                    $.datepicker.parseDate('dd/mm/yy', $(this).val());
+            	            } catch(e){
+                	            $(this).val('');
+                    	    }
+                    	}
+					});
 
 			});
 		</script>				

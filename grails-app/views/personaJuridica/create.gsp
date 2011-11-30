@@ -7,6 +7,9 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'personaJuridica.label', default: 'PersonaJuridica')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
+		<style>
+			.ui-autocomplete-loading { background: white url('/images/loading.gif') right center no-repeat; }
+		</style>
 		<script type="text/javascript" charset="utf-8">
 			<g:render template="/js/prov-loc.js"/>
 				$.expr[':'].textEquals = function (a, i, m) {
@@ -36,7 +39,7 @@
                 				}
                     		})	
                 		},
-                		minLength: 2,
+                		minLength: 1,
 						change: function(event, ui) {
 							if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
                     			$(this).val('');
@@ -90,15 +93,15 @@
                 <g:renderErrors bean="${personaJuridicaInstance}" as="list" />
 				</div>
             </g:hasErrors>
-			<g:if test="${personaJuridicaInstance.pJuridicaPFisicas.any{it.hasErrors()}}">
+		<g:if test="${personaJuridicaInstance.pJuridicaPFisicas.any{it.hasErrors()}}">
 				<div class="errors">	
 			<g:each in="${personaJuridicaInstance.pJuridicaPFisicas.findAll{it.hasErrors()}}" var="err">
 				<g:renderErrors bean="${err}" as="list" />
 			</g:each>	
 				</div>	
-			</g:if>
+			</g:if> 
             <g:form action="save" method=get>
-               <g:if test="${personaJuridicaInstance?.id}">
+               <g:if test="${personaJuridicaInstance?.id }">
                     <g:hiddenField name="id" value="${personaJuridicaInstance?.id}" />
                     <g:hiddenField name="version" value="${personaJuridicaInstance?.version}" />
                 </g:if>

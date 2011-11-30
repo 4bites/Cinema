@@ -120,13 +120,15 @@ class PersonaJuridicaController {
 	def save = {
 		def p
         if(params.id){
+			println "ID: $params.id"
             p = PersonaJuridica.get(params.id)
             p.properties=params.findAll{ it.key != "pJuridicaPFisicas.personaFisica" && it.key != "pJuridicaFisicas.cargo"}
         }else{
             p = new PersonaJuridica(params.findAll{ it.key != "pJuridicaPFisicas.personaFisica" && it.key != "pJuridicaPFisicas.cargo"})
         }
 		PersonaJuridica.withTransaction { status ->
-			if(p.validate()){
+			def pfpj = []
+//			if(p.validate()){
 				println "juridica valida"
 				if(params.id){
 					println "pf: $p.pJuridicaPFisicas.size()"	
@@ -141,41 +143,50 @@ class PersonaJuridicaController {
 					}
 				}
 				def valid = true
-				def pfpj = []
+				if(p.validate()){
+					p.save()
+				}
+				//def pfpj = []
 				params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
 
 					if(pf){
                         def cuit = pf.split(" cuit:")[1]?.trim()
+						println "CUIT: $cuit"
                         def pFisica = PersonaFisica.findByCuit(cuit)
+						println "PFISICA: $pFisica.nombre"
                         if(pFisica){
                             def fj = PFisicaPJuridica.link(pFisica, p, params.list("pJuridicaPFisicas.cargo").get(i))
 							valid = valid && !fj.hasErrors()		
-							pfpj << fj				
+							pfpj << fj			
                         }
     	            }
 				}
+			//	p.validate()
 				if(pfpj.size()==0){
 //          if(p.pJuridicaPFisicas.size() == 0){
 					valid = false	
     	            p.errors.reject("personaJuridica.unlessOnePerson",null,"una persona!!")
 	            }
 
-				if(!valid){
+				if(p.hasErrors() || !valid){
+//					pJuridica?.removeFromPJuridicaPFisicas(pp)
+           			//p.pJuridicaPFisicas = null
+					println "ROLLBACK!!!!!!"	 
 					status.setRollbackOnly()
-					//p.merge()
+        	
 					//p.provincia.merge()
 					p.provincia.localidades.each{it.read()}
 					render view:"create", model: [personaJuridicaInstance:p, pfPjs:pfpj]	
 				}else{
-					p.save()
+//					p.save()
 					redirect action:"show", id: p.id
 				}
-			}else{
+/*			}else{
 				println "juridica invalida"
 				status.setRollbackOnly()
 				p.provincia.localidades.each{it.read()}
 				render view:"create", model: [personaJuridicaInstance:p]
-			}	
+			}	*/
 		}
 	}
 

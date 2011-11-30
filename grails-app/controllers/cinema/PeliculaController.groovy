@@ -25,6 +25,7 @@ class PeliculaController {
 		}
 		pelicula.distribuidor = Distribuidor.get(params["distribuidor.id"])
 		pelicula.productor = Productor.get(params["productor.id"])
+		pelicula.fechaEstreno = (params.fechaEstreno != '' ? Empresa.dateFormat.parse(params.fechaEstreno):null)
 		if(pelicula.save()){
 			redirect action:"show", id: pelicula.id
         } else{

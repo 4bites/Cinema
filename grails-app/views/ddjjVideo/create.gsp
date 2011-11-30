@@ -127,7 +127,7 @@
                                     <g:textField name="precioTotalVenta" value="${ddjjVideoInstance?.precioTotalVenta}" />
                                 </td>
                             </tr>
-                        
+                    <!--    
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="gravamenTotalVenta"><g:message code="ddjjVideo.gravamenTotalVenta.label" default="Gravamen Total Venta" /></label>
@@ -136,7 +136,7 @@
                                     <g:textField name="gravamenTotalVenta" value="${ddjjVideoInstance?.gravamenTotalVenta}" />
                                 </td>
                             </tr>
-                        
+                    -->    
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="cantidadTotalAlquiler"><g:message code="ddjjVideo.cantidadTotalAlquiler.label" default="Cantidad Total Alquiler" /></label>
@@ -154,7 +154,7 @@
                                     <g:textField name="precioTotalAlquiler" value="${ddjjVideoInstance?.precioTotalAlquiler}" />
                                 </td>
                             </tr>
-                        
+                       <!-- 
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="gravamenTotalAlquiler"><g:message code="ddjjVideo.gravamenTotalAlquiler.label" default="Gravamen Total Alquiler" /></label>
@@ -163,7 +163,7 @@
                                     <g:textField name="gravamenTotalAlquiler" value="${ddjjVideoInstance?.gravamenTotalAlquiler}" />
                                 </td>
                             </tr>
-                        
+                        -->
                         </tbody>
                     </table>
                 </div>

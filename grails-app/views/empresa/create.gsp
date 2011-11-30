@@ -72,9 +72,34 @@
                 		}
 					});
 
-				$("#fechaInicioActividad").datepicker({dateFormat: 'dd/mm/yy'});
-				$("#fechaFinActividad").datepicker({dateFormat: 'dd/mm/yy'});
-				$("#fechaUltimaRevalida").datepicker({dateFormat: 'dd/mm/yy'});
+				$("#fechaInicioActividad").datepicker({dateFormat: 'dd/mm/yy',
+					onClose: function(){
+						try{
+							$.datepicker.parseDate('dd/mm/yy', $(this).val());
+						} catch(e){
+							$(this).val('');
+						}
+					}
+				});
+				$("#fechaFinActividad").datepicker({dateFormat: 'dd/mm/yy',
+                    onClose: function(){
+                        try{
+                            $.datepicker.parseDate('dd/mm/yy', $(this).val());
+                        } catch(e){
+                            $(this).val('');
+                        }
+                    }
+
+				});
+				$("#fechaUltimaRevalida").datepicker({dateFormat: 'dd/mm/yy',
+                    onClose: function(){
+                        try{
+                            $.datepicker.parseDate('dd/mm/yy', $(this).val());
+                        } catch(e){
+                            $(this).val('');
+                        }
+                    }
+				});
 
 
 			});
