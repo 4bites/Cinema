@@ -16,6 +16,7 @@
 		<g:javascript library="jquery/jquery.dataTables.tableTools" />
     </head>
     <body class="yui-skin-sam">
+
         <div id="spinner" class="spinner" style="display:none;">
             <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
         </div>

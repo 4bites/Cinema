@@ -7,7 +7,7 @@ class Empresa {
 		dateFormat.lenient = false  
 	}
 	static SimpleDateFormat periodFormat = new SimpleDateFormat("yyyyMM")
-    Integer codigo
+    Long codigo
     Date fechaInicioActividad
     Date fechaFinActividad
     Date fechaUltimaRevalida
@@ -17,7 +17,7 @@ class Empresa {
 		personaJuridica lazy: false
     }
     static constraints = {
-        codigo(unique:true)
+        codigo(maxSize:11, unique:true)
         fechaInicioActividad()
         fechaFinActividad(nullable:true, blank: true, validator:{ val, obj, errors ->
 			if(val && val < obj.fechaInicioActividad){

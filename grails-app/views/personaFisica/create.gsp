@@ -26,7 +26,7 @@
 		</script>
     </head>
     <body>
-    
+   		<bean:errorClass>errors</bean:errorClass> 
         <div class="body">
             <h1><g:message code="default.${personaFisicaInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -45,23 +45,52 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
-                            <tr class="prop">
+	                        <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="cuit"><g:message code="personaFisica.cuit.label" default="Cuit" /></label>
+                                    <label for="cuit"><g:message code="personaFisica.cuit.label" default="Cuit" />*</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'cuit', 'errors')}">
                                     <g:textField name="cuit" value="${personaFisicaInstance?.cuit}" />
 									<input type="button" id="cuitbot" value="Calcular" />
                                 </td>
                             </tr>
-                        
-                            <tr class="prop">
+                       		<bean:withBean beanName="personaFisicaInstance" >                  
+                                <bean:input property="nombre" /> 
+								<bean:input property="apellido" />
+								<bean:select property="tipoDocumento" optionValue="name" value="${personaFisicaInstance?.tipoDocumento}" noSelection="${['':'Seleccionar...']}"/>
+								<bean:input property="numeroDocumento" />
+   								<bean:select property="sexo" optionValue="name" value="${personaFisicaInstance?.sexo}" noSelection="${['':'Seleccionar...']}"/>
+								<bean:input property="domicilio" />
+								<bean:input property="codigoPostal" />
+								<bean:select property="provincia" noSelection="${['':'Seleccionar...']}" from="${cinema.Provincia.list()}"
+					                  	value="${personaFisicaInstance?.provincia?.id}"  optionValue="name" optionKey="id"/>
+							</bean:withBean>
+	                         <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="localidad"><g:message code="personaFisica.localidad.label" default="Localidad" />*</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'localidad', 'errors')}">
+                                    <g:select name="localidad.id" id="localidad" value="${personaFisicaInstance?.localidad?.id}" noSelection="${['':'Seleccionar...']}"
+                                            optionValue="name" optionKey="id" from="${personaFisicaInstance?.provincia?.localidades}"/>
+                                </td>
+                            </tr>
+
+
+							<bean:withBean beanName="personaFisicaInstance" >	
+								<!--bean:select property="localidad" noSelection="${['':'Seleccionar...']}" from="${personaFisicaInstance?.provincia?.id != null ? personaFisicaInstance?.provincia?.localidades:null}"  value="${personaFisicaInstance?.localidad?.id}"  optionValue="name" optionKey="id"/-->
+								<bean:input property="telefono" />
+								<bean:input property="email" />
+								<bean:select property="condicionIVA" noSelection="${['':'Seleccionar...']}"
+                                              from="${['Inscripto','No Inscripto','Excento', 'Monotributo']}" />	
+   							</bean:withBean>
+							<!--	
+	                         <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="nombre"><g:message code="personaFisica.nombre.label" default="Nombre" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'nombre', 'errors')}">
                                     <g:textField name="nombre" value="${personaFisicaInstance?.nombre}" size="40"/>
+	
                                 </td>
                             </tr>
                         
@@ -167,14 +196,13 @@
                                     <label for="condicionIVA"><g:message code="personaFisica.condicionIVA.label" default="Condicion IVA" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'condicionIVA', 'errors')}">
-                                    <!--g:textField name="condicionIVA" value="${personaFisicaInstance?.condicionIVA}" /-->
     		                        <g:select name="condicionIVA" id="condicionIVA" noSelection="${['0':'Seleccionar...']}"
                                               from="${['Inscripto','No Inscripto','Excento', 'Monotributo']}" 
                                               value="${personaFisicaInstance?.condicionIVA}"
                                               />
                                     </td>
                             </tr>
-                        
+                       --> 
                         </tbody>
                     </table>
                 </div>

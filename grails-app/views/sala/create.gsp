@@ -80,7 +80,11 @@
                         } catch(e){
                             $(this).val('');
                         }
+                    },
+                    onSelect: function(dateText, inst) {
+                        $( "#fechaRenovacion" ).datepicker( "option", "minDate", $.datepicker.parseDate('dd/mm/yy',dateText) );
                     }
+
 				});
 				$("#fechaRenovacion").datepicker({dateFormat: 'dd/mm/yy',
                     onClose: function(){
@@ -96,6 +100,7 @@
 		</script>
     </head>
     <body>
+		 <bean:errorClass>errors</bean:errorClass>
         <div class="body">
             <h1><g:message code="default.${salaInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -106,7 +111,7 @@
                 <g:renderErrors bean="${salaInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" method="get" >
+            <g:form action="save" >
                <g:if test="${salaInstance?.id}">
                     <g:hiddenField name="id" value="${salaInstance?.id}" />
                     <g:hiddenField name="version" value="${salaInstance?.version}" />
@@ -114,16 +119,49 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
+                        	<bean:withBean beanName="salaInstance">
+								<bean:input property="codigo" />
+								<bean:input property="nombre" />
+								<bean:input property="domicilio" />
+								<bean:input property="complejo.denominacion" id="complejo" size="40"/>
+								<bean:input property="codigoPostal" />
+								<bean:select property="provincia" noSelection="${['':'Seleccionar...']}" from="${cinema.Provincia.list()}"
+                                        optionValue="name" optionKey="id"/> 
+							</bean:withBean>
+   			              	<tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="localidad"><g:message code="sala.localidad.label" default="Localidad" />*</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'localidad', 'errors')}">
+                                    <g:select name="localidad.id" id="localidad" value="${salaInstance?.localidad?.id}" noSelection="${['':'Seleccionar...']}"
+                                            optionValue="name" optionKey="id" from="${salaInstance?.provincia?.localidades}"/>
+                                </td>
+                            </tr>
+							<bean:withBean beanName="salaInstance">
+								<bean:input property="email" />
+								<bean:input property="fechaInicioActividad" value="${formatDate(format:'dd/MM/yyyy', date:salaInstance?.fechaInicioActividad)}"/>
+								<bean:select property="tipo" noSelection="${['':'Seleccionar...']}"
+                                              from="${['Comercial','No Comercial','Ambulante Comercial', 'Ambulante No Comercial']}" />
+					            <bean:select property="frecuencia" noSelection="${['':'Seleccionar...']}"
+                                              from="${['Anual',' Fines de semana','Verano e invierno', 'Ocasional']}" />
+                       			<bean:input property="fechaRenovacion" value="${formatDate(format:'dd/MM/yyyy', date:salaInstance?.fechaRenovacion)}"  />
+                                <bean:select property="sistemaProyeccion" noSelection="${['':'Seleccionar...']}"
+                                              from="${['35 mm','Digital','Digital 3D', 'DVD']}" />
+								<bean:input property="capacidad" />
+							    <bean:input property="exhibidor" value="${salaInstance != null && salaInstance.exhibidor != null? salaInstance?.exhibidor?.desc():''}" size="40" />
+                                <input type="hidden" id="exhibidor.id" name="exhibidor.id" value="${salaInstance?.exhibidor?.id}" />
+								<input type="hidden" id="complejo.id" name="complejo.id" value="${salaInstance?.complejo?.id}">
+							</bean:withBean>
+							<!--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="codigo"><g:message code="sala.codigo.label" default="Codigo" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: salaInstance, field: 'codigo', 'errors')}">
-                                    <g:textField name="codigo" value="${salaInstance?.codigo}" size="11" maxLenght="11" />
+                                    <g:textField name="codigo" value="${salaInstance?.codigo}" size="11" maxLength="11" />
                                 </td>
                             </tr>
-                        
+                        	
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="nombre"><g:message code="sala.nombre.label" default="Nombre" /></label>
@@ -264,6 +302,7 @@
 									<input type="hidden" id="exhibidor.id" name="exhibidor.id" value="${salaInstance?.exhibidor?.id}" />
                                 </td>
                             </tr>
+							-->	
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="diasExhibicion"><g:message code="sala.diasExhibicion.label" default="Dias Exhibicion" /></label>

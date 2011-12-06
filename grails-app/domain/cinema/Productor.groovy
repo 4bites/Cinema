@@ -5,8 +5,14 @@ class Productor extends Empresa{
 
     static hasMany = [peliculas:Pelicula]
     static constraints = {
-		personaFisica(unique:true)
-		personaJuridica(unique:true)
+		personaFisica(validator:{ val, obj ->
+			if(val && Productor.countByPersonaFisica(val) > 0)
+				return "unique"
+		})
+		personaJuridica(validator:{ val, obj ->
+            if(val && Productor.countByPersonaJuridica(val) > 0)
+                return "unique"
+        })
     }
 
     static mapping = {

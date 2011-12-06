@@ -12,7 +12,13 @@ class VideoClub extends Empresa{
 	 	pagos   cascade: 'none'
 	}	
     static constraints = {
-		personaFisica(unique:true)
-		personaJuridica(unique:true)
+        personaFisica(validator:{ val, obj ->
+            if(val && VideoClub.countByPersonaFisica(val) > 0)
+                return "unique"
+        })
+        personaJuridica(validator:{ val, obj ->
+            if(val && VideoClub.countByPersonaJuridica(val) > 0)
+                return "unique"
+        })
     }
 }

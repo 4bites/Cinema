@@ -44,6 +44,9 @@ class PersonaFisicaController {
 		def pFisicas = p.list {
             ilike('nombre', params.name_startsWith + '%')
         }
+		if(params.empresa){
+			pFisicas = pFisicas.findAll{ grailsApplication.getDomainClass("cinema.$params.empresa").clazz.countByPersonaFisica(it) == 0 } 
+		}
    		render pFisicas as JSON
 	}
 

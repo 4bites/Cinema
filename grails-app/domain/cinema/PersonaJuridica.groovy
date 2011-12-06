@@ -23,19 +23,19 @@ class PersonaJuridica {
 
     static constraints = {
 		cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/)
-		razonSocial(unique:true, blank:false, nullable:false)
+		razonSocial(unique:true, blank:false, nullable:false, maxSize:255)
 		tipoSociedad(blank:false)
-		domicilio(blank:false)
-		codigoPostal(blank:false)
+		domicilio(blank:false, maxSize:255)
+		codigoPostal(blank:false, maxSize:10)
         provincia(nullable:false, validator: {
-            return (it.id != 0)
+            return (it.id != null)
         })
         localidad(nullable:false, validator: {
-            return (it.id != 0)
+            return (it.id != null)
         })
 
-		telefono(blank:false)
-		email(blank:false,email:true)
+		telefono(blank:false, maxSize: 255)
+		email(blank:false,email:true, maxSize:255)
 		condicionIVA(blank:false, validator: {
             return (it != '0')
         })

@@ -15,7 +15,7 @@
 				 	autocomplete= {
                         source: function(request, response) {
                             $.ajax({
-                                url: "${createLink(controller:'personaFisica', action:'autocomplete')}",
+                                url: "${createLink(controller:'personaFisica', action:'autocomplete', params:[empresa:entityName])}",
                                 dataType: "json",
                                 data: {
                                     name_startsWith: request.term
@@ -31,14 +31,17 @@
                                 }
                             })
                         },
-                        minLength: 2,
+                        minLength: 1,
                         change: function(event, ui) {
 							if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
                                 $(this).val('');
+								$("label[for='personaFisica']").html("Persona Fisica*");
 							}
                         },
 						select: function(event, ui) {
                             $('#personaJuridica').val('');
+							$("label[for='personaJuridica']").html("Persona Juridica");			
+							$("label[for='personaFisica']").html("Persona Fisica*");	
                         }
  
                     };
@@ -50,7 +53,7 @@
                     });
 					$("#personaJuridica").autocomplete({ source: function(request, response) {
                             $.ajax({
-								url: "${createLink(controller:'personaJuridica', action:'autocomplete')}", 
+								url: "${createLink(controller:'personaJuridica', action:'autocomplete', params:[empresa:entityName])}", 
 								dataType: "json",
 								data: {
                                     term: request.term
@@ -66,9 +69,17 @@
                                 }
 							})
 						},	
-						minLength:2,
+						minLength:1,
+                        change: function(event, ui) {
+                            if ($(".ui-autocomplete li:textEquals('" + $(this).val() + "')").size() == 0){
+                                $(this).val('');
+                                $("label[for='personaJuridica']").html("Persona Juridica*");
+                            }
+                        },
 						select: function(event, ui) {
                 	    	$('#personaFisica').val('');
+							$("label[for='personaFisica']").html("Persona Fisica");
+							$("label[for='personaJuridica']").html("Persona Juridica*");
                 		}
 					});
 
@@ -79,6 +90,10 @@
 						} catch(e){
 							$(this).val('');
 						}
+					},
+					onSelect: function(dateText, inst) { 
+						$( "#fechaFinActividad" ).datepicker( "option", "minDate", $.datepicker.parseDate('dd/mm/yy',dateText) );
+						$( "#fechaUltimaRevalida" ).datepicker( "option", "minDate", $.datepicker.parseDate('dd/mm/yy',dateText) );
 					}
 				});
 				$("#fechaFinActividad").datepicker({dateFormat: 'dd/mm/yy',
@@ -98,7 +113,11 @@
                         } catch(e){
                             $(this).val('');
                         }
+                    },
+                    onSelect: function(dateText, inst) {
+                        $( "#fechaFinActividad" ).datepicker( "option", "minDate", $.datepicker.parseDate('dd/mm/yy',dateText) );
                     }
+		
 				});
 
 
@@ -106,6 +125,7 @@
 		</script>
     </head>
     <body>
+		<bean:errorClass>errors</bean:errorClass>	
         <div class="body">
             <h1><g:message code="default.${empresaInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -126,7 +146,7 @@
                     <table>
                         <tbody>
                         
-                            <tr class="prop">
+<!--                            <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="codigo"><g:message code="empresa.codigo.label" default="Codigo" /></label>
                                 </td>
@@ -134,16 +154,25 @@
                                     <g:textField name="codigo" value="${empresaInstance?.codigo}" />
                                 </td>
                             </tr>
-                        
+-->
+							<bean:withBean beanName="empresaInstance">
+	                        	<bean:field property="codigo" maxLength="11"/>
+								<bean:input property="fechaInicioActividad" value="${formatDate(date:empresaInstance?.fechaInicioActividad, format:'dd/MM/yyyy')}"/>
+								<bean:input property="fechaFinActividad" value="${formatDate(date:empresaInstance?.fechaFinActividad, format:'dd/MM/yyyy')}"/>
+								<bean:input property="fechaUltimaRevalida" value="${formatDate(date:empresaInstance?.fechaUltimaRevalida, format:'dd/MM/yyyy')}"/>
+								<!--bean:input property="personaFisica" value="${empresaInstance !=null && empresaInstance.personaFisica != null? empresaInstance.personaFisica.nombre+' '+empresaInstance.personaFisica.apellido+' cuit:'+empresaInstance.personaFisica.cuit:''}" /-->
+								<!_-bean:input property="personaJuridica" value="${empresaInstance !=null && empresaInstance.personaJuridica != null? empresaInstance?.personaJuridica?.razonSocial+' cuit:'+empresaInstance?.personaJuridica?.cuit:''}" /--> 	
+							</bean:withBean>	
+							<!--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="fechaInicioActividad"><g:message code="empresa.fechaInicioActividad.label" default="Fecha Inicio Actividad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: empresaInstance, field: 'fechaInicioActividad', 'errors')}">
-                                    <g:textField name="fechaInicioActividad" value="${formatDate(date:empresaInstance?.fechaInicioActividad, format:'dd/MM/yyyy')}"  />
+                                    <g:textField name="fechaInicioActividad" value="${formatDate(date:empresaInstance?.fechaInicioActividad, format:'dd/MM/yyyy')}" />
                                 </td>
                             </tr>
-                        
+                        	
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="fechaFinActividad"><g:message code="empresa.fechaFinActividad.label" default="Fecha Fin Actividad" /></label>
@@ -152,7 +181,7 @@
                                     <g:textField name="fechaFinActividad" value="${formatDate(date:empresaInstance?.fechaFinActividad, format:'dd/MM/yyyy')}" />
                                 </td>
                             </tr>
-                        
+                        	
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="fechaUltimaRevalida"><g:message code="empresa.fechaUltimaRevalida.label" default="Fecha Ultima Revalida" /></label>
@@ -161,25 +190,23 @@
                                     <g:textField name="fechaUltimaRevalida" value="${formatDate(date:empresaInstance?.fechaUltimaRevalida, format:'dd/MM/yyyy')}"  />
                                 </td>
                             </tr>
-                        
+                        	-->
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="personaFisica"><g:message code="empresa.personaFisica.label" default="Persona Fisica" /></label>
+                                    <label for="personaFisica"><g:message code="empresa.personaFisica.label" default="Persona Fisica" />*</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: empresaInstance, field: 'personaFisica', 'errors')}">
-                                    <g:textField name="personaFisica" value="${empresaInstance !=null && empresaInstance.personaFisica != null? empresaInstance.personaFisica.nombre+' '+empresaInstance.personaFisica.apellido+' cuit:'+empresaInstance.personaFisica.cuit:''}"  />
+                                    <g:textField name="personaFisica" value="${empresaInstance !=null && empresaInstance.personaFisica != null? empresaInstance.personaFisica.nombre+' '+empresaInstance.personaFisica.apellido+' cuit:'+empresaInstance.personaFisica.cuit:''}"  size="40"/>
                                 </td>
                             </tr>
-                        
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="personaJuridica"><g:message code="empresa.personaJuridica.label" default="Persona Juridica" /></label>
+                                    <label for="personaJuridica"><g:message code="empresa.personaJuridica.label" default="Persona Juridica" />*</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: empresaInstance, field: 'personaJuridica', 'errors')}">
-                                    <g:textField name="personaJuridica" value="${empresaInstance !=null && empresaInstance.personaJuridica != null? empresaInstance?.personaJuridica?.razonSocial+' cuit:'+empresaInstance?.personaJuridica?.cuit:''}"  />
+                                    <g:textField name="personaJuridica" value="${empresaInstance !=null && empresaInstance.personaJuridica != null? empresaInstance?.personaJuridica?.razonSocial+' cuit:'+empresaInstance?.personaJuridica?.cuit:''}"  size="40"/>
                                 </td>
                             </tr>
-                        
                         </tbody>
                     </table>
                 </div>

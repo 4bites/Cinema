@@ -11,7 +11,13 @@ class Exhibidor extends Empresa{
 		ddjjs cascade: 'none'
 	}	
     static constraints = {
-		personaFisica(unique: true)
-		personaJuridica(unique:true)
-    }
+    	personaFisica(validator:{ val, obj ->
+            if(val && Exhibidor.countByPersonaFisica(val) > 0)
+                return "unique"
+        })
+        personaJuridica(validator:{ val, obj ->
+            if(val && Exhibidor.countByPersonaJuridica(val) > 0)
+                return "unique"
+        })
+	}
 }

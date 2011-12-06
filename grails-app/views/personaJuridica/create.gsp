@@ -82,7 +82,7 @@
        </script> 
     </head>
     <body>
-    
+   		<bean:errorClass>errors</bean:errorClass> 
         <div class="body">
             <h1><g:message code="default.${personaJuridicaInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -108,7 +108,35 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
+                        	<bean:withBean beanName="personaJuridicaInstance" >
+								<bean:input property="cuit" />
+								<bean:input property="razonSocial" />
+								<bean:select property="tipoSociedad" from="${cinema.SocietyType.values()}" noSelection="${['':'Seleccionar...']}" 
+                                   value="${personaJuridicaInstance?.tipoSociedad}" optionValue="name" />
+								<bean:input property="domicilio" />
+								<bean:input property="codigoPostal" />
+								<bean:select property="provincia" noSelection="${['':'Seleccionar...']}" from="${cinema.Provincia.list()}"
+                                        value="${personaJuridicaInstance?.provincia?.id}"  optionValue="name" optionKey="id"/>	
+							</bean:withBean>
+                          <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="localidad"><g:message code="personaJuridica.localidad.label" default="Localidad" />*</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: personaJuridicaInstance, field: 'localidad', 'errors')}">
+                                    <g:select name="localidad.id" id="localidad" optionKey="id" optionValue="name" 
+                                        value="${personaJuridicaInstance?.localidad?.id}" from="${personaJuridicaInstance?.provincia?.localidades}" 
+                                        noSelection="${['':'Seleccionar...']}"/>
+                                </td>
+                            </tr>
+
+
+							<bean:withBean beanName="personaJuridicaInstance" >
+								<bean:input property="telefono" />
+                                <bean:input property="email" />
+                                <bean:select property="condicionIVA" noSelection="${['':'Seleccionar...']}"
+                                              from="${['Inscripto','No Inscripto','Excento', 'Monotributo']}" />
+							</bean:withBean>
+							<!--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="cuit"><g:message code="personaJuridica.cuit.label" default="Cuit" /></label>
@@ -210,6 +238,7 @@
   
                                 </td>
                             </tr>
+							-->
                       		<tr class="prop">
 								<td valign="top" class="name" colspan=2>Personas Fisicas</td>
 							</tr>  

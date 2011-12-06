@@ -1,18 +1,18 @@
       var localidades = function(){
-                if($("#provincia\\.id").val()=='0'){
-                     $("#localidad\\.id").html("<option value='0'>Seleccionar...</option>");
+                if($("#provincia").val()==''){
+                     $("#localidad").html("<option value=''>Seleccionar...</option>");
                 }else{
-                $.getJSON("${createLink(controller:'localidad', action:'options')}",{id: $("#provincia\\.id").val()}, function(j){
-                    var options = "<option value='0'>Seleccionar...</option>";
+                $.getJSON("${createLink(controller:'localidad', action:'options')}",{id: $("#provincia").val()}, function(j){
+                    var options = "<option value=''>Seleccionar...</option>";
                     for (var i = 0; i < j.length; i++) {
                         options += '<option value="' + j[i].id + '">' + j[i].name + '</option>';
                     }
-                    $("#localidad\\.id").html(options);
+                    $("#localidad").html(options);
                 })
                 }
             }
         $(function(){
-            $("#provincia\\.id").change(localidades);
+            $("#provincia").change(localidades);
             //$(document).ready(localidades);
         })
  

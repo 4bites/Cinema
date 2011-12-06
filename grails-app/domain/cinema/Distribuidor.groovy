@@ -6,8 +6,14 @@ class Distribuidor extends Empresa{
     static hasMany = [peliculas:Pelicula]
     static belongsTo = Pelicula  
     static constraints = {
-		personaFisica(unique:true)
-		personaJuridica(unique_:true)
+        personaFisica(validator:{ val, obj ->
+            if(val && Distribuidor.countByPersonaFisica(val) > 0)
+                return "unique"
+        })
+        personaJuridica(validator:{ val, obj ->
+            if(val && Distribuidor.countByPersonaJuridica(val) > 0)
+                return "unique"
+        })
     }
 
 	static mapping = {

@@ -114,7 +114,10 @@ class PersonaJuridicaController {
         def pJuridicas = p.list {
             ilike('razonSocial', params.term + '%')
         }
-        render pJuridicas as JSON
+		if(params.empresa){
+			pJuridicas = pJuridicas.findAll{ grailsApplication.getDomainClass("cinema.$params.empresa").clazz.findByPersonaJuridica(it)==null }
+		}
+		render pJuridicas as JSON
 	}
 
 	def save = {
@@ -175,7 +178,8 @@ class PersonaJuridicaController {
 					status.setRollbackOnly()
         	
 					//p.provincia.merge()
-					p.provincia.localidades.each{it.read()}
+					p.provincia?.localidades.each{it.read()}
+					if(!params.id) p.id = null
 					render view:"create", model: [personaJuridicaInstance:p, pfPjs:pfpj]	
 				}else{
 //					p.save()

@@ -36,10 +36,10 @@ class PersonaFisica {
         domicilio(blank:false, size:2..255)
         codigoPostal(blank:false, size:1..10)
         provincia(nullable:false, validator: {
-            return (it.id != 0)
+            return (it.id != null)
     	})
         localidad(nullable:false, validator: {
-            return (it.id != 0)
+            return (it.id != null)
     	})
         telefono(nullable:false, blank:false, size:8..255)
         email(email:true, blank:false, size: 5..254)
