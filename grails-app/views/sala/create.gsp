@@ -120,7 +120,7 @@
                     <table>
                         <tbody>
                         	<bean:withBean beanName="salaInstance">
-								<bean:input property="codigo" />
+								<bean:input property="codigo" maxLength="9" />
 								<bean:input property="nombre" />
 								<bean:input property="domicilio" />
 								<bean:input property="complejo" id="complejo" size="40" value="${salaInstance != null && salaInstance.complejo ? salaInstance?.complejo?.denominacion:''}"/>

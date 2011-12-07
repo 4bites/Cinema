@@ -47,7 +47,7 @@
                         <tbody>
 	                        <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="cuit"><g:message code="personaFisica.cuit.label" default="Cuit" />*</label>
+                                    <label for="cuit"><g:message code="personaFisica.cuit.label" default="Cuit" maxLength="13" />*</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'cuit', 'errors')}">
                                     <g:textField name="cuit" value="${personaFisicaInstance?.cuit}" />

@@ -60,6 +60,7 @@
 		</script>    
     </head>
     <body>
+		<bean:errorClass>errors</bean:errorClass>
         <div class="body">
             <h1><g:message code="default.${localInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -79,7 +80,32 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
+                        	<bean:withBean beanName="localInstance">
+								<bean:input property="codigo" maxLength="9" />
+								<bean:input property="codigoPostal" />
+								<bean:input property="domicilio" />
+								<bean:input property="email" />
+								<bean:input property="fechaApertura" value="${formatDate(format:'dd/MM/yyyy', date:localInstance?.fechaApertura)}"/>
+								<bean:input property="nombre" />
+								<bean:select property="provincia" noSelection="${['':'Seleccionar...']}" from="${cinema.Provincia.list()}"
+                                        optionValue="name" optionKey="id"/>
+                                    <input type="hidden" name="video.id" id="video.id" value="${localInstance?.video?.id}" />
+                            </bean:withBean>
+							
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="localidad"><g:message code="sala.localidad.label" default="Localidad" />*</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: localInstance, field: 'localidad', 'errors')}">
+                                    <g:select name="localidad.id" id="localidad" value="${localInstance?.localidad?.id}" noSelection="${['':'Seleccionar...']}"
+                                            optionValue="name" optionKey="id" from="${localInstance?.provincia?.localidades}"/>
+                                </td>
+                            </tr>
+                            <bean:withBean beanName="localInstance">
+								 <bean:input property="telefono" />
+    	                         <bean:input property="video" value="${localInstance && localInstance.video ? localInstance.video.desc():''}"  size="40"/>		
+							</bean:withBean>
+							<!--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="codigo"><g:message code="local.codigo.label" default="Codigo" /></label>
@@ -174,7 +200,7 @@
 									<input type="hidden" name="video.id" id="video.id" value="${localInstance?.video?.id}" />
                                 </td>
                             </tr>
-                        
+                        	-->
                         </tbody>
                     </table>
                 </div>

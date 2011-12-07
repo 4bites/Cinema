@@ -15,16 +15,16 @@ class Local {
     static belongsTo = [video:VideoClub] 
     static constraints = {
 		codigo(unique:true, blank:false)
-		nombre(blank:false)
-		domicilio(blank:false)
-		codigoPostal(blank:false)
-		telefono(blank:false)
-		email(email:true)
+		nombre(blank:false, maxSize: 40)
+		domicilio(blank:false, maxSize:255)
+		codigoPostal(blank:false, maxSize:10)
+		telefono(blank:false, maxSize:255)
+		email(email:true, maxSize:255)
 		provincia(nullable:false, validator: {
-            return (it.id != 0)
+            return (it.id != null)
         })
         localidad(nullable:false, validator: {
-            return (it.id != 0)
+            return (it.id != null)
         })
     }
 
