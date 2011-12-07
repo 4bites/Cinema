@@ -50,11 +50,23 @@
                     });
 
         //            $("#fechaAlta").datepicker({dateFormat: 'dd/mm/yy'});
+
+	                    $("#accion").change( function(event, ui) {
+							if($(this).val() == 'entrega' || $(this).val() == 'devolucion'){
+	                            $("label[for='exhibidor']").html("Exhibidor*");
+							}else{
+                                $("label[for='exhibidor']").html("Exhibidor");
+ 							}
+                        });
+
+					$('#accion').trigger('change');
+
             });
         </script>
 	
     </head>
     <body>
+		<bean:errorClass>errors</bean:errorClass> 		
         <div class="body">
             <h1><g:message code="default.${bocInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -74,22 +86,31 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                       <tr class="prop">
+						 <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="serie"><g:message code="boc.accion.label" default="Accion" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'accion', 'errors')}">
-                                    <g:select disabled="disabled" name="accion" id="accion" noSelection="${['0':'Seleccionar...']}"
+                                    <g:select disabled="disabled" name="accion" id="accion" noSelection="${['':'Seleccionar...']}"
                                               from="${['alta','baja','entrega', 'devolucion']}" 
                                               value="${bocInstance?.accion}"
                                               />
 
                                 </td>
                             </tr>
- 
+
+						<bean:withBean beanName="bocInstance">
+                            <bean:input property="desde" maxLength="9" />
+                            <bean:input property="hasta" maxLength="9" />
+                            <bean:select property="serie" noSelection="${['':'Seleccionar...']}"
+                                              from="${['A','B','C', 'D', 'E', 'Z']}"  />
+                            <bean:input property="exhibidor" size="40" value="${bocInstance&&bocInstance.exhibidor?bocInstance.exhibidor.desc():''}"/>
+							<input type="hidden" name="exhibidor.id" id="exhibidor.id" value="${bocInstance?.exhibidor?.id}"/>
+                        </bean:withBean>
+						<!--	
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="desde"><g:message code="boc.desde.label" default="Desde número" /></label>
+                                    <label for="desde"><g:message code="boc.desde.label" default="Desde numero" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'desde', 'errors')}">
                                     <g:textField name="desde" value="${bocInstance?.desde}" />
@@ -98,7 +119,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="hasta"><g:message code="boc.hasta.label" default="Hasta número" /></label>
+                                    <label for="hasta"><g:message code="boc.hasta.label" default="Hasta numero" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'hasta', 'errors')}">
                                     <g:textField name="hasta" value="${bocInstance?.hasta}" />
@@ -126,7 +147,7 @@
 									<input type="hidden" name="exhibidor.id" id="exhibidor.id" value="${bocInstance?.exhibidor?.id}"/>
                                 </td>
                             </tr>
-                        <!--
+                        
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="fechaAlta"><g:message code="boc.fechaAlta.label" default="Fecha Alta" /></label>

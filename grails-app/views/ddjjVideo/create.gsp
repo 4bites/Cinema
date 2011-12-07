@@ -71,6 +71,7 @@
 		</style>
     </head>
     <body>
+		<bean:errorClass>errors</bean:errorClass>	
         <div class="body">
             <h1><g:message code="default.${ddjjVideoInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -89,8 +90,17 @@
 	
                 <div class="dialog">
                     <table>
-                        <tbody>
-                        
+						<bean:withBean beanName="ddjjVideoInstance">
+                        	<bean:input property="videoClub" size="40" value="${ddjjVideoInstance && ddjjVideoInstance.videoClub?ddjjVideoInstance.videoClub.desc():''}"/>
+							<input type="hidden" name="videoClub.id" id="videoClub.id" value="${ddjjVideoInstance?.videoClub?.id}"
+							<bean:field property="periodo" />
+							<bean:field property="cantidadTotalVenta" maxLength="9"/>
+							<bean:field property="precioTotalVenta" maxLength="9"/>
+						 	<bean:field property="cantidadTotalAlquiler" maxLength="9"/>
+                            <bean:field property="precioTotalAlquiler" maxLength="9"/>
+						</bean:withBean>	
+                            
+							<!-- 
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="videoClub"><g:message code="ddjjVideo.videoClub.label" default="Video Club" /></label>
@@ -127,7 +137,6 @@
                                     <g:textField name="precioTotalVenta" value="${ddjjVideoInstance?.precioTotalVenta}" />
                                 </td>
                             </tr>
-                    <!--    
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="gravamenTotalVenta"><g:message code="ddjjVideo.gravamenTotalVenta.label" default="Gravamen Total Venta" /></label>
@@ -136,7 +145,6 @@
                                     <g:textField name="gravamenTotalVenta" value="${ddjjVideoInstance?.gravamenTotalVenta}" />
                                 </td>
                             </tr>
-                    -->    
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="cantidadTotalAlquiler"><g:message code="ddjjVideo.cantidadTotalAlquiler.label" default="Cantidad Total Alquiler" /></label>
@@ -154,7 +162,6 @@
                                     <g:textField name="precioTotalAlquiler" value="${ddjjVideoInstance?.precioTotalAlquiler}" />
                                 </td>
                             </tr>
-                       <!-- 
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="gravamenTotalAlquiler"><g:message code="ddjjVideo.gravamenTotalAlquiler.label" default="Gravamen Total Alquiler" /></label>

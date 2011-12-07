@@ -49,7 +49,7 @@ class Sala {
 				errors.rejectValue("fechaRenovacion", "fechaRenovacion", [Empresa.dateFormat.format(val), Empresa.dateFormat.format(obj.fechaInicioActividad)] as Object[], "la fecha de renovación de certificado [{0}] debe ser mayor o igual a la fecha de inicio de actividad [{1}]")
 			}	
  		})
-		sistemaProyeccion()
+		sistemaProyeccion(blank:false)
 		capacidad(min:1, blank:false)
 		complejo(nullable: true)
     }

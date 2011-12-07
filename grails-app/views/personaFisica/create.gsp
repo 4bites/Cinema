@@ -50,7 +50,7 @@
                                     <label for="cuit"><g:message code="personaFisica.cuit.label" default="Cuit" maxLength="13" />*</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: personaFisicaInstance, field: 'cuit', 'errors')}">
-                                    <g:textField name="cuit" value="${personaFisicaInstance?.cuit}" />
+                                    <g:textField name="cuit" value="${personaFisicaInstance?.cuit}" maxLength="13"/>
 									<input type="button" id="cuitbot" value="Calcular" />
                                 </td>
                             </tr>
@@ -58,7 +58,7 @@
                                 <bean:input property="nombre" /> 
 								<bean:input property="apellido" />
 								<bean:select property="tipoDocumento" optionValue="name" value="${personaFisicaInstance?.tipoDocumento}" noSelection="${['':'Seleccionar...']}"/>
-								<bean:input property="numeroDocumento" />
+								<bean:input property="numeroDocumento" maxLength="8"/>
    								<bean:select property="sexo" optionValue="name" value="${personaFisicaInstance?.sexo}" noSelection="${['':'Seleccionar...']}"/>
 								<bean:input property="domicilio" />
 								<bean:input property="codigoPostal" />

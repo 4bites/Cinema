@@ -66,7 +66,7 @@
                                 }
                             })
                         },
-                        minLength:2,
+                        minLength:1,
 						select: function(event, ui) {
                             $('#distribuidor\\.id').val(ui.item.title);
                         },
@@ -94,6 +94,7 @@
     </head>
     <body>
         <div class="body">
+			<bean:errorClass>errors</bean:errorClass>
             <h1><g:message code="default.${peliculaInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
@@ -112,7 +113,16 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
+                        	<bean:withBean beanName="peliculaInstance">
+								<bean:input property="codigo" maxLength="9" />
+								<bean:input property="titulo"/>
+								<bean:input property="fechaEstreno" value="${formatDate(format:'dd/MM/yyyy', date:peliculaInstance?.fechaEstreno)}"/> 
+								<bean:input property="distribuidor" size="40" value="${peliculaInstance && peliculaInstance.distribuidor?peliculaInstance.distribuidor.desc():''}"/>
+								<bean:input property="productor" size="40" value="${peliculaInstance && peliculaInstance.productor?peliculaInstance.productor.desc():''}"/>
+								<input type="hidden" value="${peliculaInstance?.productor?.id}" name="productor.id" id="productor.id"/>
+								<input type="hidden" value="${peliculaInstance?.distribuidor?.id}" name="distribuidor.id" id="distribuidor.id"/>								
+							</bean:withBean>
+							<!--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="codigo"><g:message code="pelicula.codigo.label" default="Codigo" /></label>
@@ -160,7 +170,7 @@
 									<input type="hidden" value="${peliculaInstance?.productor?.id}" name="productor.id" id="productor.id"/>
                                 </td>
                             </tr>
-                        
+                        	-->
                         </tbody>
                     </table>
                 </div>

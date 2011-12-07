@@ -31,7 +31,7 @@ class PersonaFisica {
         nombre(blank:false, size:2..255)
         apellido(blank:false, size: 2..255)
         tipoDocumento(blank:false)
-        numeroDocumento(nullable:false)
+        numeroDocumento(nullable:false, max:99999999)
         sexo(blank:false)
         domicilio(blank:false, size:2..255)
         codigoPostal(blank:false, size:1..10)

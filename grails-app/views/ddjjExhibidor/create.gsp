@@ -41,10 +41,6 @@
 		</script>
     </head>
     <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Home</a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-        </div>
         <div class="body">
             <h1><g:message code="default.${ddjjExhibidorInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -62,7 +58,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="file"><g:message code="ddjjExhibidor.file.label" default="File" /></label>
+                                    <label for="file"><g:message code="ddjjExhibidor.file.label" default="Archivo" />*</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjExhibidorInstance, field: 'file', 'errors')}">
                                    <input type="file" name="file" value="${ddjjExhibidorInstance?.file}"/>
@@ -72,10 +68,10 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="exhibidora"><g:message code="ddjjExhibidor.exhibidora.label" default="Exhibidora" /></label>
+                                    <label for="exhibidora"><g:message code="ddjjExhibidor.exhibidora.label" default="Exhibidor" />*</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: ddjjExhibidorInstance, field: 'exhibidora', 'errors')}">
-                                    <g:textField name="exhibidor" value="${ddjjExhibidorInstance?.exhibidora?.desc()}"  />
+                                    <g:textField name="exhibidor" value="${ddjjExhibidorInstance?.exhibidora?.desc()}"  size="40"/>
 									<input type="hidden" name="exhibidor.id" id="exhibidor.id" value="${ddjjExhibidorInstance?.exhibidora?.id}" />	
                                 </td>
                             </tr>

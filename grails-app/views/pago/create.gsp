@@ -26,7 +26,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="file"><g:message code="pago.file.label" default="File" />*</label>
+                                    <label for="file"><g:message code="pago.file.label" default="Archivo" />*</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: pagoInstance, field: 'file', 'errors')}">
                                    <input type="file" name="file" value="${pagoInstance?.file}"/>

@@ -20,12 +20,12 @@ class DdjjVideo {
  
     static constraints = {
         videoClub()
-		periodo()
-		cantidadTotalVenta(range:0..99999999)
-		precioTotalVenta(min:0)
+		periodo(size:6..7)
+		cantidadTotalVenta(range:0..999999999)
+		precioTotalVenta(range:0..999999999)
 		gravamenTotalVenta()
 		cantidadTotalAlquiler(range:0..99999999)
-		precioTotalAlquiler(min:0)
+		precioTotalAlquiler(range:0..999999999)
 		gravamenTotalAlquiler()
     }
 
