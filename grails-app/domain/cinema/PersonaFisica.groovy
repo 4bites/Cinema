@@ -24,7 +24,7 @@ class PersonaFisica {
 
 	static hasMany = [pFisicaPJuridicas:PFisicaPJuridica]
     static constraints = {
-        cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/, validator:{ val, obj ->
+        cuit(unique:true, blank:false, maxSize:13, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/, validator:{ val, obj ->
 			def c = PersonaFisica.calculateCuit(obj.sexo.toString(), obj.numeroDocumento)
 			c && val == c
 		})

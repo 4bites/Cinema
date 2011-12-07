@@ -19,6 +19,9 @@
 
         $(document).ready(function() {
             var oTable = $('#results').dataTable( {
+				"oLanguage": {
+                    "sUrl": "/js/jquery/dataTables.spanish.txt"
+                },
                 "bProcessing": true,
                 "bDeferRender": true,
                 "bServerSide": false,

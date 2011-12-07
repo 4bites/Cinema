@@ -156,7 +156,7 @@
                             </tr>
 -->
 							<bean:withBean beanName="empresaInstance">
-	                        	<bean:field property="codigo" maxLength="11"/>
+	                        	<bean:field property="codigo" maxLength="9"/>
 								<bean:input property="fechaInicioActividad" value="${formatDate(date:empresaInstance?.fechaInicioActividad, format:'dd/MM/yyyy')}"/>
 								<bean:input property="fechaFinActividad" value="${formatDate(date:empresaInstance?.fechaFinActividad, format:'dd/MM/yyyy')}"/>
 								<bean:input property="fechaUltimaRevalida" value="${formatDate(date:empresaInstance?.fechaUltimaRevalida, format:'dd/MM/yyyy')}"/>

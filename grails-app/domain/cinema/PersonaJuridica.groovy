@@ -22,7 +22,7 @@ class PersonaJuridica {
     }
 
     static constraints = {
-		cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/)
+		cuit(unique:true, blank:false, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/, maxSize:13)
 		razonSocial(unique:true, blank:false, nullable:false, maxSize:255)
 		tipoSociedad(blank:false)
 		domicilio(blank:false, maxSize:255)

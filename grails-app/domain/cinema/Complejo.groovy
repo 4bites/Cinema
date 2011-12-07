@@ -9,7 +9,7 @@ class Complejo {
 	static hasMany = [salas:Sala]
 
     static constraints = {
-		codigo(unique:true)
+		codigo(unique:true, max:999999999)
 		denominacion(blank:false, size:1..100)
     }
 

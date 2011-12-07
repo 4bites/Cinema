@@ -22,13 +22,7 @@
 		</script>
     </head>
     <body>
-		<!--
-        <div class="nav">
-            <gsec:hasBasicPermission target="complejo" action="list">
-              <span class="menuButton"><gti:link class="list" action="list"><g:message code="complejo.list" default="Complejo List" /></gti:link></span>
-            </gsec:hasBasicPermission>
-        </div>
-		-->
+		<bean:errorClass>errors</bean:errorClass>
         <div class="body">
             <h1><g:message code="default.${complejoInstance?.id?'edit':'create'}.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -39,8 +33,7 @@
                 <g:renderErrors bean="${complejoInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <!--g:form method="post" useToken="true"-->
-			<g:form method="get" action="save">
+			<g:form  action="save">
 				 <g:if test="${complejoInstance?.id}">
                     <g:hiddenField name="id" value="${complejoInstance?.id}" />
                     <g:hiddenField name="version" value="${complejoInstance?.version}" />
@@ -48,7 +41,12 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
+                       		<bean:withBean beanName="complejoInstance">
+								<bean:input property="codigo" maxLength="9"/>
+								<bean:input property="denominacion" />
+								<bean:input property="fechaApertura" value="${formatDate(date:complejoInstance?.fechaApertura, format:'dd/MM/yyyy')}" />
+							</bean:withBean>
+							<!--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="codigo"><g:message code="complejo.codigo" default="Codigo" />:</label>
@@ -75,7 +73,7 @@
                                     <g:textField name="fechaApertura" value="${formatDate(date:complejoInstance?.fechaApertura, format:'dd/MM/yyyy')}" />
                                 </td>
                             </tr>
-                        
+                        	-->
                         </tbody>
                     </table>
                 </div>

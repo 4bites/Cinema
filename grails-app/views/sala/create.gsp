@@ -123,7 +123,7 @@
 								<bean:input property="codigo" />
 								<bean:input property="nombre" />
 								<bean:input property="domicilio" />
-								<bean:input property="complejo.denominacion" id="complejo" size="40"/>
+								<bean:input property="complejo" id="complejo" size="40" value="${salaInstance != null && salaInstance.complejo ? salaInstance?.complejo?.denominacion:''}"/>
 								<bean:input property="codigoPostal" />
 								<bean:select property="provincia" noSelection="${['':'Seleccionar...']}" from="${cinema.Provincia.list()}"
                                         optionValue="name" optionKey="id"/> 

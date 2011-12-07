@@ -4,4 +4,5 @@
 *.log
 target/
 *.swp
+*.swo
 *.jar

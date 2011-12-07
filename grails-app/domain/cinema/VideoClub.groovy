@@ -13,11 +13,17 @@ class VideoClub extends Empresa{
 	}	
     static constraints = {
         personaFisica(validator:{ val, obj ->
-            if(val && VideoClub.countByPersonaFisica(val) > 0)
+			if(!(val != null ^ obj.personaJuridica != null)){
+				return "onlyone"
+			}	
+            if(!obj.id && val && VideoClub.countByPersonaFisica(val) > 0)
                 return "unique"
         })
         personaJuridica(validator:{ val, obj ->
-            if(val && VideoClub.countByPersonaJuridica(val) > 0)
+			if(!(val != null ^ obj.personaFisica != null)){
+                return "onlyone"
+            }
+            if(!obj.id && val && VideoClub.countByPersonaJuridica(val) > 0)
                 return "unique"
         })
     }

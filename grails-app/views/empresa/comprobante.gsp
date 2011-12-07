@@ -66,6 +66,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="buttons">
+	            <span class="button"><input type="button" class="save" value="${message(code: 'default.button.print.label', default: 'Imprimir')}" onclick="window.print()" /></span>
+            </div>
+
         </div>
     </body>
 </html>

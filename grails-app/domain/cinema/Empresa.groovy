@@ -17,7 +17,7 @@ class Empresa {
 		personaJuridica lazy: false
     }
     static constraints = {
-        codigo(maxSize:11, unique:true)
+        codigo(maxSize:9, unique:true)
         fechaInicioActividad()
         fechaFinActividad(nullable:true, blank: true, validator:{ val, obj, errors ->
 			if(val && val < obj.fechaInicioActividad){
@@ -43,9 +43,8 @@ class Empresa {
 */
 			}
 		})
-		personaJuridica(nullable:true, validator: {val, obj -> val != null ^ obj.personaFisica != null
-		})
-		personaFisica(nullable:true, validator: {val, obj -> val != null ^ obj.personaJuridica != null })
+		personaJuridica(nullable:true)
+		personaFisica(nullable:true)
     }
 
 	def desc = {
