@@ -46,7 +46,7 @@ class Sala {
 		frecuencia(blank:false)
 		fechaRenovacion(validator:{ val, obj, errors ->
 			if( val < obj.fechaInicioActividad){
-				errors.rejectValue("fechaRenovacion", "fechaRenovacion", [Empresa.dateFormat.format(val), Empresa.dateFormat.format(obj.fechaInicioActividad)] as Object[], "la fecha de renovación de certificado [{0}] debe ser mayor o igual a la fecha de inicio de actividad [{1}]")
+				errors.rejectValue("fechaRenovacion", "fechaRenovacion", [Empresa.dateFormat.format(val), Empresa.dateFormat.format(obj.fechaInicioActividad)] as Object[], "la fecha de renovacion de certificado [{0}] debe ser mayor o igual a la fecha de inicio de actividad [{1}]")
 			}	
  		})
 		sistemaProyeccion(blank:false)
@@ -55,7 +55,7 @@ class Sala {
     }
 	
 	public String toString(){
-		"${nombre} (Código: ${codigo})"
+		"${nombre} (Codigo: ${codigo})"
 	}
 	static def show_columns = {
 		["codigo", "nombre", "provincia.name", "localidad.name", "capacidad", "complejo.denominacion", "tipo"]

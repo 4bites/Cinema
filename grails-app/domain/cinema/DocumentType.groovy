@@ -2,9 +2,9 @@ package cinema
 
 public enum DocumentType{
 	DNI('D.N.I'),
-	CEDULA_IDENTIDAD('Cédula de Identidad'),
+	CEDULA_IDENTIDAD('Cedula de Identidad'),
     PASAPORTE('Pasaporte'),
-	LIBRETA_CIVICA('Libreta Cívica'),
+	LIBRETA_CIVICA('Libreta Civica'),
 	LIBRETA_ENROLAMIENTO('Libreta de Enrolamiento')
 
 	public String name

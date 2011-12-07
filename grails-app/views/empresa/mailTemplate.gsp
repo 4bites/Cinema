@@ -4,9 +4,9 @@
                         <tr>
                             <td>Codigo</td>
 							<td>Cuit</td>
-							<td>Persona Física/Jurídica</td>
-							<td>Fecha Ultima Reválida</td>	
-                            <td>Status de reválida</td>
+							<td>Persona Fisica/Juridica</td>
+							<td>Fecha Ultima Revalida</td>	
+                            <td>Status de revalida</td>
                         </tr>
                     </thead>
                     <tbody>

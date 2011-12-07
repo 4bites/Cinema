@@ -20,7 +20,7 @@ class BocEgreso {
 		tipo(blank:false, inList:['ENTREGA','DEVOLUCION'])
 		exhibidor(nullable: true, validator: { val, obj, errors ->
 			if(obj.tipo	== 'DEVOLUCION' && !val){
-				errors.rejectValue("exhibidor", "exhibidor", null, "El exhibidor es obligatorio cuando se trata de una devolución")
+				errors.rejectValue("exhibidor", "exhibidor", null, "El exhibidor es obligatorio cuando se trata de una devolucion")
 			}
 		})
     }

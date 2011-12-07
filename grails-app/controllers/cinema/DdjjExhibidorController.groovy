@@ -22,7 +22,7 @@ class DdjjExhibidorController {
         DdjjExhibidor.withTransaction { status ->
 			ddjj.validate()
 			if(dest.size() == 0){
-    	        ddjj.errors.rejectValue("file","file","Debe ingresar un archivo válido")
+    	        ddjj.errors.rejectValue("file","file","Debe ingresar un archivo valido")
 	        }
 
 			def ddjjRegs = []

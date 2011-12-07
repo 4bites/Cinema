@@ -137,8 +137,8 @@ class Boc {
             save()
 			true
         } else {
-            print "no se pueden devolver porque esa serie no estaba en poseción de ese exhibidor"
-			errors.reject("no se pueden devolver porque esa serie no estaba en poseción de ese exhibidor")
+            print "no se pueden devolver porque esa serie no estaba en posecion de ese exhibidor"
+			errors.reject("no se pueden devolver porque esa serie no estaba en posecion de ese exhibidor")
 			false
         }
 

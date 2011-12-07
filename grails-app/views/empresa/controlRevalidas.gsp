@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="body">
-            <h1>Reválida de empresas</h1>
+            <h1>Revalida de empresas</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -45,7 +45,7 @@
                             <g:each in='${Empresa.show_columns()}' var=" field" >
                             <td>${field.tokenize(".")[0].humanField()}</td>
                             </g:each>
-							<td>Status de reválida</td>
+							<td>Status de revalida</td>
                         </tr>
                     </thead>
                     <tbody>

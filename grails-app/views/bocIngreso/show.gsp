@@ -23,14 +23,14 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bocIngreso.desde.label" default="Desde número" /></td>
+                            <td valign="top" class="name"><g:message code="bocIngreso.desde.label" default="Desde numero" /></td>
                             
                             <td valign="top" class="value">${bocIngresoInstance?.desde}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bocIngreso.hasta.label" default="Hasta número" /></td>
+                            <td valign="top" class="name"><g:message code="bocIngreso.hasta.label" default="Hasta numero" /></td>
                             
                             <td valign="top" class="value">${bocIngresoInstance?.hasta}</td>
                             

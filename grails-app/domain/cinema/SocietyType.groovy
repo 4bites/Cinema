@@ -1,11 +1,11 @@
 package cinema
 
 public enum SocietyType{
-	ANONIMA('Anónima'),
+	ANONIMA('Anonima'),
 	CIVIL('Civil'),
     COOPERATIVA('Cooperativa'),
 	DE_HECHO('De Hecho'),
-	FUNDACION('Fundación'),
+	FUNDACION('Fundacion'),
 	MUNICIPAL('Municipal'),
 	MUTUAL('Mutual'),
 	NACIONAL('Nacional'),

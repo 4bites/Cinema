@@ -134,11 +134,11 @@ class DdjjExhibidor {
 			if(baseTotal < devoTotal){
 				base.each {
 					it.errors.rejectValue("cantidadEntradas","cantidadEntradas",["${baseTotal}","${devoTotal}"] as Object[],
-                                          "La cantidad de entradas vendidas [{0}] de la función es menor a la cantidad devuelta [{1}]")
+                                          "La cantidad de entradas vendidas [{0}] de la funcion es menor a la cantidad devuelta [{1}]")
 				}
 				devo.each {
                     it.errors.rejectValue("cantidadEntradas","cantidadEntradas",["${devoTotal}","${baseTotal}"] as Object[],
-                                          "La cantidad de entradas devueltas [{0}] de la función es mayor a la cantidad vendida [{1}]")
+                                          "La cantidad de entradas devueltas [{0}] de la funcion es mayor a la cantidad vendida [{1}]")
                 }
 				valid = false
 			}

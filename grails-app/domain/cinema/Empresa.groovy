@@ -29,16 +29,16 @@ class Empresa {
 			if(val){
 				if(val < obj.fechaInicioActividad){
 					errors.rejectValue("fechaUltimaRevalida","fechaUltimaRevalida", [dateFormat.format(val), dateFormat.format(obj.fechaInicioActividad)] as Object[],
-                        "La fecha de última reválida [{0}] debe ser mayor o igual a la fecha de inicio de actividad [{1}]")
+                        "La fecha de ultima revalida [{0}] debe ser mayor o igual a la fecha de inicio de actividad [{1}]")
 				}
 				if(obj.fechaFinActividad && val > obj.fechaFinActividad){
 					errors.rejectValue("fechaUltimaRevalida","fechaUltimaRevalida", [dateFormat.format(val), dateFormat.format(obj.fechaFinActividad)] as Object[],
-                        "La fecha de última reválida [{0}] debe ser menor o igual a la fecha de fin de actividad [{1}]")
+                        "La fecha de ultima revalida [{0}] debe ser menor o igual a la fecha de fin de actividad [{1}]")
 				}
 /*				def hoy = new Date() 
 				if(val > hoy){
                     errors.rejectValue("fechaUltimaRevalida","fechaUltimaRevalida", [dateFormat.format(val), dateFormat.format(hoy)] as Object[],
-                        "La fecha de última reválida [{0}] debe ser menor o igual a la fecha de hoy [{1}]")
+                        "La fecha de ultima revalida [{0}] debe ser menor o igual a la fecha de hoy [{1}]")
                 }
 */
 			}
@@ -49,7 +49,7 @@ class Empresa {
 
 	def desc = {
 //		personaFisica? "${personaFisica.nombre} ${personaFisica.apellido} cuit:${personaFisica.cuit}" : "${personaJuridica?.razonSocial} cuit:${personaJuridica?.cuit}"
-		(personaFisica? "${personaFisica.nombre} ${personaFisica.apellido}" : "${personaJuridica?.razonSocial}") + ", Código: ${codigo}"
+		(personaFisica? "${personaFisica.nombre} ${personaFisica.apellido}" : "${personaJuridica?.razonSocial}") + ", Codigo: ${codigo}"
 	}
 
 	public String toString() {

@@ -77,7 +77,7 @@ class PersonaFisicaController {
 	def delete = {
 		def person = PersonaFisica.get(params.id)
 		if (Empresa.findByPersonaFisica(person) || PFisicaPJuridica.findByPersonaFisica(person)){
-			flash.message = "No se pudo eliminar la Persona Física por pertenecer a alguna empresa o persona jurídica."
+			flash.message = "No se pudo eliminar la Persona Fisica por pertenecer a alguna empresa o persona juridica."
 			render view:"show", model:[personaFisicaInstance:person]
 		} else {
 			person.delete()

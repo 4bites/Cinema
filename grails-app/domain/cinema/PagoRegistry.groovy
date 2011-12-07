@@ -29,7 +29,7 @@ class PagoRegistry {
 		codigoImpuesto(inList:[304, 305], validator:{ val, obj, errors ->
 			if(obj.empresa instanceof Exhibidor && val != 304 || obj.empresa instanceof VideoClub && val != 305){
 				errors.rejectValue("codigoImpuesto", "codigoImpuesto", [val, obj.empresa.class.simpleName] as Object[], 
-					"El código de impuesto [{0}] no corresponde con el tipo de empresa [{1}]")
+					"El codigo de impuesto [{0}] no corresponde con el tipo de empresa [{1}]")
 			}	
 		})
 		anio(range:2000..9999)

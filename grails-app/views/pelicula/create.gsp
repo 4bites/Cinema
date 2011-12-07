@@ -22,8 +22,8 @@
                                 success: function(data) {
                                     response($.map(data, function(item) {
                                         return {
-											label: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Código: "+item.codigo,
-                                            value: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Código: "+item.codigo,
+											label: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Codigo: "+item.codigo,
+                                            value: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Codigo: "+item.codigo,
                                             
 											//label: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
                                             //value: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
@@ -55,8 +55,8 @@
                                 success: function(data) {
                                     response($.map(data, function(item) {
                                         return {
-                                           label: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Código: "+item.codigo,
-                                            value: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Código: "+item.codigo,
+                                           label: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Codigo: "+item.codigo,
+                                            value: (item.nombre?item.nombre+" "+item.apellido:item.razonSocial)+", Codigo: "+item.codigo,
 
                                            // label: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),
                                            // value: (item.nombre?item.nombre+" "+item.apellido+" cuit:"+item.cuit:item.razonSocial+" cuit:"+item.cuit),

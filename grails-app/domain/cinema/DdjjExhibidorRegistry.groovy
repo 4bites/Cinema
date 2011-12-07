@@ -51,7 +51,7 @@ class DdjjExhibidorRegistry {
 			}
 			if(dias.size > 0)
 				errors.rejectValue("periodoFiscal","periodoFiscal",["${val}"]+dias+["${obj.registry[6]}"] as Object[],
-					"El período fiscal [{0}] debe corresponder con los días del mes [{1}] al [{2}], pero el día del registro es [{3}]")
+					"El periodo fiscal [{0}] debe corresponder con los dias del mes [{1}] al [{2}], pero el dia del registro es [{3}]")
 		})
 		dia(range:1..31, validator:{val, obj, errors -> 
 			def formatValid
@@ -69,7 +69,7 @@ class DdjjExhibidorRegistry {
 				} catch(Exception e){
 					e.printStackTrace()
 					if(!formatValid)
-						errors.rejectValue("dia","fecha",["${val}/${obj.mes}/${obj.anio}",""] as Object[],"La fecha [{0}] formada por los valores de día, mes y año del registro es inválida")
+						errors.rejectValue("dia","fecha",["${val}/${obj.mes}/${obj.anio}",""] as Object[],"La fecha [{0}] formada por los valores de dia, mes y año del registro es invalida")
 				}
 		})
 		mes(range:1..12)
@@ -85,7 +85,7 @@ class DdjjExhibidorRegistry {
 				true
 			}catch(Exception e){
 				e.printStackTrace()
-				errors.rejectValue("hora","hora",["${val}"] as Object[],"La hora [{0}] es inválida")
+				errors.rejectValue("hora","hora",["${val}"] as Object[],"La hora [{0}] es invalida")
 			}
 		})
 		renglon(nullable:false)
@@ -98,7 +98,7 @@ class DdjjExhibidorRegistry {
 			def mc = new java.math.MathContext( 2 )					
 			println "${val.multiply(10.0, mc)}, ${obj.precioBasico?.add(0.0, mc)}"	
 			if(val.multiply(10.0, mc) != obj.precioBasico?.add(0.0, mc)){
-				errors.rejectValue("impuesto","impuesto",["${val}","${obj.precioBasico}"] as Object[],"El impuesto [{0}] no es equivalente al 10% del precio básico [{1}]")
+				errors.rejectValue("impuesto","impuesto",["${val}","${obj.precioBasico}"] as Object[],"El impuesto [{0}] no es equivalente al 10% del precio basico [{1}]")
 			}
 		})
 		impuestoTotal(validator: {val, obj, errors -> 
@@ -118,12 +118,12 @@ class DdjjExhibidorRegistry {
 		})
 		numeroInicialBOC(validator:{val, obj, errors ->
             if(obj.hora == '0' && val != '0'){
-                errors.rejectValue("numeroInicialBOC","numeroInicialBOC",["${val}"] as Object[],"El número de primer BOC [{0}] debe ser 0 dado que la hora es 0")
+                errors.rejectValue("numeroInicialBOC","numeroInicialBOC",["${val}"] as Object[],"El numero de primer BOC [{0}] debe ser 0 dado que la hora es 0")
             }
         })
        	precioBasico(validator:{val, obj, errors ->
             if(obj.hora == '0' && val != 0){
-                errors.rejectValue("precioBasico","precioBasico",["${val}"] as Object[],"El precio básico [{0}] debe ser 0 dado que la hora es 0")
+                errors.rejectValue("precioBasico","precioBasico",["${val}"] as Object[],"El precio basico [{0}] debe ser 0 dado que la hora es 0")
             }
         })
 		precioVenta(validator:{val, obj, errors ->
@@ -144,10 +144,10 @@ class DdjjExhibidorRegistry {
 		pelicula(nullable: true,validator:{val, obj, errors ->
 			if(obj.hora == '0'){
 				if(obj.registry[8]!='99999999'){
-					errors.rejectValue("pelicula","pelicula",["${obj.registry[8]}"] as Object[],"El codigo de película [{0}] debe ser 99999999 dado que la hora es 0")
+					errors.rejectValue("pelicula","pelicula",["${obj.registry[8]}"] as Object[],"El codigo de pelicula [{0}] debe ser 99999999 dado que la hora es 0")
 				}
 			}else if(val == null){
-				errors.rejectValue("pelicula","pelicula",["${obj.registry[8]}"] as Object[],"El codigo de película [{0}] no corresponde a ninguna película válida")
+				errors.rejectValue("pelicula","pelicula",["${obj.registry[8]}"] as Object[],"El codigo de pelicula [{0}] no corresponde a ninguna pelicula valida")
 			} 
 				
 		})
@@ -159,20 +159,20 @@ class DdjjExhibidorRegistry {
             }else if(val == null){
                 errors.rejectValue("distribuidor","distribuidor",["${obj.registry[11]}"] as Object[],"El codigo de distribuidor [{0}] no corresponde a ningun distribuidor valido")
             }else if(val != obj.pelicula?.distribuidor){
-				errors.rejectValue("distribuidor","distribuidor",["${obj.registry[11]}","${obj.registry[8]}"] as Object[],"El distribuidor [{0}] no es el distribuidor de la película [{1}]")
+				errors.rejectValue("distribuidor","distribuidor",["${obj.registry[11]}","${obj.registry[8]}"] as Object[],"El distribuidor [{0}] no es el distribuidor de la pelicula [{1}]")
 			}
 
         })
 		sala(nullable: true, validator:{val, obj, errors ->
 			if(val == null){
-				errors.rejectValue("sala","salaNull",["${obj.registry[4]}"] as Object[], "El código [{0}] no corresponde a ninguna sala válida")	
+				errors.rejectValue("sala","salaNull",["${obj.registry[4]}"] as Object[], "El codigo [{0}] no corresponde a ninguna sala valida")	
 			} else if(obj.exhibidor && val.exhibidor != obj.exhibidor){
 				errors.rejectValue("sala","sala",["${val.codigo}","${obj.exhibidor.codigo}"] as Object[],"La sala [{0}] no pertenece al exhibidor [{1}]")
 			}
 		})
 		exhibidor(nullable: true, validator:{ val, obj, errors ->
 			if(val == null){
-                errors.rejectValue("exhibidor","exhibidor",["${obj.registry[3]}"] as Object[], "El código [{0}] no corresponde a ningun exhibidor válido")
+                errors.rejectValue("exhibidor","exhibidor",["${obj.registry[3]}"] as Object[], "El codigo [{0}] no corresponde a ningun exhibidor valido")
 			} else if(obj.ddjj.exhibidora && val != obj.ddjj.exhibidora){
 				errors.rejectValue("exhibidor","exhibidor",["${val.codigo}","${obj.ddjj.exhibidora.codigo}"] as Object[],"El exhibidor [{0}] difiere del exhibidor [{1}] que presenta la ddjj")
 			}	

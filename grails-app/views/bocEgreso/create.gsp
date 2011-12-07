@@ -85,7 +85,7 @@
  
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="desde"><g:message code="bocEgreso.desde.label" default="Desde número" /></label>
+                                    <label for="desde"><g:message code="bocEgreso.desde.label" default="Desde numero" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocEgresoInstance, field: 'desde', 'errors')}">
                                     <g:textField name="desde" value="${bocEgresoInstance?.desde}" />
@@ -94,7 +94,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="hasta"><g:message code="bocEgreso.hasta.label" default="Hasta número" /></label>
+                                    <label for="hasta"><g:message code="bocEgreso.hasta.label" default="Hasta numero" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocEgresoInstance, field: 'hasta', 'errors')}">
                                     <g:textField name="hasta" value="${bocEgresoInstance?.hasta}" />

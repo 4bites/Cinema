@@ -68,7 +68,7 @@ class EmpresaController {
 		}
 /*        if (empresa.clazz.name=="Exhibidor" && (DdjjExhibidor.findByExhibidor(empresa) || PagoRegistry.findByEmpresa(empresa) || Sala.findByExhibidor(empresa)) 
 			|| empresa.clazz.name=="Productor" && (Pelicula.findByProductor(empresa) || ){
-            flash.message = "No se pudo eliminar la Persona Física por pertenecer a alguna empresa o persona jurídica."
+            flash.message = "No se pudo eliminar la Persona Fisica por pertenecer a alguna empresa o persona juridica."
             render view:"show", model:[personaFisicaInstance:person]
         } else {
             person.delete()
@@ -154,7 +154,7 @@ class EmpresaController {
 	def sendRevalidasByMail = {
 		sendMail {
     	    to "nosotros@4bites.com.ar", "germadevanesa@gmail.com", "javier.iseruk@gmail.com", "julio@tuozzo.com.ar", "diego.rossotti@citi.com", "gabrielmarcos2001@gmail.com"
-        	subject "Reválidas de empresas vencidas o próximas a vencer"
+        	subject "Revalidas de empresas vencidas o proximas a vencer"
         	body( view:"mailTemplate", model:[empresas:Empresa.controlRevalidas()])
 //			html Empresa.controlRevalidas()
 		}

@@ -64,7 +64,7 @@
 	        <gui:menuitem url='${webRequest.getContextPath()}/empresas/VideoClub/list'>Listar</gui:menuitem>
 	    </gui:submenu>
 		<gui:menuitem url='${webRequest.getContextPath()}/empresas/empresa/controlPagosList'>Control de Pagos</gui:menuitem>
-		<gui:menuitem url='${webRequest.getContextPath()}/empresas/empresa/revalidasList'>Vencimientos de Reválidas</gui:menuitem>
+		<gui:menuitem url='${webRequest.getContextPath()}/empresas/empresa/revalidasList'>Vencimientos de Revalidas</gui:menuitem>
     </gui:submenu>
    	<gui:submenu label='Sala'>
         <gui:menuitem url='${webRequest.getContextPath()}/sala/create'>Alta</gui:menuitem>
@@ -103,7 +103,7 @@
 	<gsec:isLoggedIn>
          <gui:submenu label="${session.gsecUsername}" >
 			<gsec:hasRole name="Administrator" >
-				<gui:submenu label='Users'>
+				<gui:submenu label='Usuarios'>
 	            	<gui:menuitem url="${createLink(controller:'gsecUser', action:'create')}" >Alta</gui:menuitem>
     	            <gui:menuitem url="${createLink(controller:'gsecUser', action:'list')}" >Listar</gui:menuitem>
 				</gui:submenu>

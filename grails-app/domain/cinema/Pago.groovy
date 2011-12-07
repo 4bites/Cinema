@@ -30,7 +30,7 @@ class Pago {
 			if(value.size > 1){
 				value.each {
 					it.errors.reject("uniqueness",[it.registry[0], it.codigoImpuesto, it.anio, it.mes, it.cuota] as Object[], 
-						"La combinación CUIT [{0}] / Código de Impuesto [{1}] / Año [{2}]/ Mes [{3}] / Cuota [{4}] debe ser única" )
+						"La combinacion CUIT [{0}] / Codigo de Impuesto [{1}] / Año [{2}]/ Mes [{3}] / Cuota [{4}] debe ser unica" )
 				}
 				valid = false
 			}

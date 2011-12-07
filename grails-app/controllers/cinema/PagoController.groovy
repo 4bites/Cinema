@@ -18,7 +18,7 @@ class PagoController {
 		Pago.withTransaction { status ->
             pago.validate()
             if(dest.size() == 0){
-                pago.errors.rejectValue("file","file","Debe ingresar un archivo válido")
+                pago.errors.rejectValue("file","file","Debe ingresar un archivo valido")
             }
 
             def pagos = []

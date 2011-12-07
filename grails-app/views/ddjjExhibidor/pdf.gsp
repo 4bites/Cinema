@@ -54,7 +54,7 @@
 										<th>Cod. Empresa:</th><th>${ddjjExhibidorInstance?.exhibidora?.codigo}</th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th>Cuit:</th><th>${ddjjExhibidorInstance?.exhibidora?.cuit()}</th>
 									</tr>
 									<tr>
-										<th>Hora</th><th>Cod. Película</th><th>Titulo</th><th>Cod. Distribuidor</th><th>Tipo</th><th>Serie</th><th>Nro: Boc</th><th>Precio Básico</th><th>10% Impuesto</th><th>Precio Venta</th><th>Entr. Vendidas</th><th>Total Impuesto</th>
+										<th>Hora</th><th>Cod. Pelicula</th><th>Titulo</th><th>Cod. Distribuidor</th><th>Tipo</th><th>Serie</th><th>Nro: Boc</th><th>Precio Basico</th><th>10% Impuesto</th><th>Precio Venta</th><th>Entr. Vendidas</th><th>Total Impuesto</th>
 									</tr>
 								</thead>
 								<tbody>

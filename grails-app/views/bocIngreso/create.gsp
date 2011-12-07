@@ -73,7 +73,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="desde"><g:message code="bocIngreso.desde.label" default="Desde número" /></label>
+                                    <label for="desde"><g:message code="bocIngreso.desde.label" default="Desde numero" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocIngresoInstance, field: 'desde', 'errors')}">
                                     <g:textField name="desde" value="${bocIngresoInstance?.desde}" />
@@ -82,7 +82,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="hasta"><g:message code="bocIngreso.hasta.label" default="Hasta número" /></label>
+                                    <label for="hasta"><g:message code="bocIngreso.hasta.label" default="Hasta numero" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocIngresoInstance, field: 'hasta', 'errors')}">
                                     <g:textField name="hasta" value="${bocIngresoInstance?.hasta}" />
