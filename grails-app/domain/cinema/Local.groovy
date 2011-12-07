@@ -19,7 +19,7 @@ class Local {
 		domicilio(blank:false, maxSize:255)
 		codigoPostal(blank:false, maxSize:10)
 		telefono(blank:false, maxSize:255)
-		email(email:true, maxSize:255)
+		email(blank:false, email:true, maxSize:255)
 		provincia(nullable:false, validator: {
             return (it.id != null)
         })
