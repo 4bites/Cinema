@@ -88,7 +88,7 @@
                         <tbody>
 						 <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="serie"><g:message code="boc.accion.label" default="Accion" /></label>
+                                    <label for="serie"><g:message code="boc.accion.label" default="Accion*" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'accion', 'errors')}">
                                     <g:select disabled="disabled" name="accion" id="accion" noSelection="${['':'Seleccionar...']}"

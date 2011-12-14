@@ -15,6 +15,7 @@ class LocalController {
 		local.properties = params.findAll{it.key != "video"}
 		if(local.validate()){
 			local.save()
+			flash.message = "Local guardado satisfactoriamente"
 			redirect action:"show", id: local.id
 		} else {
 			render view:"create", model:[localInstance: local]

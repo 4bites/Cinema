@@ -12,20 +12,23 @@
 
 			$(document).ready(function() {
 				$('#results').dataTable( {
-                	"bProcessing": false,
+ 	               	"oLanguage": {
+    	                "sUrl": "/js/jquery/dataTables.spanish.txt"
+        	        },
+                 	"bProcessing": false,
 					"bSort":false,
 					"bPaginate": false,
                 	"bDeferRender": true,
                 	"bAutoWidth": true,
 					"sDom": 'T<"clear">lfrtip',
 					"oTableTools": {
-						"sSwfPath": "/js/copy_cvs_xls_pdf.swf",
+//						"sSwfPath": "/js/copy_cvs_xls_pdf.swf",
 						"aButtons": [
-							{
+/*							{
 								"sExtends": "pdf",
 								"sPdfOrientation": "landscape",
 								"sPdfMessage": "Cod. Empresa:${ddjjExhibidorInstance?.exhibidora?.codigo}, Cuit:${ddjjExhibidorInstance?.exhibidora?.cuit()}"
-							},
+							},*/
 							"copy",
 							"print"
 						]

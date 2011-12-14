@@ -5,8 +5,10 @@ import org.hibernate.event.PostUpdateEvent
 class SessionPostUpdateEventListener implements PostUpdateEventListener {
 	public void onPostUpdate(PostUpdateEvent event){
 		print event.getEntity().class.name
-		if(event.getEntity().class.name == 'de.ppi.grails.gsec.GsecUser'){
-			HttpSessionCollector.invalidateUser(event.getEntity().username)		
+		if(event.getEntity().class.name == 'de.ppi.grails.gsec.GsecPermission'){
+			event.getEntity().users.each{
+				HttpSessionCollector.updateUser(it, event.getEntity())		
+			}
 		}
 	} 
 }

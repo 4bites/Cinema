@@ -27,6 +27,7 @@ class PeliculaController {
 		pelicula.productor = Productor.get(params["productor.id"])
 		pelicula.fechaEstreno = (params.fechaEstreno != '' ? Empresa.dateFormat.parse(params.fechaEstreno):null)
 		if(pelicula.save()){
+			flash.message = "Pelicula guardada satisfactoriamente."
 			redirect action:"show", id: pelicula.id
         } else{
             render view:"create", model:[peliculaInstance: pelicula]

@@ -19,6 +19,7 @@ class ComplejoController {
 		println complejo.fechaApertura
 		if(complejo.validate()){
 			complejo.save()
+			flash.message = "Complejo guardado satisfactoriamente."
 			redirect action:"show", id: complejo.id
 		} else {
 			render view:"create", model:[complejoInstance:complejo]

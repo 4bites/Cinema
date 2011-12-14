@@ -65,6 +65,7 @@ class DdjjExhibidorController {
 			def map = [ddjjExhibidorInstance:ddjj]
 			if(ddjj.validateRepetitionsAndZeros(ddjjRegs) & !ddjj.hasErrors() & valid ){
 				ddjj.save()
+				flash.message = "Ddjj de exhibidor guardada satisfactoriamente"	
 	        	redirect action:"show", id:ddjj.id
 			}else{
 				ddjjRegs.findAll{it.hasErrors()}.each{ it.errors.each{ reg -> println reg}} 

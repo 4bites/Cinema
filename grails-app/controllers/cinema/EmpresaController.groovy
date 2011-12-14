@@ -45,7 +45,7 @@ class EmpresaController {
 			empresa.personaFisica = null
 		}
 		if(empresa.save()){
-			println "empresa.id:$empresa.id"	
+			flash.message = "${params.dom} guardado satisfactoriamente"	
 			redirect(uri:"/empresas/$params.dom/show?id=$empresa.id")
 		} else {
 			render(view:"create", model: [empresaInstance:empresa])	

@@ -48,6 +48,7 @@ class SalaController {
 			sala.diasExhibicion = dias*/
 			try{ 
 				sala.save()
+				flash.message = "Sala guardada satisfactoriamente."
 			}catch(Exception e){
 				e.printStackTrace()
 			}

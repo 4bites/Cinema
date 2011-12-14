@@ -183,6 +183,7 @@ class PersonaJuridicaController {
 					render view:"create", model: [personaJuridicaInstance:p, pfPjs:pfpj]	
 				}else{
 //					p.save()
+					flash.message = "Persona juridica guardada satisfactoriamente."
 					redirect action:"show", id: p.id
 				}
 /*			}else{

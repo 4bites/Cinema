@@ -24,6 +24,7 @@ class DdjjVideoController {
 		}	
 		if(ddjj.validate()){
 			ddjj.save()
+			flash.message = "Ddjj de video club guardada satisfactoriamente"
 			redirect action:"show", id: ddjj.id
 		} else { 
 			render view:"create", model:[ddjjVideoInstance: ddjj]

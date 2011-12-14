@@ -59,6 +59,7 @@ class PersonaFisicaController {
 			person = new PersonaFisica(params)
 		}
 		if(person.validate() && person.save()){
+			flash.message = "Persona fisica guardada satisfactoriamente."
 			redirect action:"show", id:person.id
 		} else {
 			render view:"create", model:[personaFisicaInstance:person]

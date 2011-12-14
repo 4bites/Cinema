@@ -57,6 +57,7 @@ class PagoController {
 			def map = [pagoInstance:pago]
             if(!pago.hasErrors() & valid & pago.validateUniqueness(pagos)){
                 pago.save()
+				flash.message = "Pagos guardados satisfactoriamente."
                 redirect action:"show", id:pago.id
             }else{
                 pagos.findAll{it.hasErrors()}.each{ it.errors.each{ reg -> println reg}}

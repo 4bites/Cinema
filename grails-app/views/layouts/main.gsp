@@ -128,5 +128,10 @@
 </gsec:isLoggedIn>
 </div>
 		<g:layoutBody />
+		<gsec:isLoggedIn>
+		<g:if test="${params.action in ['create','edit','save']}" >	
+		<div class="body"><span class="button"> Los campos con (*) son obligatorios.</span></div>
+		</g:if>
+		</gsec:isLoggedIn>	
     </body>
 </html>
