@@ -41,14 +41,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="ddjjVideo.precioTotalVenta.label" default="Precio Total Venta" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: ddjjVideoInstance, field: "precioTotalVenta")}</td>
+                            <td valign="top" class="value">$ ${fieldValue(bean: ddjjVideoInstance, field: "precioTotalVenta")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="ddjjVideo.gravamenTotalVenta.label" default="Gravamen Total Venta" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: ddjjVideoInstance, field: "gravamenTotalVenta")}</td>
+                            <td valign="top" class="value">$ ${fieldValue(bean: ddjjVideoInstance, field: "gravamenTotalVenta")}</td>
                             
                         </tr>
                     
@@ -62,14 +62,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="ddjjVideo.precioTotalAlquiler.label" default="Precio Total Alquiler" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: ddjjVideoInstance, field: "precioTotalAlquiler")}</td>
+                            <td valign="top" class="value">$ ${fieldValue(bean: ddjjVideoInstance, field: "precioTotalAlquiler")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="ddjjVideo.gravamenTotalAlquiler.label" default="Gravamen Total Alquiler" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: ddjjVideoInstance, field: "gravamenTotalAlquiler")}</td>
+                            <td valign="top" class="value">$ ${fieldValue(bean: ddjjVideoInstance, field: "gravamenTotalAlquiler")}</td>
                             
                         </tr>
                     
