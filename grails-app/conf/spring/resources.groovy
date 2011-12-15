@@ -23,11 +23,12 @@ beans = {
     code39Generator(Code39Bean) {
         height = 10
     }
-/*
+
 	sessionPostUpdateEventListener(SessionPostUpdateEventListener)
 
 	hibernateEventListeners(HibernateEventListeners) {
     	listenerMap = ['post-update':sessionPostUpdateEventListener]
+		listenerMap['post-delete'] = sessionPostUpdateEventListener
    	}
-*/    
+    
 }
