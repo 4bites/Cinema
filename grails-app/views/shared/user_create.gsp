@@ -4,57 +4,54 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <title><g:message code="gsecUser.edit" default="Edit GsecUser" /></title>
+        <title><g:message code="gsecUser.create" default="Create GsecUser" /></title>
         <g:javascript library="jquery/jquery.password_strength" />
         <style>
-            .password_strength {
-                padding: 0 5px;
-                display: inline-block;
-            }
-            .password_strength_1 {
-                background-color: #fcb6b1;
-            }
-            .password_strength_2 {
-                background-color: #fccab1;
-            }
-            .password_strength_3 {
-                background-color: #fcfbb1;
-            }
-            .password_strength_4 {
-                background-color: #dafcb1;
-            }
-           .password_strength_5 {
-                background-color: #bcfcb1;
-            }
+			.password_strength {
+				padding: 0 5px;
+				display: inline-block;
+			}
+			.password_strength_1 {
+				background-color: #fcb6b1;
+			}
+			.password_strength_2 {
+				background-color: #fccab1;
+			}
+			.password_strength_3 {
+				background-color: #fcfbb1;
+			}	
+			.password_strength_4 {
+				background-color: #dafcb1;
+			}		
+			.password_strength_5 {
+				background-color: #bcfcb1;
+			}
 
-        </style>
-        <script>
-            $(document).ready(function() {
-                $('#password').password_strength();
+		</style>
+		<script>
+	        $(document).ready(function() {
+				$('#password').password_strength();
 
-                $('#userform').submit(function(e) {
-                    if ($(this).find('.password_strength_1').size() != 0) {
-                        e.preventDefault();
-                        alert('La clave es demasiado debil!');
-                    }else if ($(this).find('.password_strength_2').size() != 0) {
+				$('#userform').submit(function(e) {
+   			 		if ($(this).find('.password_strength_1').size() != 0) {
+			        	e.preventDefault();
+        				alert('La clave es demasiado debil!');
+    				}else if ($(this).find('.password_strength_2').size() != 0) {
                         e.preventDefault();
                         alert('La clave es debil!');
-                    }
-                });
-            });
-		</script>
+					}
+ 				});
+			});  
+		</script>	
     </head>
     <body>
         <div class="nav">
             <gsec:hasBasicPermission target="gsecUser" action="list">
               <span class="menuButton"><gti:link class="list" action="list"><g:message code="gsecUser.list" default="GsecUser List" /></gti:link></span>
             </gsec:hasBasicPermission>
-            <gsec:hasBasicPermission target="gsecUser" action="create">
-              <span class="menuButton"><gti:link class="create" action="create"><g:message code="gsecUser.new" default="New GsecUser" /></gti:link></span>
-            </gsec:hasBasicPermission>
         </div>
         <div class="body">
-            <h1><g:message code="gsecUser.edit" default="Edit GsecUser" /></h1>
+            <h1><g:message code="gsecUser.create" default="Create GsecUser" /></h1>
             <g:if test="${flash.message}">
             <div class="message"><g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" /></div>
             </g:if>
@@ -64,8 +61,6 @@
             </div>
             </g:hasErrors>
             <g:form method="post" useToken="true" name="userform">
-                <g:hiddenField name="id" value="${gsecUserInstance?.id}" />
-                <g:hiddenField name="version" value="${gsecUserInstance?.version}" />
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -151,17 +146,6 @@
                                 </td>
                             </tr>
                         </gsec:hasBasicPermission>
-                         <gsec:hasNot>
-	                         <gsec:hasBasicPermission target="GsecUser.passwordHash" action="read">
-		                         <tr class="prop">
-		                            <td valign="top" class="name"><g:message code="gsecUser.passwordHash" default="Password Hash" />:</td>
-		                            
-		                            <td valign="top" class="value">${fieldValue(bean: gsecUserInstance, field: "passwordHash")}</td>
-		                            
-		                         </tr>
-	                         </gsec:hasBasicPermission>
-                         </gsec:hasNot>
-                         
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="password"><g:message code="gsecUser.password" default="Password" />:</label>
@@ -170,67 +154,17 @@
                                     <input type="text" maxlength="128" id="password" name="password" value="${fieldValue(bean:gsecUserInstance,field:'password')}"/>
                                 </td>
                             </tr>
-                        <gsec:hasBasicPermission target="GsecUser.permissions" action="write">
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="permissions"><g:message code="gsecUser.permissions" default="Permissions" />:</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: gsecUserInstance, field: 'permissions', 'errors')}">
-                                    <g:hiddenField name="mtm_[permissions]" value="permissions" />
-<g:select name="permissions"
-from="${de.ppi.grails.gsec.GsecPermission.list()?.sort()}"
-size="5" multiple="yes" optionKey="id" 
-value="${gsecUserInstance?.permissions}" />
-
-                                </td>
-                            </tr>
-                        </gsec:hasBasicPermission>
-                         <gsec:hasNot>
-	                         <gsec:hasBasicPermission target="GsecUser.permissions" action="read">
-		                         <tr class="prop">
-		                            <td valign="top" class="name"><g:message code="gsecUser.permissions" default="Permissions" />:</td>
-		                            
-		                            <td  valign="top" style="text-align: left;" class="value">
-		                                <ul>
-		                                <g:each in="${gsecUserInstance?.permissions.sort()}" var="gsecPermissionInstance">
-		                                <gsec:hasBasicPermission target="gsecPermission" action="show">
-		                                      <li><gti:link controller="gsecPermission" action="show" id="${gsecPermissionInstance.id}">${gsecPermissionInstance.encodeAsHTML()}</gti:link></li>
-		                                </gsec:hasBasicPermission>
-		                                <gsec:hasNot>
-		                                    <li>${gsecPermissionInstance.encodeAsHTML()}</li>
-		                                </gsec:hasNot>
-		                                </g:each>
-		                                </ul>
-		                            </td>
-		                            
-		                         </tr>
-	                         </gsec:hasBasicPermission>
-                         </gsec:hasNot>
-                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="roles"><g:message code="gsecUser.roles" default="Roles" />:</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: gsecUserInstance, field: 'roles', 'errors')}">
-                                    <g:hiddenField name="mtm_[roles]" value="roles" />
-<g:select name="roles"
-from="${de.ppi.grails.gsec.GsecRole.list()?.sort()}"
-size="5" multiple="yes" optionKey="id"
-value="${gsecUserInstance?.roles}" />
-
-                                </td>
-                            </tr>
                         
                         </tbody>
                     </table>
                 </div>
                 <div class="buttons">
-                  <gsec:hasBasicPermission target="gsecUser" action="update">
-                      <span class="button"><gti:actionSubmit class="save" action="update" messageCode="update"/></span>
-                    </gsec:hasBasicPermission>
-                    <gsec:hasBasicPermission target="gsecUser" action="delete">
-                      <span class="button"><gti:actionSubmit class="delete" action="delete" messageCode="delete" onclick="return confirm('${message(code: 'delete.confirm', 'default': 'Are you sure?')}');" /></span>
-                    </gsec:hasBasicPermission>
+                  <gsec:hasBasicPermission target="gsecUser" action="save">
+                      <span class="button"><gti:actionSubmit name="create" class="save" action="save" messageCode="create"/></span>
+                  </gsec:hasBasicPermission>
+                  <gsec:hasBasicPermission target="gsecUser" action="saveAndRedirectToCreate">
+                      <span class="button"><gti:actionSubmit name="create" class="saveAndNext" action="saveAndRedirectToCreate" messageCode="saveAndRedirectToCreate"/></span>
+                  </gsec:hasBasicPermission>
                 </div>
             </g:form>
         </div>

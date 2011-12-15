@@ -8,5 +8,10 @@ class GsecUserController {
         def role = GsecUser.get(params.id)
         render view:"/shared/user_edit", model:[gsecUserInstance:role]
     }
+
+    def create = {
+        def role = GsecUser.get(params.id)
+        render view:"/shared/user_create", model:[gsecUserInstance:role]
+    }
 	
 }

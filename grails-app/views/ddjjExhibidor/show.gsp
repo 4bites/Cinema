@@ -10,7 +10,10 @@
 		<script>
 			$(document).ready(function() {
 				$('#results').dataTable( {
-                	"bProcessing": true,
+					 "oLanguage": {
+                    	"sUrl": "/js/jquery/dataTables.spanish.txt"
+                	},
+                   	"bProcessing": true,
                 	"bDeferRender": true,
                 	"bAutoWidth": true
             	});
