@@ -1,4 +1,5 @@
 package cinema
+import grails.converters.*
 
 class BocController {
 	def scaffold = true
@@ -48,6 +49,25 @@ class BocController {
         def boc = Boc.get(params.id)
         render view:"create", model:[bocInstance: boc]
     }
+	
+	def lookFor = {
+		def bocs
+		if(params.accion == 'alta'){
+			bocs = Boc.findAllBySerie(params.serie, [sort:"desde"])
+		} else if(params.accion == 'devolucion'){
+			if(params.exhibidor){
+                def exhibidor = Exhibidor.get(params.exhibidor)
+                bocs = Boc.findAllBySerieAndExhibidor(params.serie, exhibidor, [sort:"desde"])
+            }else{
+				bocs = []
+			}
+		}else if(params.accion in ['baja','entrega']){
+			bocs = Boc.findAllBySerieAndExhibidorIsNull(params.serie, [sort:"desde"])
+		}else{	
+			bocs = []
+		}
+		render bocs as JSON
+	}
 
     def search = {
         searcher(params)

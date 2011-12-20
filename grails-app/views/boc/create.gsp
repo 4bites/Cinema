@@ -7,6 +7,15 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'boc.label', default: 'Boc')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
+		<style>
+			.ui-button { margin-left: -1px; }
+			.ui-button-icon-only .ui-button-text { padding: 0.35em; } 
+			.ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; }
+		</style>
+        <link rel="stylesheet" href="${resource(dir:'css',file:'boc_styles.css')}" />
+
+		<g:javascript library="jquery/jquery.ui.autocomplete" />
+      
 		<script type="text/javascript" charset="utf-8">
              $.expr[':'].textEquals = function (a, i, m) {
                 return $(a).text().match("^" + m[3] + "$");
@@ -44,12 +53,29 @@
                         },
                         select: function(event, ui) {
                             $('#exhibidor\\.id').val(ui.item.title);
+	                       	$.getJSON("${createLink(controller:'boc', action:'lookFor')}",{serie: $("#serie").val(), exhibidor: $("#exhibidor\\.id").val(), accion: $("#accion").val()}, function(j){
+                               	var options = '<li class="sb_filter"><label for="">Intervalos disponibles</label></li>';
+                               	for (var i = 0; i < j.length; i++) {
+                                   	options += '<li><label for="'+ j[i].desde + '..' + j[i].hasta +'">' + j[i].desde + '..'+ j[i].hasta + '</label></li>';
+                               	}
+                               	$("#desde_c").html(options);
+                           	});
                         }
 
 
                     });
-
-        //            $("#fechaAlta").datepicker({dateFormat: 'dd/mm/yy'});
+					$("#exhibidor").blur(function(){
+						if($(this).val() == ''){
+							$("#exhibidor\\.id").val('');
+	                           $.getJSON("${createLink(controller:'boc', action:'lookFor')}",{serie: $("#serie").val(), exhibidor: $("#exhibidor\\.id").val(), accion: $("#accion").val()}, function(j){
+                                var options = '<li class="sb_filter"><label for="">Intervalos disponibles</label></li>';
+                                for (var i = 0; i < j.length; i++) {
+                                    options += '<li><label for="'+ j[i].desde + '..' + j[i].hasta +'">' + j[i].desde + '..'+ j[i].hasta + '</label></li>';
+                                }
+                                $("#desde_c").html(options);
+                            });
+  						}
+					});
 
 	                    $("#accion").change( function(event, ui) {
 							if($(this).val() == 'entrega' || $(this).val() == 'devolucion'){
@@ -57,9 +83,168 @@
 							}else{
                                 $("label[for='exhibidor']").html("Exhibidor");
  							}
+							//if($(this).val() == 'alta'){
+							
+							if($(this).val() == ''){
+								$("#serie").attr('disabled', 'disabled');
+								$("#exhibidor").attr('disabled', 'disabled');
+							}else{
+								$("#serie").removeAttr('disabled');
+								$("#exhibidor").removeAttr('disabled');
+							}
+							populateDesde();
                         });
 
 					$('#accion').trigger('change');
+
+
+					$("#serie").change ( function(event, ui){
+			               $.getJSON("${createLink(controller:'boc', action:'lookFor')}",{serie: $("#serie").val(), exhibidor: $("#exhibidor\\.id").val(), accion: $("#accion").val()}, function(j){
+		                    	var options = '<li class="sb_filter"><label for="desde_title">'+($("#accion").val()=='alta'?'Intervalos existentes':'Intervalos disponibles')+'</label></li>';
+        		            	for (var i = 0; i < j.length; i++) {
+									options += '<li><label for="'+ j[i].desde + '..' + j[i].hasta +'">' + j[i].desde + '..'+ j[i].hasta + '</label></li>';
+                                        	
+                    			}
+                    			$("#desde_c").html(options);
+                			});
+							if($(this).val() == ''){
+                                $("#desde").attr('disabled', 'disabled');
+								$("#hasta").attr('disabled', 'disabled');
+								$("#exhibidor").attr('disabled', 'disabled');
+                            }else{
+                                $("#desde").removeAttr('disabled');
+								$("#hasta").removeAttr('disabled');
+								if($("#accion").val() == 'entrega' || $("#accion").val() == 'devolucion')	
+									$("#exhibidor").removeAttr('disabled');
+                            }
+					});
+					
+					$("#serie").trigger('change');
+
+					function populateDesde(){
+						$.getJSON("${createLink(controller:'boc', action:'lookFor')}",
+								{serie: $("#serie").val(), exhibidor: $("#exhibidor\\.id").val(), accion: $("#accion").val()}, function(j){
+                        	var options = '<li class="sb_filter"><label for="desde_title">'+($("#accion").val()=='alta'?'Intervalos ocupados':'Intervalos disponibles')+'</label></li>';
+                            for (var i = 0; i < j.length; i++) {
+                                options += '<li><label for="'+ j[i].desde + '..' + j[i].hasta +'">' + j[i].desde + '..'+ j[i].hasta + '</label></li>';
+                            }
+                            $("#desde_c").html(options);
+                        });
+					}	
+
+		            $(function() {
+
+						var $ui 		= $('#ui_element');
+
+				/**
+				* on focus and on click display the dropdown, 
+				* and change the arrow image
+				*/
+				$ui.find('#desde').bind('focus click',function(){
+					pos   = $(this).offset();
+    				width = $(this).width();
+   					$ui.find('.sb_down')
+					   .addClass('sb_up')
+					   .removeClass('sb_down')
+					   .andSelf()
+					   .find('.sb_dropdown')
+					   .css({ "left": (pos.left + width) + "px", "top":pos.top + "px" })
+					   .show();
+				});
+               $ui.find('#hasta').bind('focus click',function(){
+                    pos   = $(this).offset();
+                    width = $(this).width();
+                    $ui.find('.sb_down2')
+                       .addClass('sb_up2')
+                       .removeClass('sb_down2')
+                       .andSelf()
+                       .find('.sb_dropdown2')
+                       .css({ "left": (pos.left + width) + "px", "top":pos.top + "px" })
+                       .show();
+                });
+
+
+				/**
+				* on mouse leave hide the dropdown, 
+				* and change the arrow image
+				*/
+				$ui.bind('mouseleave',function(){
+					$ui.find('.sb_up')
+					   .addClass('sb_down')
+					   .removeClass('sb_up')
+					   .andSelf()
+					   .find('.sb_dropdown')
+					   .hide();
+				});
+               $ui.bind('mouseleave',function(){
+                    $ui.find('.sb_up2')
+                       .addClass('sb_down2')
+                       .removeClass('sb_up2')
+                       .andSelf()
+                       .find('.sb_dropdown2')
+                       .hide();
+                });
+
+
+				$("#desde").bind('blur', function(){
+					valid = $("#accion").val() != 'alta'?false:true;
+					value = $(this).val();
+					var i=0;
+					var desde_arr = new Array();
+					$ui.find('.sb_dropdown').children( "li" ).each(function() {
+						if(i>0) {
+                        	var desde = $(this).children("label:first-child").html().split("..")[0];
+							var hasta = $(this).children("label:first-child").html().split("..")[1];	
+							if($("#accion").val() != 'alta'){
+								if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)  && parseInt(value) <= parseInt(hasta)){
+									valid = true;
+									$("#hasta_c").html('<li><label for="'+ value + '..' + hasta +'">' + value + '..'+ hasta + '</label></li>');		
+								}	
+							}else{
+								desde_arr[i-1] = parseInt(desde);
+	                           	if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)  && parseInt(value) <= parseInt(hasta) ){
+        	                        valid = false;
+									return false;
+            	                }   
+							}
+                    	}
+						i++;
+					});
+					if ( !valid ) {
+                     	$( this ).val( "" );
+                      	return false;
+                    }else{
+                    	if($("#accion").val() == 'alta'){
+							var max = 0;
+							for(i=0;i<desde_arr.length && desde_arr[i]<value; i++){
+								max=desde_arr[i]
+							}
+                            if( i == desde_arr.length){
+                                $("#hasta_c").html('<li><label for="'+ value + '..">Mayor o igual a ' + value + '</label></li>');
+                            }else{
+                                $("#hasta_c").html('<li><label for="'+ value + '..' + max +'">' + value + '..'+ desde_arr[i] + '</label></li>');
+                            }
+                        }
+					}
+				});
+
+               $("#hasta").bind('blur', function(){
+                    valid = false;
+                    value = $(this).val();
+                    $ui.find('.sb_dropdown2').children( "li" ).each(function() {
+                        var desde = $(this).children("label:first-child").html().split("..")[0];
+                        var hasta = $(this).children("label:first-child").html().split("..")[1];    
+                        if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)  && parseInt(value) <= parseInt(hasta)){
+                            valid = true;
+                        }   
+                    });
+                    if ( !valid ) {
+                        $( this ).val( "" );
+                        return false;
+                    }
+                });
+	
+            });
 
             });
         </script>
@@ -77,86 +262,75 @@
                 <g:renderErrors bean="${bocInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <g:form action="save" method="get">
 				<g:if test="${bocInstance?.id}">
                     <g:hiddenField name="id" value="${bocInstance?.id}" />
                     <g:hiddenField name="version" value="${bocInstance?.version}" />
                 </g:if>
 
                 <div class="dialog">
-                    <table>
+                    <table id="ui_element">
                         <tbody>
 						 <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="serie"><g:message code="boc.accion.label" default="Accion*" /></label>
+                                    <label for="accion"><g:message code="boc.accion.label" default="Accion*" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'accion', 'errors')}">
-                                    <g:select disabled="disabled" name="accion" id="accion" noSelection="${['':'Seleccionar...']}"
+                                    <g:select name="accion" id="accion" noSelection="${['':'Seleccionar...']}"
                                               from="${['alta','baja','entrega', 'devolucion']}" 
                                               value="${bocInstance?.accion}"
                                               />
 
                                 </td>
                             </tr>
-
-						<bean:withBean beanName="bocInstance">
-                            <bean:input property="desde" maxLength="9" />
-                            <bean:input property="hasta" maxLength="9" />
-                            <bean:select property="serie" noSelection="${['':'Seleccionar...']}"
-                                              from="${['A','B','C', 'D', 'E', 'Z']}"  />
-                            <bean:input property="exhibidor" size="40" value="${bocInstance&&bocInstance.exhibidor?bocInstance.exhibidor.desc():''}"/>
-							<input type="hidden" name="exhibidor.id" id="exhibidor.id" value="${bocInstance?.exhibidor?.id}"/>
-                        </bean:withBean>
-						<!--	
-                            <tr class="prop">
+							<bean:select beanName="bocInstance" property="serie" noSelection="${['':'Seleccionar...']}"
+                                              from="${['A','B','C', 'D', 'E', 'Z']}"  disabled="true"/>
+                        <tr class="prop" style="height:35px">
                                 <td valign="top" class="name">
-                                    <label for="desde"><g:message code="boc.desde.label" default="Desde numero" /></label>
+                                    <label for="desde"><g:message code="boc.desde.label" default="Desde*" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'desde', 'errors')}">
-                                    <g:textField name="desde" value="${bocInstance?.desde}" />
+                                    <div class="sb_wrapper">
+                                    <g:textField name="desde" class="sb_input"  value="${bocInstance?.desde}" disabled="true"/><span class="sb_down"></span>
+                                    <ul class="sb_dropdown" style="display:none;" id="desde_c">
+                                        <li class="sb_filter"><span for="desde_title">Intervalos disponibles</span></li>
+                                    </ul>
+                                    </div>
                                 </td>
                             </tr>
-                        
-                            <tr class="prop">
+                           <tr class="prop" style="height:35px">
                                 <td valign="top" class="name">
-                                    <label for="hasta"><g:message code="boc.hasta.label" default="Hasta numero" /></label>
+                                    <label for="hasta"><g:message code="boc.hasta.label" default="Hasta*" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'hasta', 'errors')}">
-                                    <g:textField name="hasta" value="${bocInstance?.hasta}" />
+                                    <div class="sb_wrapper2">
+                                    <g:textField name="hasta" class="sb_input"  value="${bocInstance?.hasta}" disabled="true"/><span class="sb_down2"></span>
+                                    <ul class="sb_dropdown2" style="display:none;" id="hasta_c">
+                                        <li class="sb_filter">Elija campo "Desde" primero</li>
+                                    </ul>
+                                    </div>
                                 </td>
                             </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="serie"><g:message code="boc.serie.label" default="Serie" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'serie', 'errors')}">
-									<g:select name="serie" id="serie" noSelection="${['0':'Seleccionar...']}"
-                                              from="${['A','B','C', 'D', 'E', 'Z']}" 
-                                              value="${bocInstance?.serie}"
-                                              />
-
-                                </td>
-                            </tr>
-                            <tr class="prop">
+ 
+						<bean:withBean beanName="bocInstance">
+                            <!--bean:input property="desde" maxLength="9" /-->
+                            <!--bean:input property="hasta" maxLength="9" /-->
+                            <!--bean:select property="serie" noSelection="${['':'Seleccionar...']}"
+                                              from="${['A','B','C', 'D', 'E', 'Z']}"  /-->
+                            <!--bean:input property="exhibidor" size="40" value="${bocInstance&&bocInstance.exhibidor?bocInstance.exhibidor.desc():''}"/-->
+							<!--input type="hidden" name="exhibidor.id" id="exhibidor.id" value="${bocInstance?.exhibidor?.id}"/-->
+                        </bean:withBean>
+							
+                            <tr class="prop" style="height:30px">
                                 <td valign="top" class="name">
                                     <label for="exhibidor"><g:message code="boc.exhibidor.label" default="Exhibidor" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'exhibidor', 'errors')}">
-                                    <g:textField name="exhibidor" value="${bocInstance?.exhibidor?.desc()}"  />
+                                    <g:textField name="exhibidor" value="${bocInstance?.exhibidor?.desc()}"  size="40" disabled="true"/>
 									<input type="hidden" name="exhibidor.id" id="exhibidor.id" value="${bocInstance?.exhibidor?.id}"/>
                                 </td>
                             </tr>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="fechaAlta"><g:message code="boc.fechaAlta.label" default="Fecha Alta" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: bocInstance, field: 'fechaAlta', 'errors')}">
-                                    <g:textField name="fechaAlta" value="${formatDate(format:'dd/MM/yyyy', date:bocInstance?.fechaAlta)}"  />
-                                </td>
-                            </tr>
-                        -->
                         </tbody>
                     </table>
                 </div>
