@@ -232,11 +232,18 @@
                     valid = false;
                     value = $(this).val();
                     $ui.find('.sb_dropdown2').children( "li" ).each(function() {
-                        var desde = $(this).children("label:first-child").html().split("..")[0];
-                        var hasta = $(this).children("label:first-child").html().split("..")[1];    
-                        if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)  && parseInt(value) <= parseInt(hasta)){
-                            valid = true;
-                        }   
+						if($(this).children("label:first-child").html().indexOf("Mayor") != -1){
+							var desde = $(this).children("label:first-child").html().split("Mayor o igual a ")[1]
+							if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)){
+								valid = true;
+							}
+						}else{
+                        	var desde = $(this).children("label:first-child").html().split("..")[0];
+                        	var hasta = $(this).children("label:first-child").html().split("..")[1];    
+                        	if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)  && parseInt(value) <= parseInt(hasta)){
+                            	valid = true;
+                        	}
+						}   
                     });
                     if ( !valid ) {
                         $( this ).val( "" );
