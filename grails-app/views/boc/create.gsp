@@ -53,13 +53,8 @@
                         },
                         select: function(event, ui) {
                             $('#exhibidor\\.id').val(ui.item.title);
-	                       	$.getJSON("${createLink(controller:'boc', action:'lookFor')}",{serie: $("#serie").val(), exhibidor: $("#exhibidor\\.id").val(), accion: $("#accion").val()}, function(j){
-                               	var options = '<li class="sb_filter"><label for="">Intervalos disponibles</label></li>';
-                               	for (var i = 0; i < j.length; i++) {
-                                   	options += '<li><label for="'+ j[i].desde + '..' + j[i].hasta +'">' + j[i].desde + '..'+ j[i].hasta + '</label></li>';
-                               	}
-                               	$("#desde_c").html(options);
-                           	});
+							if($("#accion").val()=='entrega'||$("#accion").val()=='devolucion')
+								populateDesde();
                         }
 
 
@@ -67,13 +62,7 @@
 					$("#exhibidor").blur(function(){
 						if($(this).val() == ''){
 							$("#exhibidor\\.id").val('');
-	                           $.getJSON("${createLink(controller:'boc', action:'lookFor')}",{serie: $("#serie").val(), exhibidor: $("#exhibidor\\.id").val(), accion: $("#accion").val()}, function(j){
-                                var options = '<li class="sb_filter"><label for="">Intervalos disponibles</label></li>';
-                                for (var i = 0; i < j.length; i++) {
-                                    options += '<li><label for="'+ j[i].desde + '..' + j[i].hasta +'">' + j[i].desde + '..'+ j[i].hasta + '</label></li>';
-                                }
-                                $("#desde_c").html(options);
-                            });
+							populateDesde();
   						}
 					});
 
@@ -83,40 +72,39 @@
 							}else{
                                 $("label[for='exhibidor']").html("Exhibidor");
  							}
-							//if($(this).val() == 'alta'){
-							
+							$("#exhibidor").val('');
+							$("#desde").val('');
+							$("#hasta").val('');
+
 							if($(this).val() == ''){
 								$("#serie").attr('disabled', 'disabled');
-								$("#exhibidor").attr('disabled', 'disabled');
 							}else{
 								$("#serie").removeAttr('disabled');
+							}
+							if($(this).val() == 'alta' || $(this).val() == 'baja' || $(this).val() == ''){
+								$("#exhibidor").attr('disabled', 'disabled');
+							}else{
 								$("#exhibidor").removeAttr('disabled');
 							}
 							populateDesde();
+							$("#desde").trigger('change');
                         });
 
-					$('#accion').trigger('change');
+					$('#accion').trigger('blur');
 
 
 					$("#serie").change ( function(event, ui){
-			               $.getJSON("${createLink(controller:'boc', action:'lookFor')}",{serie: $("#serie").val(), exhibidor: $("#exhibidor\\.id").val(), accion: $("#accion").val()}, function(j){
-		                    	var options = '<li class="sb_filter"><label for="desde_title">'+($("#accion").val()=='alta'?'Intervalos existentes':'Intervalos disponibles')+'</label></li>';
-        		            	for (var i = 0; i < j.length; i++) {
-									options += '<li><label for="'+ j[i].desde + '..' + j[i].hasta +'">' + j[i].desde + '..'+ j[i].hasta + '</label></li>';
-                                        	
-                    			}
-                    			$("#desde_c").html(options);
-                			});
-							if($(this).val() == ''){
-                                $("#desde").attr('disabled', 'disabled');
-								$("#hasta").attr('disabled', 'disabled');
-								$("#exhibidor").attr('disabled', 'disabled');
-                            }else{
-                                $("#desde").removeAttr('disabled');
-								$("#hasta").removeAttr('disabled');
-								if($("#accion").val() == 'entrega' || $("#accion").val() == 'devolucion')	
-									$("#exhibidor").removeAttr('disabled');
-                            }
+						populateDesde();
+						if($(this).val() == ''){
+                            $("#desde").attr('disabled', 'disabled');
+							$("#hasta").attr('disabled', 'disabled');
+							$("#exhibidor").attr('disabled', 'disabled');
+                        }else{
+                            $("#desde").removeAttr('disabled');
+							$("#hasta").removeAttr('disabled');
+							if($("#accion").val() == 'entrega' || $("#accion").val() == 'devolucion')	
+								$("#exhibidor").removeAttr('disabled');
+                       }
 					});
 					
 					$("#serie").trigger('change');
@@ -124,7 +112,12 @@
 					function populateDesde(){
 						$.getJSON("${createLink(controller:'boc', action:'lookFor')}",
 								{serie: $("#serie").val(), exhibidor: $("#exhibidor\\.id").val(), accion: $("#accion").val()}, function(j){
-                        	var options = '<li class="sb_filter"><label for="desde_title">'+($("#accion").val()=='alta'?'Intervalos ocupados':'Intervalos disponibles')+'</label></li>';
+							var options;
+							if($("#accion").val()=='alta'){
+                            	options = '<li class="sb_filter"><label for="hasta_title">Intervalos existentes. (El valor no debe pertenecer a ninguno)</label></li>';
+							}else{
+                            	options = '<li class="sb_filter"><label for="hasta_title">Intervalos disponibles. (El valor debe pertenecer a alguno)</label></li>';
+ 							}
                             for (var i = 0; i < j.length; i++) {
                                 options += '<li><label for="'+ j[i].desde + '..' + j[i].hasta +'">' + j[i].desde + '..'+ j[i].hasta + '</label></li>';
                             }
@@ -198,11 +191,12 @@
 							if($("#accion").val() != 'alta'){
 								if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)  && parseInt(value) <= parseInt(hasta)){
 									valid = true;
-									$("#hasta_c").html('<li><label for="'+ value + '..' + hasta +'">' + value + '..'+ hasta + '</label></li>');		
+									var title = '<li class="sb_filter"><label for="hasta_title">El valor debe pertenecer al siguiente intervalo.</label></li>';
+                            		$("#hasta_c").html(title+'<li><label for="'+ value + '..' + hasta +'">' + value + '..'+ hasta + '</label></li>');		
 								}	
 							}else{
 								desde_arr[i-1] = parseInt(desde);
-	                           	if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)  && parseInt(value) <= parseInt(hasta) ){
+	                           	if ( !isNaN(parseInt(value)) && parseInt(desde) < parseInt(value)  && parseInt(value) < parseInt(hasta) ){
         	                        valid = false;
 									return false;
             	                }   
@@ -219,21 +213,27 @@
 							for(i=0;i<desde_arr.length && desde_arr[i]<value; i++){
 								max=desde_arr[i]
 							}
+                            var title = '<li class="sb_filter"><label for="hasta_title">El valor debe pertenecer al siguiente intervalo.</label></li>';
                             if( i == desde_arr.length){
-                                $("#hasta_c").html('<li><label for="'+ value + '..">Mayor o igual a ' + value + '</label></li>');
+                                $("#hasta_c").html(title+'<li><label for="'+ value + '..">Mayor o igual a ' + value + '</label></li>');
                             }else{
-                                $("#hasta_c").html('<li><label for="'+ value + '..' + max +'">' + value + '..'+ desde_arr[i] + '</label></li>');
+                                $("#hasta_c").html(title+'<li><label for="'+ value + '..' + max +'">' + value + '..'+ (desde_arr[i]-1) + '</label></li>');
                             }
                         }
+					}
+					if(value==''){
+						$("#hasta_c").html('<li class="sb_filter"><label for="hasta_title">El valor debe pertenecer al siguiente intervalo.</label></li>');
 					}
 				});
 
                $("#hasta").bind('blur', function(){
-                    valid = false;
-                    value = $(this).val();
+                    var valid = false;
+                    var value = $(this).val();
+					var i = 0;
                     $ui.find('.sb_dropdown2').children( "li" ).each(function() {
+						if(i>0){
 						if($(this).children("label:first-child").html().indexOf("Mayor") != -1){
-							var desde = $(this).children("label:first-child").html().split("Mayor o igual a ")[1]
+							var desde = $(this).children("label:first-child").html().split("Mayor o igual a ")[1];
 							if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)){
 								valid = true;
 							}
@@ -243,7 +243,9 @@
                         	if ( !isNaN(parseInt(value)) && parseInt(desde) <= parseInt(value)  && parseInt(value) <= parseInt(hasta)){
                             	valid = true;
                         	}
-						}   
+						}  
+						}
+						i++; 
                     });
                     if ( !valid ) {
                         $( this ).val( "" );

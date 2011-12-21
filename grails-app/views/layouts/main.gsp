@@ -106,6 +106,7 @@
 				<gui:submenu label='Usuarios'>
 	            	<gui:menuitem url="${createLink(controller:'gsecUser', action:'create')}" >Alta</gui:menuitem>
     	            <gui:menuitem url="${createLink(controller:'gsecUser', action:'list')}" >Listar</gui:menuitem>
+					<gui:menuitem url="${createLink(controller:'gsecUser', action:'status')}" >Activar/Inactivar</gui:menuitem>
 				</gui:submenu>
 				<gui:submenu label='Roles'>
                     <gui:menuitem url="${createLink(controller:'gsecRole', action:'create')}" >Alta</gui:menuitem>
