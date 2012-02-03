@@ -79,7 +79,7 @@ class DdjjExhibidorController {
     }
 
 	def search = {
-		searcher(params)
+		searcher(params, session.restrictions["ddjjExhibidor"])
 	}
 
 	def pdf = {

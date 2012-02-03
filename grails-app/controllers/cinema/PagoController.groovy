@@ -71,7 +71,7 @@ class PagoController {
 	}
 
 	def search = {
-        searcher(params)
+        searcher(params, session.restrictions["pago"])
     }
 	
 	def edit = {

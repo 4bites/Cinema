@@ -196,7 +196,7 @@ class PersonaJuridicaController {
 	}
 
 	def search = {
-		searcher(params) //search(params)
+		searcher(params, session.restrictions["personaJuridica"]) 
 /*		def dataToRender = [:]
     	dataToRender.sEcho = params.sEcho
 	    dataToRender.aaData=[]                

@@ -120,7 +120,8 @@ class EmpresaController {
 	}
 
 	def search = {
-		searcher(params)
+		def empresa = params.dom[0].toLowerCase()+params.dom[1..-1]
+		searcher(params, session.restrictions["empresa"])
 	}
 
 	def controlPagos = {

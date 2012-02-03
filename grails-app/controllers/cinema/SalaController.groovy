@@ -68,6 +68,6 @@ class SalaController {
     }
 
 	def search = {
-		searcher(params)
+		searcher(params, session.restrictions["sala"])
 	}
 }

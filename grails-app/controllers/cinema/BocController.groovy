@@ -70,6 +70,6 @@ class BocController {
 	}
 
     def search = {
-        searcher(params)
+        searcher(params, session.restrictions["boc"])
     }
 }

@@ -86,10 +86,17 @@ class BootStrap {
 
 			}	
 		}
+		
+		def evalRestriction = { restriction, iter ->
+			def b = new Binding()
+            def shell = new GroovyShell(this.class.classLoader, b)
+			b.setVariable("it", iter)
+			return shell.evaluate("import cinema.*; $restriction")	
+		}
 
 		grailsApplication.getArtefacts("Controller")*.clazz.each{ controller ->
 //			new org.codehaus.groovy.grails.commons.DefaultGrailsControllerClass(controller).registerMapping("search")
-			controller.metaClass.searcher = { params -> 
+			controller.metaClass.searcher = { params, restrictions -> 
 //				def params = RCH.currentRequestAttributes().params
 				def domain = params.dom? grailsApplication.classLoader.loadClass("cinema.${params.dom}") :
 										grailsApplication.getDomainClass(controller.name.replaceAll("Controller","")).clazz
@@ -101,6 +108,11 @@ class BootStrap {
 		        dataToRender.iTotalDisplayRecords = dataToRender.iTotalRecords
 				if(!params.sEcho){
 					dataToRender.aaData = domain.list()
+					def restrictionsString = restrictions?.collect{"($it)"}.join(" && ")
+					println "restrictions: $restrictionsString"
+					if(restrictionsString){
+						dataToRender.aaData =  dataToRender.aaData.findAll{ evalRestriction(restrictionsString, it)}
+					}
 					render dataToRender as JSON
 					return 
 				}

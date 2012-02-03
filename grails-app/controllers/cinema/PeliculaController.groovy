@@ -44,6 +44,6 @@ class PeliculaController {
     }
 	
 	def search = {
-		searcher(params)
+		searcher(params, session.restrictions["pelicula"])
 	}
 }

@@ -50,7 +50,7 @@ class ComplejoController {
     }
 
 	def search = {
-        searcher(params)
+        searcher(params, session.restrictions["complejo"])
     }
 
 

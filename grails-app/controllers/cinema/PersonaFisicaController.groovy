@@ -88,7 +88,9 @@ class PersonaFisicaController {
 	}
 
 	def search = {
-		searcher(params)
+//		def restrictions = session.gsecPermissions.findAll{it[1]=="personaFisica" && it[3] }.collect{it[3]}
+//		restrictions += session.gsecRolePermissions.findAll{it[1]=="personaFisica" && it[3] }.collect{it[3]}
+		searcher(params, session.restrictions["personaFisica"])
 	}
 
 }
