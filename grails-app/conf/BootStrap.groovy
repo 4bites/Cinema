@@ -108,7 +108,7 @@ class BootStrap {
 		        dataToRender.iTotalDisplayRecords = dataToRender.iTotalRecords
 				if(!params.sEcho){
 					dataToRender.aaData = domain.list()
-					def restrictionsString = restrictions?.collect{"($it)"}.join(" && ")
+					def restrictionsString = restrictions?.collect{"($it)"}?.join(" && ")
 					println "restrictions: $restrictionsString"
 					if(restrictionsString){
 						dataToRender.aaData =  dataToRender.aaData.findAll{ evalRestriction(restrictionsString, it)}
