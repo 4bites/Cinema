@@ -18,9 +18,15 @@ class ComplejoController {
 		complejo.clearErrors()
 		println complejo.fechaApertura
 		if(complejo.validate()){
-			complejo.save()
-			flash.message = "Complejo guardado satisfactoriamente."
-			redirect action:"show", id: complejo.id
+			try {
+				complejo.save()
+				flash.message = "Complejo guardado satisfactoriamente."
+				redirect action:"show", id: complejo.id
+			}catch(Exception e){
+				complejo.errors.reject("complejo.denied",null,
+                    "Los datos ingresados no matchean con los permisos [ ${session.restrictions['complejo'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")		
+				render view:"create", model:[complejoInstance:complejo]
+			}
 		} else {
 			render view:"create", model:[complejoInstance:complejo]
 		}

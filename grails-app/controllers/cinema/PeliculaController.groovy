@@ -26,12 +26,18 @@ class PeliculaController {
 		pelicula.distribuidor = Distribuidor.get(params["distribuidor.id"])
 		pelicula.productor = Productor.get(params["productor.id"])
 		pelicula.fechaEstreno = (params.fechaEstreno != '' ? Empresa.dateFormat.parse(params.fechaEstreno):null)
-		if(pelicula.save()){
-			flash.message = "Pelicula guardada satisfactoriamente."
-			redirect action:"show", id: pelicula.id
-        } else{
-            render view:"create", model:[peliculaInstance: pelicula]
-        }
+		try{
+			if(pelicula.save()){
+				flash.message = "Pelicula guardada satisfactoriamente."
+				redirect action:"show", id: pelicula.id
+	        } else{
+    	        render view:"create", model:[peliculaInstance: pelicula]
+        	}
+		}catch(Exception e){
+			pelicula.errors.reject("pelicula.denied",null,
+                 "Los datos ingresados no matchean con los permisos [ ${session.restrictions['pelicula'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")	
+			render(view:"create", model:[peliculaInstance: pelicula])
+		}		
 	}
 
     def update = {

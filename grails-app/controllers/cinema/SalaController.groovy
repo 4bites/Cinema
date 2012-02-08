@@ -49,10 +49,12 @@ class SalaController {
 			try{ 
 				sala.save()
 				flash.message = "Sala guardada satisfactoriamente."
+				redirect action:"show", id: sala.id
 			}catch(Exception e){
-				e.printStackTrace()
+				sala.errors.reject("sala.denied",null,
+                 "Los datos ingresados no matchean con los permisos [ ${session.restrictions['sala'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")	
+				render view:"create", model:[salaInstance: sala]	
 			}
-			redirect action:"show", id: sala.id
 		} else{
 			render view:"create", model:[salaInstance: sala]
 		}

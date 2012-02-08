@@ -64,9 +64,15 @@ class DdjjExhibidorController {
 			}
 			def map = [ddjjExhibidorInstance:ddjj]
 			if(ddjj.validateRepetitionsAndZeros(ddjjRegs) & !ddjj.hasErrors() & valid ){
-				ddjj.save()
-				flash.message = "Ddjj de exhibidor guardada satisfactoriamente"	
-	        	redirect action:"show", id:ddjj.id
+				try {
+					ddjj.save()
+					flash.message = "Ddjj de exhibidor guardada satisfactoriamente"	
+	    	    	redirect action:"show", id:ddjj.id
+				} catch(Exception e) {
+					ddjj.errors.reject("ddjj.denied",null,
+                    "Los datos ingresados no matchean con los permisos [ ${session.restrictions['ddjjExhibidor'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")	
+					render(view:"create", model:map)
+				}
 			}else{
 				ddjjRegs.findAll{it.hasErrors()}.each{ it.errors.each{ reg -> println reg}} 
 				map.ddjjRegs = ddjjRegs.findAll{it.hasErrors()}

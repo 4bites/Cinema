@@ -56,9 +56,15 @@ class PagoController {
 			}
 			def map = [pagoInstance:pago]
             if(!pago.hasErrors() & valid & pago.validateUniqueness(pagos)){
-                pago.save()
-				flash.message = "Pagos guardados satisfactoriamente."
-                redirect action:"show", id:pago.id
+				try{
+	                pago.save()
+					flash.message = "Pagos guardados satisfactoriamente."
+        	        redirect action:"show", id:pago.id
+				}catch(Exception e){
+					pago.errors.reject("pago.denied",null,
+                 		"Los datos ingresados no matchean con los permisos [ ${session.restrictions['pago'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")	
+					render(view:"create", model:map)
+				}
             }else{
                 pagos.findAll{it.hasErrors()}.each{ it.errors.each{ reg -> println reg}}
                 map.pagoRegs = pagos.findAll{it.hasErrors()}

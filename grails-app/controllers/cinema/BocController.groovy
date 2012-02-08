@@ -16,9 +16,16 @@ class BocController {
         boc.fechaAlta = new Date()
 //		boc.exhibidor = Exhibidor.get(params.int('exhibidor.id'))
 		boc.exhibidor = params["exhibidor.id"]?Exhibidor.get(params["exhibidor.id"]):null
-        if(boc.validate() && boc."${params.accion}"()){
-			flash.message="${params.accion} de boc satisfactoria"
-            redirect action:(boc.id?"show":"list"), id: boc.id
+        if(boc.validate()){
+			try {
+				boc."${params.accion}"()
+				flash.message="${params.accion} de boc satisfactoria"
+            	redirect action:(boc.id?"show":"list"), id: boc.id
+			}catch(Exception e){
+				boc.errors.reject("personaJuridica.denied",null,
+                    "Los datos ingresados no matchean con los permisos [ ${session.restrictions['boc'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")
+				render view:"create", model:[bocInstance: boc]
+			}
         } else {
             render view:"create", model:[bocInstance: boc]
         }

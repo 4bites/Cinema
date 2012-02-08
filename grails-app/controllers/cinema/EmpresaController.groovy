@@ -44,11 +44,17 @@ class EmpresaController {
 			empresa.personaJuridica = pJuridica
 			empresa.personaFisica = null
 		}
-		if(empresa.save()){
-			flash.message = "${params.dom} guardado satisfactoriamente"	
-			redirect(uri:"/empresas/$params.dom/show?id=$empresa.id")
-		} else {
-			render(view:"create", model: [empresaInstance:empresa])	
+		try {
+			if(empresa.save()){
+				flash.message = "${params.dom} guardado satisfactoriamente"	
+				redirect(uri:"/empresas/$params.dom/show?id=$empresa.id")
+			} else {
+				render(view:"create", model: [empresaInstance:empresa])	
+			}
+		}catch(Exception e){
+            empresa.errors.reject("empresa.denied",null,
+                 "Los datos ingresados no matchean con los permisos [ ${session.restrictions['empresa'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")
+			render(view:"create", model: [empresaInstance:empresa])			
 		}
 	}
 

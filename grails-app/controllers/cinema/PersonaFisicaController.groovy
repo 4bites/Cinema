@@ -58,9 +58,16 @@ class PersonaFisicaController {
 		}else{
 			person = new PersonaFisica(params)
 		}
-		if(person.validate() && person.save()){
-			flash.message = "Persona fisica guardada satisfactoriamente."
-			redirect action:"show", id:person.id
+		if(person.validate()){
+			try{
+				person.save()
+				flash.message = "Persona fisica guardada satisfactoriamente."
+				redirect action:"show", id:person.id
+			}catch(Exception e){
+				person.errors.reject("person.denied",null,
+                 "Los datos ingresados no matchean con los permisos [ ${session.restrictions['persona'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")	
+				render view:"create", model:[personaFisicaInstance:person]
+			}
 		} else {
 			render view:"create", model:[personaFisicaInstance:person]
 		}

@@ -3,6 +3,7 @@ import grails.converters.*
 import groovy.lang.ExpandoMetaClass
 //import org.springframework.web.context.request.RequestContextHolder as RCH
 import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler
+import  org.springframework.web.context.request.RequestContextHolder
 
 class BootStrap {
 
@@ -84,7 +85,27 @@ class BootStrap {
                 	filter.join(",")
 		        } catch (Exception e){}   
 
-			}	
+			}
+		
+			domain.metaClass.beforeInsert = {
+		        def session = RequestContextHolder.currentRequestAttributes().session
+				def domStr = domain.simpleName[0].toLowerCase()+domain.simpleName[1..-1]
+				println "bootstrap $domStr"	
+		        def restrictions = session.restrictions[domStr]?.collect{"($it)"}?.join(" && ")
+				println "bootstrap $restrictions"
+        		if(restrictions && !evalRestriction(restrictions, delegate)){
+		            throw new Exception()
+        		}
+
+			}
+
+			domain.metaClass.evalRestriction = { restriction, iter ->
+    	        def b = new Binding()
+        	    def shell = new GroovyShell(this.class.classLoader, b)
+            	b.setVariable("it", iter)
+            	return shell.evaluate("import cinema.*; $restriction")
+	        }
+
 		}
 		
 		def evalRestriction = { restriction, iter ->

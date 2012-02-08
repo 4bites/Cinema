@@ -23,9 +23,15 @@ class DdjjVideoController {
 			ddjj = new DdjjVideo(params.findAll{it.key != "videoClub"})
 		}	
 		if(ddjj.validate()){
-			ddjj.save()
-			flash.message = "Ddjj de video club guardada satisfactoriamente"
-			redirect action:"show", id: ddjj.id
+			try {
+				ddjj.save()
+				flash.message = "Ddjj de video club guardada satisfactoriamente"
+				redirect action:"show", id: ddjj.id
+			}catch (Exception e){
+				ddjj.errors.reject("ddjj.denied",null,
+                    "Los datos ingresados no matchean con los permisos [ ${session.restrictions['ddjjVideo'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")
+				render view:"create", model:[ddjjVideoInstance: ddjj]
+            }
 		} else { 
 			render view:"create", model:[ddjjVideoInstance: ddjj]
 		}

@@ -101,7 +101,7 @@ gsec {
     //Default-Values. No one must be set.
     isEnabled = true    //Only in development you can set it to false in all other environment it is non relevant 
     nullMustBeAuthenticated = false    //true if the user must be authenticated if the controllername is null 
-    publicControllers = ['public','auth','registration', 'passwordManagement']//, 'gsecPermission','gsecUser','gsecRole','sala', 'personaJuridica', 'personaFisica', 'localidad', 'empresa', 'exhibidor', 'distribuidor', 'productor', 'local', 'ddjjExhibidor', 'ddjjVideo', 'pelicula', 'videoClub', 'bocIngreso', 'bocEgreso', 'pago'] //list of controllernames without any security-checks
+    publicControllers = ['public','auth','registration', 'passwordManagement','localidad']//, 'gsecPermission','gsecUser','gsecRole','sala', 'personaJuridica', 'personaFisica', 'localidad', 'empresa', 'exhibidor', 'distribuidor', 'productor', 'local', 'ddjjExhibidor', 'ddjjVideo', 'pelicula', 'videoClub', 'bocIngreso', 'bocEgreso', 'pago'] //list of controllernames without any security-checks
     maxLoginFailed = 10 //nr of failed logins before a user is disabled.
     gsec.rememberMeCryptKey='No Public Default' //String which is used as key for the rememberMe encryption.
     gsec.loginView = 'login' //defines the gsp for login, which has the model:[username, rememberMe, token]

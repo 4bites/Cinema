@@ -1,6 +1,8 @@
 package cinema
+import  org.springframework.web.context.request.RequestContextHolder
 
 class PersonaFisica {
+	
  	static auditable = true	
 
     String nombre
@@ -23,6 +25,22 @@ class PersonaFisica {
     }
 
 	static hasMany = [pFisicaPJuridicas:PFisicaPJuridica]
+/*
+	def beforeInsert = {
+		def session = RequestContextHolder.currentRequestAttributes().session
+		def restrictions = session.restrictions["personaFisica"]?.collect{"($it)"}?.join(" && ")	
+		if(!evalRestriction(restrictions, this)){
+			throw new Exception()
+		}
+	}
+
+    def evalRestriction = { restriction, iter ->
+        def b = new Binding()
+        def shell = new GroovyShell(this.class.classLoader, b)
+        b.setVariable("it", iter)
+        return shell.evaluate("import cinema.*; $restriction")
+    }
+*/
     static constraints = {
         cuit(unique:true, blank:false, maxSize:13, matches:/^[0-9]{2}-[0-9]{8}-[0-9]$/, validator:{ val, obj ->
 			def c = PersonaFisica.calculateCuit(obj.sexo.toString(), obj.numeroDocumento)

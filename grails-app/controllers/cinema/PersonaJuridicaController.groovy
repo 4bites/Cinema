@@ -147,7 +147,12 @@ class PersonaJuridicaController {
 				}
 				def valid = true
 				if(p.validate()){
-					p.save()
+					try{
+						p.save()
+					}catch(Exception e){
+						p.errors.reject("personaJuridica.denied",null,
+						"Los datos ingresados no matchean con los permisos [ ${session.restrictions['personaJuridica'].collect{'('+it.replaceAll('it\\.','')+')'}.join(' and ')} ]")
+					}
 				}
 				//def pfpj = []
 				params.list("pJuridicaPFisicas.personaFisica").eachWithIndex{ pf,i ->
